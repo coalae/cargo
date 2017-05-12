@@ -14,6 +14,19 @@ import java.util.GregorianCalendar;
 import model.Mitarbeiter;
 
 public class DatabaseMitarbeiterDAO {
+	
+	private static final String all = "Select * from Mitarbeiter";
+	private static final String delID = "DELETE from Mitarbeiter where mitarbeiterid = ?";
+	private static final String ausID = "Select * from Mitarbeiter where mitarbeiterid =?";
+	private static final String upNachname = "UPDATE from Mitarbeiter SET nachname = ? where mitarbeiterid = ?";
+	private static final String upSpez = "UPDATE from Mitarbeiter SET spezialisierung = ? where mitarbeiterid = ?";
+	private static final String upuser = "UPDATE from Mitarbeiter SET username = ? where mitarbeiterid = ?";
+	private static final String upPassw = "UPDATE from Mitarbeiter SET passw = ? where mitarbeiterid=?";
+	private static final String upActiv = "UPDATE from Mitarbeiter SET active = ? where mitarbeiterid =?";
+	private static final String add = "INSERT INTO Mitarbeiter (mitarbeiterid,vorname,nachname,svnr,spezialisierung"+
+	"mitarbeitertyp,geburtsdatum,username,passw,active) VALUES (?,?,?,?,?,?,?,?,?,?)";
+	
+	
 	private String DBAdresse = "jdbc:mariadb://localhost:3306/cargo";
 	private String username = "root";
 	private String password = "coalacoala1";

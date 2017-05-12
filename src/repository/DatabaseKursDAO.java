@@ -13,6 +13,18 @@ import java.util.GregorianCalendar;
 import model.Kurs;
 
 public class DatabaseKursDAO {
+	
+	private static final String all = "Select * from Kurs";
+	private static final String delID = "DELTE from Kurs where kursid=?";
+	private static final String upName = "UPDATE Kurs SET kursname =? where kursid =?";
+	private static final String uplevel = "UPDATE Kurs SET kurslevel =? where kursid =?";
+	private static final String upEnde = "UPDATE Kurs SET ende =? where kursid =?";
+	private static final String upBeginn ="UPDATE Kurs SET beginn =? where kursid =?";
+	private static final String upPreis ="UPDATE Kurs SET preis = ? where krusid =?";
+	private static final String ausgabe ="Select * from Kurs where kursid =?";
+	private static final String add = "INSERT INTO Kurs (kursid,nursname,kurslevel,"
+	+"beginn,ende,preis,betreuerid,maxAnazahl,immobilie) VALUES (?,?,?,?,?,?,?,?,?)";
+	
 	private String DBAdresse = "jdbc:mariadb://localhost:3306/cargo";
 	private String username = "root";
 	private String password = "coalacoala1";

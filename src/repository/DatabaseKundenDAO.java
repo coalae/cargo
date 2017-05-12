@@ -11,6 +11,15 @@ import java.util.ArrayList;
 import model.Kunde;
 
 public class DatabaseKundenDAO {
+	
+	private static final String all = "Select * from Kunde";
+	private static final String delID = "Delete from Kunde where id=?";
+	private static final String upIban = "UPDATE Kunde SET iban = ? where kundenid=?";
+	private static final String upBIC = "UPDATE Kunde SET bic =? where kundenid=?";
+	private static final String upACTIV = "UPDATE Kudnen SET activ = ? where kundenid=?";
+	private static final String id = "Select * from Kunde where kundenid = ?";
+	private static final String insert = "INSERT INTO Kunde (kundenid,vorname,nachname,iban,bic,username,passw,activ) VALUES (?,?,?,?,?,?,?,?)";
+	
 	private String DBAdresse = "jdbc:mariadb://localhost:3306/cargo";
 	private String username = "root";
 	private String password = "coalacoala1";
