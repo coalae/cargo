@@ -11,7 +11,16 @@ import java.util.ArrayList;
 import model.Immobilie;
 
 public class DatabaseImmobilienDAO {
-
+	private static final String delImmo = "Delete from Immobilie wehre immobilienid = ?";
+	private static final String addImmo = "INSERT INTO Immobilie (immobilienid,typ,immobielienname) values (?,?,?)";
+	private static final String uptyp = "UPDATE Fahrzeug SET typ = ? where immobielienid=?";
+	private static final String upname = "UPDATE Fahrzeug SET immobilienname = ? where immobielienid=?";
+	private static final String upid = "UPDATE Fahrzeug SET immobielienid = ? where immobielienid=?";
+	private static final String all = "Select * from Immobilie";
+	private static final String aus1 = "Select * from Immobilie where typ = ?";
+	private static final String aus2 = "Select * from Immobilie where immobielienname = ? ";
+	private static final String aus3 = "Select * from Immobilie where immobielienid = ? ";
+	
 
 		private String DBAdresse = "jdbc:mariadb://localhost:3306/cargo";
 		private String username = "root";

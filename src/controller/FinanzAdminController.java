@@ -1,7 +1,7 @@
 package controller;
 
 public class FinanzAdminController {
-	
+
 	/*
 	 * Berechtigt dafuer: ADMIN
 	 * Moegliche Aktivitaeten:

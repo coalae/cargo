@@ -1,7 +1,6 @@
 package controller;
 
 public class ImmobilienController {
-
 	/*
 	 * Berechtigt dafuer: ADMIN
 	 * Moegliche Aktivitaeten:
