@@ -75,14 +75,15 @@
                     <!-- logo -->
                     <div class="navbar-brand">
                         <a href="index.jsp" >
-                            <img src="images/CargoLogo.JPG" alt="">
+                            <img src="images/CargoLogo.JPG" alt="" align="right">
+                            <br>
                         </a>
                     </div>
                     <!-- /logo -->
                 </div>
                 <!-- main menu -->
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
-                    <div class="main-menu">
+                    <div class="main-menu active">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <a href="index.jsp" >Home</a>

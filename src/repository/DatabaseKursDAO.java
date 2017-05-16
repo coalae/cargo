@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import model.Kunde;
 import model.Kurs;
 
 public class DatabaseKursDAO implements KursDAO {
@@ -184,6 +183,7 @@ public class DatabaseKursDAO implements KursDAO {
 	@Override
 	public void addKurs(Kurs kurs) {
 		Connection con = null;
+
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             con = DriverManager.getConnection(DBAdresse, username, password);
@@ -205,8 +205,8 @@ public class DatabaseKursDAO implements KursDAO {
               SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
               preparedStmt.setString (1, kurs.getKursname());
               preparedStmt.setString (2, kurs.getLevel());
-              preparedStmt.setString (3, sdf.format(kurs.getBeginn()));
-              preparedStmt.setString(4, sdf.format(kurs.getBeginn()));
+              preparedStmt.setString (3, sdf.format(kurs.getBeginn().getTime()));
+              preparedStmt.setString(4, sdf.format(kurs.getEnde().getTime()));
               preparedStmt.setDouble(5, kurs.getPreis());
               preparedStmt.setInt(6, kurs.getBetreuerId()); 
               preparedStmt.setInt(7, kurs.getMaxAnzahl());

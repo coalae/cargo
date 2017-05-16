@@ -50,6 +50,18 @@ public class KursMgmt {
 		return suchKurs;
 	}
 	
+	public ArrayList<Kurs> getKursByKursnameAndBeginn(String kursname, String beginn){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
+		ArrayList<Kurs> suchListe=null;
+		ArrayList<Kurs> kursliste=getKursListe();
+		for(int i=0;i<kursliste.size();i++){
+			if(kursliste.get(i).getKursname().equals(kursname) && sdf.format(getKursByKursname(kursname).getBeginn().getTime()).equals(beginn)){
+				suchListe.add(kursliste.get(i));
+			}
+		}
+		return suchListe;
+	}
+	
 	public void addKurs(Kurs kurs){
 		kursdao.addKurs(kurs);
 	}
@@ -136,7 +148,7 @@ public class KursMgmt {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		Kurs neuerKurs=new Kurs(0,"Kursname2", "Level2", beginncal, endcal, 123, 1, 11, 1,null);
+		Kurs neuerKurs=new Kurs(0,"Kursname3", "Level3", beginncal, endcal, 111, 1, 11, 1,null);
 		kursmgmt.addKurs(neuerKurs);
 		*/
 
@@ -165,6 +177,13 @@ public class KursMgmt {
 		for(int i=0;i<teilnehmerliste.size();i++){
 			System.out.println(teilnehmerliste.get(i));
 		} 
+		*/
+		
+		/* TEST getKursByKursnameAndBeginn 
+		ArrayList<Kurs> sl = kursmgmt.getKursByKursnameAndBeginn("deinKurs1","31.05.2017");
+		for(int i=0;i<sl.size();i++){
+			System.out.println(sl.get(i).getKursname());
+		}
 		*/
 	}
 
