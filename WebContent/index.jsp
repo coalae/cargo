@@ -93,10 +93,10 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mitarbeiter<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="mitarbeiterListe">Mitarbeiterliste</a></li>
+                                        <li><a href="mitarbeiterListe.jsp">Mitarbeiterliste</a></li>
                                         <li><a href="mitarbeiterHinzufuegen.jsp">Mitarbeiter hinzufuegen</a></li>
                                         <li><a href="mitarbeiterLoeschen.jsp">Mitarbeiter loeschen</a></li>
-                                        <li><a href="mitarbeiterAendern">Mitarbeiter aendern</a></li>
+                                        <li><a href="mitarbeiterAendern.jsp">Mitarbeiter aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -105,10 +105,10 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mentoring<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="mentoringListe">Mentoringliste</a></li>
+                                        <li><a href="mentoringListe.jsp">Mentoringliste</a></li>
                                         <li><a href="mentoringHinzufuegen.jsp">Mentoring hinzufuegen</a></li>
                                         <li><a href="mentoringLoeschen.jsp">Mentoring loeschen</a></li>
-                                        <li><a href="mentoringAendern">Mentoring aendern</a></li>
+                                        <li><a href="mentoringAendern.jsp">Mentoring aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -117,9 +117,9 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Immobilien<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="immobilienListe">Immobilienliste</a></li>
+                                        <li><a href="immobilienListe.jsp">Immobilienliste</a></li>
                                         <li><a href="immobilieHinzufuegen.jsp">Immobilie hinzufuegen</a></li>
-                                        <li><a href="immobilieAendern">Immobilie aendern</a></li>
+                                        <li><a href="immobilieAendern.jsp">Immobilie aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -129,7 +129,7 @@
                                 <div class="dropdown-menu">
                                     <ul>
                                         <li><a href="kontoAnzeigen.jsp">Konto anzeigen</a></li>
-                                        <li><a href="transaktionsliste">Transaktionsliste</a></li>
+                                        <li><a href="transaktionsliste.jsp">Transaktionsliste</a></li>
                                         <li><a href="transaktionLoeschen.jsp">Transaktion loeschen</a></li>
                                     </ul>
                                 </div>
@@ -139,10 +139,10 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fahrzeuge<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="fahrzeugListe">Fahrzeugliste</a></li>
+                                        <li><a href="fahrzeugListe.jsp">Fahrzeugliste</a></li>
                                         <li><a href="fahrzeugHinzufuegen.jsp">Fahrzeug hinzufuegen</a></li>
                                         <li><a href="fahrzeugLoeschen.jsp">Fahrzeug loeschen</a></li>
-                                        <li><a href="fahrzeugAendern">Fahrzeug aendern</a></li>
+                                        <li><a href="fahrzeugAendern.jsp">Fahrzeug aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -152,7 +152,7 @@
                                     <ul>
                                         <li><a href="kursHinzufuegen.jsp">Kurs hinzufuegen</a></li>
                                         <li><a href="kursLoeschen.jsp">Kurs loeschen</a></li>
-                                        <li><a href="kursAendern">Kurs aendern</a></li>
+                                        <li><a href="kursAendern.jsp">Kursdaten</a></li>
                                     </ul>
                                 </div>
                             </li>
