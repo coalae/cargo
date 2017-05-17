@@ -62,6 +62,17 @@ public class KursMgmt {
 		return suchListe;
 	}
 	
+	public ArrayList<Kurs> getKursByKeyword(String keyword){ // sucht in Kursname und Level nach Keyword
+		ArrayList<Kurs> suchliste=new ArrayList<Kurs>();
+		ArrayList<Kurs> gesamtliste=getKursListe();
+		for(int i=0;i<gesamtliste.size();i++){
+			if((gesamtliste.get(i).getKursname().toLowerCase().contains(keyword.toLowerCase()) || gesamtliste.get(i).getLevel().toLowerCase().contains(keyword.toLowerCase()))){
+				suchliste.add(gesamtliste.get(i));
+			}
+		}
+		return suchliste;
+	}
+		
 	public void addKurs(Kurs kurs){
 		kursdao.addKurs(kurs);
 	}
@@ -184,6 +195,13 @@ public class KursMgmt {
 		for(int i=0;i<sl.size();i++){
 			System.out.println(sl.get(i).getKursname());
 		}
+		*/
+		
+		/* TEST getKursByKeyword 
+		ArrayList<Kurs> sl = kursmgmt.getKursByKeyword("ein");
+		for(int i=0;i<sl.size();i++){
+			System.out.println(sl.get(i).getKursname());			
+		} 
 		*/
 	}
 

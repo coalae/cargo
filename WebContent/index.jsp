@@ -157,7 +157,7 @@
                                 </div>
                             </li>
                             
-                            <li><a href="kurskatalog.jsp">Kurskatalog</a></li>
+                            <li><a href="kursListeAnzeigen.jsp">Kurskatalog</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mein Profil<span class="caret"></span></a>
                                 <div class="dropdown-menu">
@@ -212,7 +212,7 @@
                                     <br>
 									Natuerlich koennen Sie uns auch vor Ort besuchen, wo wir Sie persoenlich beraten.
                                 </h2>
-                                <a class="btn-lines dark light wow fadeInUp animated smooth-scroll btn btn-default btn-green" data-wow-delay=".9s" href="kurskatalog.jsp" data-section="#works" >Kurskatalog</a>
+					<a href="kursListeAnzeigen.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Kurskatalog</a>
                                 
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 package controller;
 
 public class KundenAdminController {
-
+	
 	/*
 	 * Berechtigt dafuer: ADMIN
 	 * Moegliche Aktivitaeten:
