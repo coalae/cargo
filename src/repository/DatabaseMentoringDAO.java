@@ -10,5 +10,5 @@ public class DatabaseMentoringDAO {
 	private static final String upMentee = "UPDATE from Mentoringbeziehung SET menteeid =? where mentoringid =?";
 	private static final String ausMentor = "Select * from Mentoringbeziehung where mentorid=?";
 	private static final String ausID= "Select * from Mentoringbeziehung where mentoringid = ?";
-	private stativ final String ausMentee = "Select * from Mentoringbeziehung where menteeid=?";
+	private static final String ausMentee = "Select * from Mentoringbeziehung where menteeid=?";
 }
