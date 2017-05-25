@@ -442,7 +442,59 @@ public class DatabaseKursDAO implements KursDAO {
 	        }
 			return teilnehmerliste;
 	}
-        
+  
+	
+	/**
+	 * Kursliste (Liste von kursIds) fuer einen Teilnehmer (Kunde) anhand kundenId suchen
+	 * @param kundenId
+	 * @return
+	 */
+	@Override
+	public ArrayList<Integer> getKurslisteForTeilnehmer (int kundenId) {
+		Connection con = null;
+    	ArrayList<Integer> kursliste=new ArrayList<Integer>();
+		 
+		try {
+            Class.forName("org.mariadb.jdbc.Driver");
+            con = DriverManager.getConnection(DBAdresse, username, password);
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+	    String sql;  
+	    sql = "SELECT kursId FROM teilnehmer WHERE kundenId='"+kundenId+"'";
+	        PreparedStatement prest = null;
+	        try {
+	            prest = con.prepareStatement(sql);
+	            ResultSet rs = prest.executeQuery();
+
+	            while (rs.next()) {
+ 	            	// TEST CHECK DATA: System.out.println(rs.getInt(1));
+	                    
+	                int kursId=rs.getInt(1);
+	                // TEST CHECK DATA: System.out.println(kundenId);
+	                kursliste.add(kursId);
+	            }
+	        }catch (SQLException e) {
+	            e.printStackTrace();
+	        } finally {
+	            try {
+	                if (prest != null)
+	                    prest.close();
+	                if (con != null)
+	                    con.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+
+	        }
+			return kursliste;
+	}
+	
+	
 	/**
 	 * main Funktion fuer Tests
 	 * @param args
@@ -462,6 +514,16 @@ public class DatabaseKursDAO implements KursDAO {
 			System.out.println(teilnehmerliste.get(i));
 		}
 		*/
+		
+		/*		 
+		int kundenId=1;
+		ArrayList<Integer> kursliste=dao.getKurslisteForTeilnehmer(kundenId);
+		
+		for(int i=0;i<kursliste.size();i++){
+			System.out.println(kursliste.get(i));
+		}
+		*/
+		
 	}
 	
 }

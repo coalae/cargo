@@ -1,14 +1,17 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@page import="logic.KundenMgmt"%>
 <%@page import="model.Kunde"%>
+<%@page import="model.Mitarbeiter"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.text.SimpleDateFormat"%>
-    
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js">
     <head>
-        <% String message = (String) request.getAttribute("message") ;%>
+    <% String message = (String) request.getAttribute("message") ;%>
     
         <!-- Basic Page Needs
         ================================================== -->
@@ -61,6 +64,13 @@
         <script src="js/jquery.fancybox.js"></script>
         <!-- template main js -->
         <script src="js/main.js"></script>
+        	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+	$( function() {
+		$( "#datepicker" ).datepicker({ dateFormat: 'dd.mm.yy' });
+	} );
+	</script>
     </head>
     <body>
         <!--
@@ -86,18 +96,16 @@
                             <br>
                         </a>
                     </div>
-                    <!-- /logo -->          
+                    <!-- /logo -->
                 </div>
-                
-                                <br> <br> <br>  <br> <br>
-                
+                                                                                <br> <br> <br>  <br> <br>
                 
                 <!-- main menu -->
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
-                    <div class="main-menu active">
+                    <div class="main-menu">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="indexLoggedInAsMitarbeiter.jsp" >Home</a>
+                                <a href="index.jsp" >Home</a>
                             </li> 
                             
                             <li class="dropdown">
@@ -111,16 +119,7 @@
                                     </ul>
                                 </div>
                             </li>
-   
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kunden<span class="caret"></span></a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li><a href="kundenListe.jsp">Kundenliste</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                                                     
+                            
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mentoring<span class="caret"></span></a>
                                 <div class="dropdown-menu">
@@ -189,16 +188,18 @@
                                 </div>
                             </li>
 							
-	<!-- TODO -->		<li><a href="LogoutServlet">Logout</a></li>
-
-							
-							                            
+					<!-- CHECK IF LOGGED IN  -->		
+							<li><a href="LogoutServlet">Logout</a></li>
+                            
                         </ul>
                     </div>
                 </nav>
                 <!-- /main nav -->
             </div>
         </header>
+        
+        
+        
         
         
         <!--
@@ -210,34 +211,27 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <div class="block wow fadeInUp" data-wow-delay=".3s">
+      			<% String keyword = (String) request.getAttribute("keywordSuche") ;%>
                             
                             <!-- Slider -->
                             <section class="cd-intro">
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-  <br>
-                                <span>Kundenliste:</span><br>
-
+ <br>
+                                <span>Suche nach: <%=keyword%></span><br>
+                      <!--          <span class="cd-words-wrapper">
+                                    <b class="is-visible">CarGo Driving School</b>
+                                    <b>CarGo Fahrschule</b>
+                                </span> -->
                                 </h1>
                                 </section> <!-- cd-intro -->
                                 <!-- /.slider -->
 
 			<%KundenMgmt km = new KundenMgmt();%>
-			<%ArrayList<Kunde> kundenliste = km.getKundenListe();%>
 		    <%SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");%>
-			 
-					<form action="KundeSucheServlet" Method="POST" >
-						
+			<%ArrayList<Kunde> suchliste=km.getKundeByKeyword(keyword); %>    
+
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Vorname, Nachname oder Username fuer Suche eingeben:</span><br><br>
-						  <input type="text" name="keywordSuche" required = "required">
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-						  <input type="submit" value="Kunden suchen">   
-						  </h2>
-			
-					</form>	
-						  
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Gesamte Kundenliste: </span><br><br>				
+                          <span>Suchergebnisliste: </span><br><br>				
                     
                           	<table class="table table-striped">
 								  <tr>
@@ -250,15 +244,15 @@
 								  	<th><div align="center"><h3>Password</h3></div></th> 
 								  </tr>
 
-								 <%for(int i = 0; i<kundenliste.size(); i++){%>
+								 <%for(int i = 0; i<suchliste.size(); i++){%>
 								  	<tr>
-								  		<td><div align="center"><h3><%=kundenliste.get(i).getId()%></h3></div></td>    
-								  		<td><div align="center"><h3><%=kundenliste.get(i).getVorname()%></h3></div></td>
-								  		<td><div align="center"><h3><%=kundenliste.get(i).getNachname()%></h3></div></td>
-								  		<td><div align="center"><h3><%=kundenliste.get(i).getIban()%></h3></div></td>
-								  		<td><div align="center"><h3><%=kundenliste.get(i).getBic()%></h3></div></td>
-								  		<td><div align="center"><h3><%=kundenliste.get(i).getUsername()%></h3></div></td>
-								  		<td><div align="center"><h3><%=kundenliste.get(i).getPassword()%></h3></div></td>
+								  		<td><div align="center"><h3><%=suchliste.get(i).getId()%></h3></div></td>    
+								  		<td><div align="center"><h3><%=suchliste.get(i).getVorname()%></h3></div></td>
+								  		<td><div align="center"><h3><%=suchliste.get(i).getNachname()%></h3></div></td>
+								  		<td><div align="center"><h3><%=suchliste.get(i).getIban()%></h3></div></td>
+								  		<td><div align="center"><h3><%=suchliste.get(i).getBic()%></h3></div></td>
+								  		<td><div align="center"><h3><%=suchliste.get(i).getUsername()%></h3></div></td>
+								  		<td><div align="center"><h3><%=suchliste.get(i).getPassword()%></h3></div></td>
 								  	</tr>
 							<%}%>
 							</table>			

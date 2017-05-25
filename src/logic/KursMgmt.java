@@ -113,6 +113,17 @@ public class KursMgmt {
 		// }
 		return teilnehmerliste;
 	}
+	
+	public ArrayList<Kurs> getKurslisteForTeilnehmer(int kundenId){
+		ArrayList<Integer> meineKurslisteIds = kursdao.getKurslisteForTeilnehmer(kundenId);
+		
+		ArrayList<Kurs> meineKurse = new ArrayList<Kurs>();
+		for(int i=0;i<meineKurslisteIds.size();i++){
+			meineKurse.add(kursdao.getKursById(meineKurslisteIds.get(i)));
+		}
+		return meineKurse;
+	}
+		
 
 	/* main Funktion fuer Tests	*/ 
 	public static void main(String[] args){

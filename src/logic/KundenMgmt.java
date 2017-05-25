@@ -3,6 +3,7 @@ package logic;
 import java.util.ArrayList;
 
 import model.Kunde;
+import model.Kurs;
 import repository.DatabaseKundenDAO;
 import repository.KundenDAO;
 
@@ -46,6 +47,17 @@ public class KundenMgmt {
 		}
 		return suchKunde;
 	}
+
+	public ArrayList<Kunde> getKundeByKeyword(String keyword){ // sucht in Vorname, Nachname und Username nach Keyword
+		ArrayList<Kunde> suchliste=new ArrayList<Kunde>();
+		ArrayList<Kunde> gesamtliste=getKundenListe();
+		for(int i=0;i<gesamtliste.size();i++){
+			if((gesamtliste.get(i).getVorname().toLowerCase().contains(keyword.toLowerCase()) || (gesamtliste.get(i).getVorname().toLowerCase().contains(keyword.toLowerCase()) || gesamtliste.get(i).getNachname().toLowerCase().contains(keyword.toLowerCase())))){
+				suchliste.add(gesamtliste.get(i));
+			}
+		}
+		return suchliste;
+	}
 	
 	public void addKunde(Kunde kunde){
 		kundendao.addKunde(kunde);
@@ -71,7 +83,7 @@ public class KundenMgmt {
 		}	
 		return exists;
 	}
-		
+	
 
 	/* main Funktion fuer Tests	*/ 
 	public static void main(String[] args){

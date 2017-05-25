@@ -76,7 +76,7 @@ public class KundeRegistrierenServlet extends HttpServlet {
 							}
 							
 							km.addKunde(neuerKunde);
-							String message = "Kundenaccount wurde angelegt.";
+							String message = "Kundenaccount wurde angelegt." + "\n" + " Sie koennen sich nun einloggen.";
 							request.setAttribute("message", message);
 							RequestDispatcher view = request.getRequestDispatcher("kundeRegistrieren.jsp");
 							view.forward(request, response);

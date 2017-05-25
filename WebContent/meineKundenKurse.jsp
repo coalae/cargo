@@ -1,15 +1,19 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="logic.KundenMgmt"%>
+<%@page import="model.Kunde"%>
 <%@page import="logic.KursMgmt"%>
 <%@page import="model.Kurs"%>
-<%@page import="model.Mitarbeiter"%>
 <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.text.SimpleDateFormat"%>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js">
     <head>
- <!-- TODO: ANPASSEN AUF SESSION OBJECT UND USERNAME DES EINGELOGGTEN KUNDE -->
+ <!-- TODO: ANPASSEN AUF SESSION OBJECT UND USERNAME DES EINGELOGGTEN KUNDE, hier noch anhand von Dummy Bsp -->
  <!--     String username = (String) request.getAttribute("username") ;  -->
 	<% String message = (String) request.getAttribute("message") ;%>    
     
@@ -98,7 +102,7 @@
                     </div>
                     <!-- /logo -->
                 </div>
-                                                                <br> <br> <br>  
+                                                                <br> <br> 
                 
                 <!-- main menu -->
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
@@ -151,99 +155,72 @@
                             <!-- Slider -->
                             <section class="cd-intro">
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-   <br>
-                                <span>Kursdaten von Kurs:</span>
+
+ 			<%KundenMgmt km = new KundenMgmt();%>
+ 			<%KursMgmt kum = new KursMgmt();%>
+ 			<!--  ACHTUNG: hier noch Dummy eingeloggte Kunden Daten -->
+			<%Kunde eingeloggterKunde = km.getKundeByUsername("martinm");%>
+			<%ArrayList<Kurs> meineKurse = kum.getKurslisteForTeilnehmer(eingeloggterKunde.getId()); %>
+ 
+                                <span>Meine Kurse:</span>
                                 <br>
-                                <span> (Id <%=kursId%>) </span>
-                      <!--          <span class="cd-words-wrapper">
-                                    <b class="is-visible">CarGo Driving School</b>
-                                    <b>CarGo Fahrschule</b>
-                                </span> -->
+                                <span> (Id <%=eingeloggterKunde.getId()%>) </span>
+
                                 </h1>
                                 </section> <!-- cd-intro -->
                                 <!-- /.slider -->
 
-			<%KursMgmt km = new KursMgmt();%>
-			<%Kurs ausgewaehlterKurs = km.getKursById(Integer.parseInt(kursId));%>
-			<%SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");%> 
-
 			 
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Kursname:</span>
-                          <br>
-                          <span><%=ausgewaehlterKurs.getKursname()%></span>
-						  <br> </h2>
-						
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Kurslevel: </span>
-                          <br>
-                          <span><%=ausgewaehlterKurs.getLevel()%></span><br>
-                          </select> </h2>
-						  
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Enddatum: </span>
-                          <br>
-                          <span><%=sdf.format(ausgewaehlterKurs.getBeginn().getTime())%></span><br>
-                          </select> </h2>
-                          						  
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Beginndatum: </span>
-                          <br>
-                          <span><%=sdf.format(ausgewaehlterKurs.getEnde().getTime())%></span><br>
-                          </select> </h2>
-
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Gesamtpreis:</span>
-                          <br>						  
-                          <span><%=ausgewaehlterKurs.getPreis()%></span><br>
-						  <br> </h2>
-	  
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>BetreuerId:</span>
-                          <br>
-                          <span><%=ausgewaehlterKurs.getBetreuerId()%></span><br>
-						  <br> </h2>
-
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Maximale Teilnehmeranzahl:</span>
-                          <br>  
-                          <span><%=ausgewaehlterKurs.getMaxAnzahl()%></span><br>
-						  <br> </h2>
-						  
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Freie Plaetze:</span>
-                          <br>  
-                          <%int freiePlaetze=ausgewaehlterKurs.getMaxAnzahl()-km.getTeilnehmerlisteForKurs(Integer.parseInt(kursId)).size();%>
-                          <span><%=freiePlaetze%></span><br>
-						  <br> </h2>
-						  
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>ImmobilienId:</span><br>
-                          <span><%=ausgewaehlterKurs.getImmobilie()%></span><br>
-						  <br>
-
-					    <%if(freiePlaetze>0) {%>
-					   	<form action="KursBuchenServlet" Method="POST" >
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-						  <input type="submit" value="Kurs buchen"> 
-						  <input type="hidden" name="kursId" value=<%=ausgewaehlterKurs.getId()%>>
-						  <%int kundenId=1;%>
-						  <input type="hidden" name="kundenId" value=<%=kundenId%>>  <!-- ACHTUNG weil muss logged in kundenId nehmen --> 						    
-						  </h2>
-						</form>	
-						<%}%>					
-					 
-						<% if (message != null){%>
+                          <br><br>				
+                          
+  						<% if (message != null){%>
 							  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
 	                          <span> 
 							<% 	out.println(message); %>
 								</span><br>
 						<%	} %>
+							                          <br> 				
 							
+  
+                          	<table class="table table-striped">
+								  <tr>
+								  	<th><div align="center"><h3>Link</h3></div></th>
+								  	<th><div align="center"><h3>Kursname</h3></div></th>
+								  	<th><div align="center"><h3>Level</h3></div></th>
+								  	<th><div align="center"><h3>Beginn</h3></div></th>
+								  	<th><div align="center"><h3>Ende</h3></div></th> 
+								  	<th><div align="center"><h3>BetreuerId</h3></div></th> 								  	 
+								  	<th><div align="center"><h3>Immobilie</h3></div></th> 
+								  	<th><div align="center"><h3>Freie Plaetze</h3></div></th>  
+								    <th><div align="center"><h3>Max. Teilnehmeranzahl</h3></div></th>
+								  </tr>
+		   						
+		   						 <%SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");%>
+
+								 <%for(int i = 0; i<meineKurse.size(); i++){%>
+								 <%int freiePlaetze=meineKurse.get(i).getMaxAnzahl()-meineKurse.get(i).getTeilnehmerliste().size();%>
+								  	<tr>
+								  		<td><div align="center"><h3><a href="KursteilnahmeStornierenServlet?param1=<%=meineKurse.get(i).getId()%>"> Kurs stornieren <%// =kursliste.get(i).getId()%></a></h3></div></td>    
+								  		<td><div align="center"><h3><%=meineKurse.get(i).getKursname() %></h3></div></td>
+								  		<td><div align="center"><h3><%=meineKurse.get(i).getLevel() %></h3></div></td>
+								  		<td><div align="center"><h3><%=sdf.format(meineKurse.get(i).getBeginn().getTime()) %></h3></div></td>
+								  		<td><div align="center"><h3><%=sdf.format(meineKurse.get(i).getEnde().getTime()) %></h3></div></td>
+								  		<td><div align="center"><h3><%=meineKurse.get(i).getBetreuerId() %></h3></div></td>
+								  		<td><div align="center"><h3><%=meineKurse.get(i).getImmobilie() %></h3></div></td>
+								  		<td><div align="center"><h3><%=freiePlaetze%></h3></div></td>
+								  		<td><div align="center"><h3><%=meineKurse.get(i).getMaxAnzahl()%></h3></div></td>
+								  	</tr>
+							<%}%>
+							</table>		
+	  
+						  <br>				
+					
+					 
+
 						
 
 						  <br>
-					<a href="kursListeAnzeigen.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Zurueck</a>
 						                                
                             </div>
                         </div>

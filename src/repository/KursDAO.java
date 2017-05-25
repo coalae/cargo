@@ -20,4 +20,6 @@ public interface KursDAO {
 
 	public void deleteTeilnehmerFromKurs(int kundenId, int kursId);
 	
+	public ArrayList<Integer> getKurslisteForTeilnehmer (int kundenId);
+	
 }
