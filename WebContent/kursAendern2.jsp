@@ -105,7 +105,7 @@
                     <div class="main-menu">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="index.jsp" >Home</a>
+                                <a href="indexLoggedInAsMitarbeiter.jsp" >Home</a>
                             </li> 
                             
                             <li class="dropdown">

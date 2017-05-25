@@ -103,90 +103,24 @@
                     <div class="main-menu">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="index.jsp" >Home</a>
+                                <a href="indexLoggedInAsKunde.jsp" >Home</a>
                             </li> 
                             
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mitarbeiter<span class="caret"></span></a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li><a href="mitarbeiterListe">Mitarbeiterliste</a></li>
-                                        <li><a href="mitarbeiterHinzufuegen.jsp">Mitarbeiter hinzufuegen</a></li>
-                                        <li><a href="mitarbeiterLoeschen.jsp">Mitarbeiter loeschen</a></li>
-                                        <li><a href="mitarbeiterAendern">Mitarbeiter aendern</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mentoring<span class="caret"></span></a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li><a href="mentoringListe">Mentoringliste</a></li>
-                                        <li><a href="mentoringHinzufuegen.jsp">Mentoring hinzufuegen</a></li>
-                                        <li><a href="mentoringLoeschen.jsp">Mentoring loeschen</a></li>
-                                        <li><a href="mentoringAendern">Mentoring aendern</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Immobilien<span class="caret"></span></a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li><a href="immobilienListe">Immobilienliste</a></li>
-                                        <li><a href="immobilieHinzufuegen.jsp">Immobilie hinzufuegen</a></li>
-                                        <li><a href="immobilieAendern">Immobilie aendern</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Finanzen<span class="caret"></span></a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li><a href="kontoAnzeigen.jsp">Konto anzeigen</a></li>
-                                        <li><a href="transaktionsliste">Transaktionsliste</a></li>
-                                        <li><a href="transaktionLoeschen.jsp">Transaktion loeschen</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fahrzeuge<span class="caret"></span></a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li><a href="fahrzeugListe">Fahrzeugliste</a></li>
-                                        <li><a href="fahrzeugHinzufuegen.jsp">Fahrzeug hinzufuegen</a></li>
-                                        <li><a href="fahrzeugLoeschen.jsp">Fahrzeug loeschen</a></li>
-                                        <li><a href="fahrzeugAendern">Fahrzeug aendern</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kurse <span class="caret"></span></a>
-                                <div class="dropdown-menu active">
-                                    <ul>
-                                        <li><a href="kursHinzufuegen.jsp">Kurs hinzufuegen</a></li>
-                                        <li><a href="kursLoeschen.jsp">Kurs loeschen</a></li>
-                                        <li><a href="kursAendern.jsp">Kursdaten abfragen</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
                             <li><a href="kursListeAnzeigen.jsp">Kurskatalog</a></li>
+                            
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mein Profil<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="meinProfil.jsp">Meine Daten</a></li>
-                                        <li><a href="meineKurse.jsp">Meine Kurse</a></li>
-                                        <li><a href="passwortAendern.jsp">Passwort aendern</a></li>
+                                        <li><a href="meineKundendaten.jsp">Meine Daten</a></li>
+                                        <li><a href="meineKundenKurse.jsp">Meine Kurse</a></li>
+                                        <li><a href="meinKundenPasswortAendern.jsp">Passwort aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
 							
 							<li><a href="LogoutServlet">Logout</a></li>
+
                             
                         </ul>
                     </div>
