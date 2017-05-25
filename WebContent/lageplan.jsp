@@ -93,6 +93,8 @@
                     </div>
                     <!-- /logo -->
                 </div>
+                                                                                <br> <br> <br>  <br> <br>
+                
                 <!-- main menu -->
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
                     <div class="main-menu">
@@ -115,8 +117,9 @@
                                     </ul>
                                 </div>
                             </li>
-                                                        							
-							<li><a href="logout.jsp">Logout</a></li>
+                                                      
+            <!-- CHECK IF LOGGED IN -->                                       							
+							<li><a href="LogoutServlet">Logout</a></li>
                             
                         </ul>
                     </div>
@@ -142,6 +145,7 @@
                             <!-- Slider -->
                             <section class="cd-intro">
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
+ <br>
                                 <span>Hier finden Sie unsere Fahrschule:</span>
                             <br>
                             <br>

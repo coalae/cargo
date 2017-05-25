@@ -96,6 +96,8 @@
                     </div>
                     <!-- /logo -->
                 </div>
+                                                                <br> <br> <br>  
+                
                 <!-- main menu -->
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
                     <div class="main-menu">
@@ -184,7 +186,7 @@
                                 </div>
                             </li>
 							
-							<li><a href="logout.jsp">Logout</a></li>
+							<li><a href="LogoutServlet">Logout</a></li>
                             
                         </ul>
                     </div>
@@ -210,6 +212,7 @@
                             <!-- Slider -->
                             <section class="cd-intro">
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
+ <br>
                                 <span>Buchungsinformation</span>
                                 <br>
                        <!--          <span class="cd-words-wrapper">

@@ -1,16 +1,8 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@page import="logic.KursMgmt"%>
-<%@page import="model.Kurs"%>
-<%@page import="model.Mitarbeiter"%>
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js">
     <head>
-    <% String message = (String) request.getAttribute("message") ;%>
-    
         <!-- Basic Page Needs
         ================================================== -->
         <meta charset="utf-8">
@@ -62,13 +54,6 @@
         <script src="js/jquery.fancybox.js"></script>
         <!-- template main js -->
         <script src="js/main.js"></script>
-        	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script>
-	$( function() {
-		$( "#datepicker" ).datepicker({ dateFormat: 'dd.mm.yy' });
-	} );
-	</script>
     </head>
     <body>
         <!--
@@ -89,18 +74,19 @@
                     
                     <!-- logo -->
                     <div class="navbar-brand">
-                        <a href="index.jsp" >
+                        <a href="indexLoggedInAsMitarbeiter.jsp" >
                             <img src="images/CargoLogo.JPG" alt="" align="right">
                             <br>
                         </a>
                     </div>
                     <!-- /logo -->
                 </div>
-                                                                                <br> <br> <br>  <br> <br>
+                
+                <br> <br> <br> <br> <br> 
                 
                 <!-- main menu -->
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
-                    <div class="main-menu">
+                    <div class="main-menu active">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <a href="indexLoggedInAsMitarbeiter.jsp" >Home</a>
@@ -186,18 +172,14 @@
                                 </div>
                             </li>
 							
-							<li><a href="LogoutServlet">Logout</a></li>
-                            
+	<!-- TODO -->		<li><a href="LogoutServlet">Logout</a></li>
+                                                       
                         </ul>
                     </div>
                 </nav>
                 <!-- /main nav -->
             </div>
         </header>
-        
-        
-        
-        
         
         <!--
         ==================================================
@@ -212,44 +194,26 @@
                             <!-- Slider -->
                             <section class="cd-intro">
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-  <br>
-                                <span>Kurs loeschen:</span><br>
-                      <!--          <span class="cd-words-wrapper">
+                                <span>Willkommen bei</span><br>
+                                <span class="cd-words-wrapper">
                                     <b class="is-visible">CarGo Driving School</b>
                                     <b>CarGo Fahrschule</b>
-                                </span> -->
+                                </span>
                                 </h1>
                                 </section> <!-- cd-intro -->
                                 <!-- /.slider -->
-
-			<%KursMgmt km = new KursMgmt();%>
-
-			 
-					<form action="KursLoeschenServlet" Method="POST" >
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Kursname:</span><br>
-						  <input type="text" name="kursname" required>
-						  <br> </h2>
-						  
-						  <br>
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-						  <span>	  <input type="submit" value="Kurs loeschen"> </span> 
-						  </h2>
-						  					 
-					</form>	
-					
-					 
-						<% if (message != null){%>
-							  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-	                          <span> 
-							<% 	out.println(message); %>
-								</span><br>
-						<%	} %>
-							
-
-						  <br>
-					<a href="index.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Home</a>
-						                                
+                                <h2 class="wow fadeInUp animated" data-wow-delay=".6s" >
+                                    Wir freuen uns ueber Ihren Besuch bei der CarGo Fahrschule in Wien! 
+                                    <br>
+                                    Bei uns koennen Sie sich schnell und einfach ueber die Fahrkurse 
+                                    <br>
+                                    ihrer Wahl informieren, Kurse suchen und buchen.
+                                    <br>
+									Natuerlich koennen Sie uns auch vor Ort besuchen, wo wir Sie persoenlich beraten.
+                                </h2>
+					<a href="kursListeAnzeigen.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Kurskatalog
+					</a>
+                                
                             </div>
                         </div>
                     </div>
@@ -257,6 +221,24 @@
             </section><!--/#main-slider-->
 
             
-            
+            <!--
+            ==================================================
+            Call To Action Section Start
+            ================================================== -->
+            <section id="call-to-action">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="block">
+                                <h2 class="title wow fadeInDown" data-wow-delay=".3s" data-wow-duration="500ms">Unsere Kontaktdaten</h1>
+                                <h3 class="wow fadeInDown" data-wow-delay=".5s" data-wow-duration="500ms">Fahrschule CarGo <br> Waehringer Strasse 29 <br> 1090 Wien <br> Austria</h3>
+                                <a href="lageplan.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Lageplan</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+                
         </body>
 </html>
