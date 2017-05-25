@@ -25,6 +25,11 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
+        <!--  jquery  -->
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<!--  fuer datepicker -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <!-- Template CSS Files
         ================================================== -->
         <!-- Twitter Bootstrs CSS -->
@@ -48,8 +53,9 @@
         ================================================== -->
         <!-- modernizr js -->
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        <!-- jquery -->
+        <!-- jquery 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        -->
         <!-- owl carouserl js -->
         <script src="js/owl.carousel.min.js"></script>
         <!-- bootstrap js -->
@@ -62,11 +68,13 @@
         <script src="js/jquery.fancybox.js"></script>
         <!-- template main js -->
         <script src="js/main.js"></script>
-        	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        	
 	<script>
 	$( function() {
-		$( "#datepicker" ).datepicker({ dateFormat: 'dd.mm.yy' });
+		$( "#datepickerBeginnDatum" ).datepicker({ dateFormat: 'dd.mm.yy' });
+	} );
+	$( function() {
+		$( "#datepickerEndDatum" ).datepicker({ dateFormat: 'dd.mm.yy' });
 	} );
 	</script>
     </head>
@@ -239,11 +247,11 @@
 						  
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>Beginndatum:</span><br> 
-                          <input type="text" name="beginndatum" id="datepicker" required>
+                          <input type="text" name="beginndatum" id="datepickerBeginnDatum" required>
 						  <br> </h2>						 
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>Enddatum:</span><br> 
-                          <input type="text" name="enddatum" id="datepicker" required>
+                          <input type="text" name="enddatum" id="datepickerEndDatum" required>
 						  <br> </h2>
 
 
