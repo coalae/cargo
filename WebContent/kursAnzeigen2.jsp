@@ -168,7 +168,7 @@
 						
 
 						  <br>
-					<a href="index.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Home</a>
+					<a href="indexLoggedInAsKunde.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Home</a>
 						                                
                             </div>
                         </div>

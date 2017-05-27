@@ -91,7 +91,7 @@
                     
                     <!-- logo -->
                     <div class="navbar-brand">
-                        <a href="index.jsp" >
+                        <a href="indexLoggedInAsMitarbeiter.jsp" >
                             <img src="images/CargoLogo.JPG" alt="" align="right">
                             <br>
                         </a>
@@ -288,7 +288,7 @@
 							
 
 						  <br>
-					<a href="index.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Home</a>
+					<a href="indexLoggedInAsMitarbeiter.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Home</a>
 						                                
                             </div>
                         </div>

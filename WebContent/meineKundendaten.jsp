@@ -90,7 +90,7 @@
                     
                     <!-- logo -->
                     <div class="navbar-brand">
-                        <a href="index.jsp" >
+                        <a href="indexLoggedInAsKunde.jsp" >
                             <img src="images/CargoLogo.JPG" alt="" align="right">
                             <br>
                         </a>
