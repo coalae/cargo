@@ -98,7 +98,7 @@
                     </div>
                     <!-- /logo -->
                 </div>
-                                                <br> <br> <br>  
+                                                <br> <br> <br>  <br> <br>
                 
                 <!-- main menu -->
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
@@ -116,6 +116,15 @@
                                         <li><a href="mitarbeiterHinzufuegen.jsp">Mitarbeiter hinzufuegen</a></li>
                                         <li><a href="mitarbeiterLoeschen.jsp">Mitarbeiter loeschen</a></li>
                                         <li><a href="mitarbeiterAendern">Mitarbeiter aendern</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            
+                              <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kunden<span class="caret"></span></a>
+                                <div class="dropdown-menu">
+                                    <ul>
+                                        <li><a href="kundenListe.jsp">Kundenliste</a></li>
                                     </ul>
                                 </div>
                             </li>

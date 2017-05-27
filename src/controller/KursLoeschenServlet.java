@@ -49,12 +49,11 @@ public class KursLoeschenServlet extends HttpServlet {
 			KursMgmt km = new KursMgmt();
 			response.setContentType("text/html");
 
- 				
-			String kursname = (String) request.getParameter("kursname");
-						
 							
 						// KURS loeschen
 						try{
+							String kursname = (String) request.getParameter("kursname");
+
 							Kurs zuLoeschenderKurs = km.getKursByKursname(kursname);
 							km.deleteKurs(zuLoeschenderKurs.getId());
 							String message = "Kurs wurde geloescht.";

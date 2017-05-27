@@ -101,7 +101,7 @@ public class KursAendernServlet extends HttpServlet {
 				km.updateKurs(kursFuerUpdate);
 				String message = "Kurs wurde geaendert.";
 				request.setAttribute("message", message);
-				RequestDispatcher view = request.getRequestDispatcher("kursAendern2.jsp");
+				RequestDispatcher view = request.getRequestDispatcher("kursAendern.jsp");
 				view.forward(request, response);
  					
  		} catch (NullPointerException e) {

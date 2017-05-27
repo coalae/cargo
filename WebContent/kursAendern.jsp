@@ -121,6 +121,15 @@
                                 </div>
                             </li>
                             
+                           <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kunden<span class="caret"></span></a>
+                                <div class="dropdown-menu">
+                                    <ul>
+                                        <li><a href="kundenListe.jsp">Kundenliste</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mentoring<span class="caret"></span></a>
                                 <div class="dropdown-menu">
