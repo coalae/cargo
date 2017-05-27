@@ -13,6 +13,12 @@ import java.util.GregorianCalendar;
 
 import model.Kurs;
 
+/** 
+ * Die Klasse DatabaseKursDAO implementiert die Methoden des Interface KursDAO.
+ * Die Methoden dienen zum Speichern, Loeschen, Aendern von Instanzen der Klasse Kurs und 
+ * zum Hinzufuegen und Loeschen von Teilnehmern an einem Kurs.
+ * @author Cordula Eggerth
+ */
 public class DatabaseKursDAO implements KursDAO {
 	private String DBAdresse = "jdbc:mariadb://localhost:3306/cargo";
 	private String username = "root";
@@ -20,8 +26,8 @@ public class DatabaseKursDAO implements KursDAO {
 
 	
 	/**
-	 * get kursliste (i.e. SELECT * FROM kurs)
-	 * @return ArrayList
+	 * getKursListe (i.e. SELECT * FROM kurs) holt eine Liste aller Kurse aus der DB.
+	 * @return ArrayList von Kursen
 	 */
 	@Override
 	public ArrayList<Kurs> getKursListe() {
@@ -100,7 +106,8 @@ public class DatabaseKursDAO implements KursDAO {
 	
 
 	/**
-     * Get Kurs by Id (SELECT ... FROM kurs WHERE kursId= ...)
+     * Get Kurs by Id (SELECT ... FROM kurs WHERE kursId= ...).
+     * Kurs anhand der als int uebergebenen id suchen.
      * @param id
      * @return
      */
@@ -180,6 +187,10 @@ public class DatabaseKursDAO implements KursDAO {
 		}
 
 
+	/**
+	 * Neuen Kurs hinzufuegen
+	 * @param kurs
+	 */
 	@Override
 	public void addKurs(Kurs kurs) {
 		Connection con = null;
@@ -230,7 +241,10 @@ public class DatabaseKursDAO implements KursDAO {
 		    }		
 	}
 
-	
+	/**
+	 * Bestehenden Kurs loeschen  
+	 * @param id
+	 */	
 	@Override
 	public void deleteKurs(int id) {
   		Connection con = null;
@@ -266,7 +280,10 @@ public class DatabaseKursDAO implements KursDAO {
         return;
 	}	
 	
-    
+	/**
+	 * Bestehenden Kurs updaten bzw. aendern 
+	 * @param kurs
+	 */
 	@Override
 	public void updateKurs(Kurs kurs) {
 		
@@ -316,6 +333,11 @@ public class DatabaseKursDAO implements KursDAO {
 		    return;		
 	}    
 	
+	/**
+	 * Teilnehmer (anhand der kundenId) zu einem bestimmten Kurs hinzufuegen
+	 * @param kundenId
+	 * @param kursId
+	 */
 	@Override
 	public void addTeilnehmerToKurs(int kundenId, int kursId){
 		Connection con = null;
@@ -358,6 +380,11 @@ public class DatabaseKursDAO implements KursDAO {
 		
 	}
 	
+	/**
+	 * Teilnehmer (anhand der kundenId) von einem bestimmten Kurs loeschen
+	 * @param kundenId
+	 * @param kursId
+	 */
 	@Override
 	public void deleteTeilnehmerFromKurs(int kundenId, int kursId){
   		Connection con = null;
