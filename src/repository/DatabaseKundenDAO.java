@@ -10,14 +10,20 @@ import java.util.ArrayList;
 
 import model.Kunde;
 
+/**
+ * Das Interface KundenDAO bietet Methoden fuer das Speichern, Loeschen, Veraendern von 
+ * Instanzen der Klasse Kunde.
+ * @author Cordula Eggerth
+ */
 public class DatabaseKundenDAO implements KundenDAO {
 	private String DBAdresse = "jdbc:mariadb://localhost:3306/cargo";
 	private String username = "root";
 	private String password = "coalacoala1";
 	
 	/**
-	 * get kundenliste (i.e. SELECT * FROM kunde)
-	 * @return ArrayList
+	 * get kundenliste (i.e. SELECT * FROM kunde).
+	 * Liste aller Kunden aus der DB holen.
+	 * @return ArrayList von Kunden
 	 */
 	@Override
 	public ArrayList<Kunde> getKundenListe() {
@@ -79,7 +85,8 @@ public class DatabaseKundenDAO implements KundenDAO {
 
 
 	/**
-     * Get Kunde by Id (SELECT ... FROM kunde WHERE kundenId= ...)
+     * Get Kunde by Id (SELECT ... FROM kunde WHERE kundenId= ...).
+     * Kunde anhand der als int uebergebenen id suchen.
      * @param id
      * @return
      */
@@ -140,7 +147,8 @@ public class DatabaseKundenDAO implements KundenDAO {
 	    	
 	
 	/**
-	 * addKunde (INSERT INTO kunde ... VALUES ...)
+	 * addKunde (INSERT INTO kunde ... VALUES ...).
+	 * Neuen Kunde hinzufuegen.
 	 * @param kunde
 	 */
 	@Override
@@ -193,7 +201,8 @@ public class DatabaseKundenDAO implements KundenDAO {
 	
 	
 	/**
-	 * deleteKunde (DELETE FROM kunde WHERE kundenId=...)
+	 * deleteKunde (DELETE FROM kunde WHERE kundenId=...).
+	 * Bestehenden Kunde loeschen.
 	 */
 	@Override
 	public void deleteKunde(int id) {
@@ -231,7 +240,8 @@ public class DatabaseKundenDAO implements KundenDAO {
 	
 	
 	/**
-	 * updateKunde (by Id) (UPDATE kunde SET ... WHERE kundenId=...)
+	 * updateKunde (by Id) (UPDATE kunde SET ... WHERE kundenId=...).
+	 * Bestehenden Kunde updaten bzw. aendern.
 	 */
 	@Override
 	public void updateKunde(Kunde kunde) {
