@@ -3,10 +3,15 @@ package model;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+/** 
+ * Die Klasse Kurs bietet das Model fuer einen Fahrkurs der Fahrschule CarGo und
+ * enthaelt dessen Daten und die Get- und Set-Methoden.
+ * @author Cordula Eggerth
+ */
 public class Kurs {
 	
 	/**
-	 * instanzvariablen
+	 * Instanzvariablen
 	 */
 	private int id;
 	private String kursname;
@@ -20,17 +25,27 @@ public class Kurs {
 	private ArrayList<Integer> teilnehmerliste;
 
 	/**
-	 * konstruktor
+	 * Konstruktor
 	 * @param id
+	 * 		KursId
 	 * @param kursname
+	 * 		Kursname (unique)
 	 * @param level
+	 * 		Kurslevel (zB Anfaenger, Mittel, Fortgeschritten)
 	 * @param beginn
+	 * 		Tag des Kursbeginns
 	 * @param ende
+	 * 		Tag des Kursendes
 	 * @param preis
+	 * 		Gesamtpreis des Kurs in Euro
 	 * @param betreuerId
+	 * 		Id des Mitarbeiters, der den Kurs betreut
 	 * @param maxAnzahl
+	 * 		Max. Teilnehmeranzahl
 	 * @param immobilie
+	 * 		Id der Immobilie, wo der Kurs stattfindet
 	 * @param teilnehmerliste
+	 * 		Id-Liste der Teilnehmer (Kunden), die den Kurs gebucht haben
 	 */
 	public Kurs(int id, String kursname, String level, GregorianCalendar beginn, GregorianCalendar ende, double preis, int betreuerId,
 			int maxAnzahl, int immobilie, ArrayList<Integer> teilnehmerliste) {
@@ -47,7 +62,7 @@ public class Kurs {
 	}
 
 	/**
-	 * getters & setters
+	 * getters & setters fuer die instanzvariablen
 	 */
 	public int getId() {
 		return id;

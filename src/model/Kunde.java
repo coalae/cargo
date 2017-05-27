@@ -1,9 +1,14 @@
 package model;
 
+/** 
+ * Die Klasse Kunde bietet das Model fuer den Kunde der Fahrschule CarGo und
+ * enthaelt dessen Daten und die Get- und Set-Methoden.
+ * @author Cordula Eggerth
+ */
 public class Kunde {
 	
 	/**
-	 * instanzvariablen
+	 * Instanzvariablen
 	 */
 	private int id;
 	private String vorname;
@@ -15,15 +20,23 @@ public class Kunde {
 	private boolean active;
 
 	/**
-	 * konstruktor
+	 * Konstruktor
 	 * @param id
+	 * 		Kunden Id
 	 * @param vorname
+	 * 		Vorname des Kunde
 	 * @param nachname
+	 * 		Nachname des Kunde
 	 * @param iban
+	 * 		IBAN (Kontonummer) des Kunde (als int)
 	 * @param bic
+	 * 		BIC (Bank Code) des Kunde (als String)
 	 * @param username
+	 * 		Username des Kunde (unique)
 	 * @param password
+	 * 		Password des Kunde
 	 * @param active
+	 * 		Angabe, ob Kunde aktiv oder gesperrt 
 	 */
 	public Kunde(int id, String vorname, String nachname, int iban, String bic, String username, String password, boolean active) {
 		this.id = id;
@@ -37,7 +50,7 @@ public class Kunde {
 	}
 
 	/**
-	 * getters & setters
+	 * getters & setters fuer die instanzvariablen
 	 */
 	public int getId() {
 		return id;
