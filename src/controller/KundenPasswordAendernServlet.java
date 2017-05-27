@@ -21,21 +21,22 @@ import javax.servlet.http.HttpServletResponse;
       
 
 /**
- * Servlet implementation class KundenPasswordAendernServlet
+ * Servlet implementation class KundenPasswordAendernServlet.
+ * Im KundenPasswordAendernServlet kann das password eines Kunde geaendert werden.
  */
 @WebServlet("/KundenPasswordAendernServlet")
 public class KundenPasswordAendernServlet extends HttpServlet {
 		private static final long serialVersionUID = 1L;
  
 	    /**
-	     * Default-Constructor
+	     * Constructor
 	     */
 	    public KundenPasswordAendernServlet() {
 	        super();
 	    }
 
 		/**
-		 * doGet leitet auf kunrden.jsp weiter
+		 * doGet leitet auf index.jsp weiter
 		 */
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 			RequestDispatcher view = request.getRequestDispatcher("indexLoggedInAsKunde.jsp");
