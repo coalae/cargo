@@ -9,36 +9,65 @@ import model.Kurs;
 import repository.DatabaseKursDAO;
 import repository.KursDAO;
 
+/**
+ * Die Klasse KursMgmt enthaelt die Methoden, mit denen auf die Klasse DatabaseDAO zugegriffen
+ * werden kann und die die Berechnung der Werte macht, die an die Controller (bzw. Servlets)
+ * weitergeleitet werden. 
+ * @author Cordula Eggerth
+ */
 public class KursMgmt {
 	
-	// instanzvariablen
+	/**
+	 * Instanzvariable
+	 */
 	private KursDAO kursdao;
 
-	// konstruktor
+	/**
+	 * Konstruktor
+	 */
 	public KursMgmt(){
 		setKursdao();
 	}
 	
-	// getter & setter		
+	/** 
+	 * Get-Methode fuer die Instanzvariable kursdao
+	 * @return kursdao
+	 */
 	public KursDAO getKursdao(){
 		return kursdao;
 	}
 
+	/**
+	 * Set-Methode fuer die Instanzvariable kursdao
+	 */
 	public void setKursdao(){
 		this.kursdao = new DatabaseKursDAO();
 	}	
 	
-	// methoden
+	/**
+	 * getKursListe gibt eine Liste aller Kurse zurueck.
+	 * @return ArrayList von Kurse
+	 */
 	public ArrayList<Kurs> getKursListe(){
 		ArrayList<Kurs> kursliste=kursdao.getKursListe();
 		return kursliste;
 	}
 	
+	/**
+	 * getKursById gibt einen Kurs anhand der uebergebenen Id zurueck.
+	 * @param id
+	 * @return kurs
+	 */
 	public Kurs getKursById(int id){
 		Kurs kurs = kursdao.getKursById(id);
 		return kurs;
 	}
 	
+	/**
+	 * getKursByKursname gibt einen Kurs anhand des uebergebenen Kursname zurueck.
+	 * @param kursname
+	 * @return kurs
+	 */
 	public Kurs getKursByKursname(String kursname){
 		Kurs suchKurs=null;
 		ArrayList<Kurs> kursliste=getKursListe();
@@ -50,6 +79,12 @@ public class KursMgmt {
 		return suchKurs;
 	}
 	
+	/**
+	 * getKursByKursnameAndBeginn gibt einen Kurs anhand des uebergebenen Kursname und Beginndatum zurueck.
+	 * @param kursname
+	 * @param beginn
+	 * @return kursliste
+	 */
 	public ArrayList<Kurs> getKursByKursnameAndBeginn(String kursname, String beginn){
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
 		ArrayList<Kurs> suchListe=null;
@@ -62,6 +97,12 @@ public class KursMgmt {
 		return suchListe;
 	}
 	
+	/**
+	 * getKursByKeyword sucht in Kursname und Level Instanzvariablen nach dem Keyword und gibt
+	 * eine Liste von Kursen zurueck.
+	 * @param keyword
+	 * @return kursliste
+	 */
 	public ArrayList<Kurs> getKursByKeyword(String keyword){ // sucht in Kursname und Level nach Keyword
 		ArrayList<Kurs> suchliste=new ArrayList<Kurs>();
 		ArrayList<Kurs> gesamtliste=getKursListe();
@@ -72,19 +113,36 @@ public class KursMgmt {
 		}
 		return suchliste;
 	}
-		
+	
+	/**
+	 * Kurs hinzufuegen
+	 * @param kurs
+	 */
 	public void addKurs(Kurs kurs){
 		kursdao.addKurs(kurs);
 	}
 	
+	/**
+	 * Kurs loeschen
+	 * @param id
+	 */
 	public void deleteKurs(int id){
 		kursdao.deleteKurs(id);
 	}
 	
+	/**
+	 * Kurs updaten bzw. aendern
+	 * @param kurs
+	 */
 	public void updateKurs (Kurs kurs){ // instanzvariablen update ohne teilnehmerliste-update
 		kursdao.updateKurs(kurs);	
 	}
 	
+	/**
+	 * Check, ob Kurs schon existiert anhand der uebergebenen Kursname.
+	 * @param kursname
+	 * @return boolean
+	 */
 	public boolean checkKursExists(String kursname){
 		boolean exists=false;
 		
@@ -98,14 +156,29 @@ public class KursMgmt {
 		return exists;
 	}
 	
+	/**
+	 * Teilnehmer (kundenId) zum Kurs hinzufuegen - Kurs buchen.
+	 * @param kundenId
+	 * @param kursId
+	 */
 	public void addTeilnehmerToKurs(int kundenId, int kursId){
 		kursdao.addTeilnehmerToKurs(kundenId, kursId);
 	}
 	
+	/**
+	 * Teilnehmer (kundenId) vom Kurs loeschen - Kursteilnahme stornieren.
+	 * @param kundenId
+	 * @param kursId
+	 */
 	public void deleteTeilnehmerFromKurs(int kundenId, int kursId){
 		kursdao.deleteTeilnehmerFromKurs(kundenId, kursId);
 	}
 	
+	/**
+	 * Teilnehmerliste von kundenIds, die am Kurs teilnehmen, generieren.
+	 * @param kursId
+	 * @return teilnehmerliste (liste von Ids)
+	 */
 	public ArrayList<Integer> getTeilnehmerlisteForKurs(int kursId){
 		Kurs kurs=kursdao.getKursById(2);
 		// if(kurs.getTeilnehmerliste()!=null || kurs.getTeilnehmerliste().size()!=0){
@@ -114,6 +187,11 @@ public class KursMgmt {
 		return teilnehmerliste;
 	}
 	
+	/**
+	 * Liste von Kursen, an denen ein bestimmter Kunde (kundenId) teilnimmt, generieren.
+	 * @param kundenId
+	 * @return meineKurse
+	 */
 	public ArrayList<Kurs> getKurslisteForTeilnehmer(int kundenId){
 		ArrayList<Integer> meineKurslisteIds = kursdao.getKurslisteForTeilnehmer(kundenId);
 		

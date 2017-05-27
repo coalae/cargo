@@ -7,36 +7,65 @@ import model.Kurs;
 import repository.DatabaseKundenDAO;
 import repository.KundenDAO;
 
+/**
+ * Die Klasse KundenMgmt enthaelt die Methoden, mit denen auf die Klasse DatabaseKundenDAO zugegriffen
+ * werden kann und die die Berechnung der Werte macht, die an die Controller (bzw. Servlets)
+ * weitergeleitet werden. 
+ * @author Cordula Eggerth
+ */
 public class KundenMgmt {
 	
-	// instanzvariablen
+	/**
+	 * Instanzvariable
+	 */
 	private KundenDAO kundendao;
 
-	// konstruktor
+	/**
+	 * Konstruktor
+	 */
 	public KundenMgmt(){
 		setKundendao();
 	}
 	
-	// getter & setter		
+	/** 
+	 * Get-Methode fuer die Instanzvariable kundendao
+	 * @return kundendao
+	 */
 	public KundenDAO getKundendao(){
 		return kundendao;
 	}
 
+	/**
+	 * Set-Methode fuer die Instanzvariable kundendao
+	 */
 	public void setKundendao(){
 		this.kundendao = new DatabaseKundenDAO();
 	}	
 	
-	// methoden
+	/**
+	 * getKundenListe gibt eine Liste aller Kunden zurueck.
+	 * @return ArrayList von Kunden
+	 */	
 	public ArrayList<Kunde> getKundenListe(){
 		ArrayList<Kunde> kundenliste=kundendao.getKundenListe();
 		return kundenliste;
 	}
 	
+	/**
+	 * getKundeById gibt einen Kunde anhand der uebergebenen Id zurueck.
+	 * @param id
+	 * @return kunde
+	 */
 	public Kunde getKundeById(int id){
 		Kunde kunde = kundendao.getKundeById(id);
 		return kunde;
 	}
 	
+	/**
+	 * getKundeByUsername gibt einen Kunde anhand des uebergebenen Username zurueck.
+	 * @param username
+	 * @return kunde
+	 */
 	public Kunde getKundeByUsername(String username){
 		Kunde suchKunde=null;
 		ArrayList<Kunde> kundenliste=getKundenListe();
@@ -48,6 +77,11 @@ public class KundenMgmt {
 		return suchKunde;
 	}
 
+	/**
+	 * getKundeByKeyword gibt einen Kunde anhand des uebergebenen keyword zurueck.
+	 * @param keyword
+	 * @return suchliste
+	 */
 	public ArrayList<Kunde> getKundeByKeyword(String keyword){ // sucht in Vorname, Nachname und Username nach Keyword
 		ArrayList<Kunde> suchliste=new ArrayList<Kunde>();
 		ArrayList<Kunde> gesamtliste=getKundenListe();
@@ -59,18 +93,35 @@ public class KundenMgmt {
 		return suchliste;
 	}
 	
+	/**
+	 * Kunde hinzufuegen.
+	 * @param kunde
+	 */
 	public void addKunde(Kunde kunde){
 		kundendao.addKunde(kunde);
 	}
 	
+	/**
+	 * Kunde loeschen.
+	 * @param id
+	 */
 	public void deleteKunde(int id){
 		kundendao.deleteKunde(id);
 	}
 	
+	/**
+	 * Kunde updaten bzw. aendern.
+	 * @param kunde
+	 */
 	public void updateKunde(Kunde kunde){
 		kundendao.updateKunde(kunde);	
 	}
 	
+	/**
+	 * Check, ob Kunden (username) in der DB schon existiert.
+	 * @param username
+	 * @return
+	 */
 	public boolean checkKundeExists(String username){
 		boolean exists=false;
 		
