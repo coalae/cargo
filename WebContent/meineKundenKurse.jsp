@@ -128,12 +128,10 @@
                                 </div>
                             </li>
 							
-							<li><a href="LogoutServlet">Logout</a></li>
+							<li><a href="LogoutKundeServlet">Logout</a></li>
 
 			
-							
-							<li><a href="LogoutServlet">Logout</a></li>
-                            
+						                            
                         </ul>
                     </div>
                 </nav>

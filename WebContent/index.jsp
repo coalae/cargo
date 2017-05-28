@@ -2,6 +2,8 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js">
+	<% String message = (String) request.getAttribute("message") ;%>    
+ 
     <head>
         <!-- Basic Page Needs
         ================================================== -->
@@ -123,6 +125,15 @@
                                     <b>CarGo Fahrschule</b>
                                 </span>
                                 </h1>
+
+                        <h2>
+  						<% if (message != null){%>
+							  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
+	                          <span> 
+							<% 	out.println(message); %>
+								</span><br>
+						<%	} %>
+						</h2>
                                 </section> <!-- cd-intro -->
                                 <!-- /.slider -->
                                 <h2 class="wow fadeInUp animated" data-wow-delay=".6s" >

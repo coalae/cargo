@@ -146,15 +146,21 @@ public class KundenMgmt {
 			return false;
 		try {
 			checkKundeExists(username);
-		} catch (IllegalArgumentException e) {
-			return false;
-		}
 
-		Kunde kunde = this.getKundeByUsername(username);
-		if (kunde.getPassword().equals(password)) {
-			return true;
-		}
-		return false;
+			Kunde kunde = this.getKundeByUsername(username);
+			if (kunde.getPassword().equals(password)) {
+				return true;
+			} else{
+				return false;
+			}
+			
+		} catch (NullPointerException e) {
+			return false;
+		}catch (IllegalArgumentException e) {
+			return false;
+		} 
+
+
 	}
 
 	/* main Funktion fuer Tests	*/ 

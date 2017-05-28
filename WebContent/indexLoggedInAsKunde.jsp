@@ -5,6 +5,9 @@
 <%@page import="model.Mitarbeiter"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js">
+
+	<% String message = (String) request.getAttribute("message") ;%>    
+
     <head>
         <!-- Basic Page Needs
         ================================================== -->
@@ -113,7 +116,7 @@
                                 </div>
                             </li>
 							
-							<li><a href="LogoutServlet">Logout</a></li>
+							<li><a href="LogoutKundeServlet">Logout</a></li>
 								                            
                         </ul>
                     </div>
@@ -135,6 +138,7 @@
                             
                             <!-- Slider -->
                             <section class="cd-intro">
+  
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                                 <span>Willkommen bei</span><br>
                                 <span class="cd-words-wrapper">

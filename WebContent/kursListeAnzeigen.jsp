@@ -225,6 +225,12 @@
                             </li>
                             <%}%>
 							
+                            <%if (kunde == null && mitarbeiter == null) {%>					                           							
+							<li><a href="registrieren.jsp">Registrieren</a></li>
+                            <%}%>
+                           <%if (kunde == null && mitarbeiter == null) {%>					                           							
+							<li><a href="login.jsp">Login</a></li>
+                            <%}%>
                            <%if (kunde != null) {%>					                           							
 							<li><a href="LogoutKundeServlet">Logout</a></li>
                             <%}%>
