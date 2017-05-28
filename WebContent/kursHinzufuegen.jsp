@@ -195,7 +195,8 @@
                             </li>
                             
                             <li><a href="kursListeAnzeigen.jsp">Kurskatalog</a></li>
-                            
+   
+   <!--  TO DO AUF MITARBEITER PROFIL ANPASSEN -->                         
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mein Profil<span class="caret"></span></a>
                                 <div class="dropdown-menu">
@@ -232,6 +233,13 @@
                             
                             <!-- Slider -->
                             <section class="cd-intro">
+
+                                <h2>
+                                   <%if (mitarbeiter != null) {%>					
+							        Sie sind eingeloggt als: <%=mitarbeiter.getUsername()%> 
+							        <%}%>                                
+                                </h2>
+                                
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
  <br>
                                 <span>Kurs hinzufuegen:</span><br>

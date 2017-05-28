@@ -229,6 +229,13 @@
                             
                             <!-- Slider -->
                             <section class="cd-intro">
+ 
+                                <h2>
+                                   <%if (mitarbeiter != null) {%>					
+							        Sie sind eingeloggt als: <%=mitarbeiter.getUsername()%> 
+							        <%}%>                                
+                                </h2>
+                                
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
  <br>
                                 <span>Suche nach: <%=keyword%></span><br>
