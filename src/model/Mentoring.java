@@ -1,23 +1,28 @@
 package model;
 
+import java.util.Date;
+
 public class Mentoring {
 	
 	/**
 	 * instanzvariablen
 	 */
+	private int mentoringId;
 	private int mentorId; // derjenige, der mentor ist
 	private int menteeId; // derjenige, der mentoring bekommt
 	private String thema;
-	private int beginnJahr;
+	private Date beginnJahr;
 
 	/**
 	 * konstruktor
+	 * @param mentoringId
 	 * @param mentorId
 	 * @param menteeId
 	 * @param thema
 	 * @param beginnJahr
 	 */
-	public Mentoring(int mentorId, int menteeId, String thema, int beginnJahr) {
+	public Mentoring(int mentoringId, int mentorId, int menteeId, String thema, Date beginnJahr) {
+		this.mentoringId= mentoringId;
 		this.mentorId = mentorId;
 		this.menteeId = menteeId;
 		this.thema = thema;
@@ -27,6 +32,15 @@ public class Mentoring {
 	/**
 	 * getters & setters
 	 */
+	
+	public int getMentoringId(){
+		return mentoringId;
+	}
+	
+	public void setMentoringId (int mentoringId){
+		this.mentoringId = mentoringId;
+	}
+	
 	public int getMentorId() {
 		return mentorId;
 	}
@@ -51,11 +65,11 @@ public class Mentoring {
 		this.thema = thema;
 	}
 
-	public int getBeginnJahr() {
+	public Date getBeginnJahr() {
 		return beginnJahr;
 	}
 
-	public void setBeginnJahr(int beginnJahr) {
+	public void setBeginnJahr(Date beginnJahr) {
 		this.beginnJahr = beginnJahr;
 	}	
 
