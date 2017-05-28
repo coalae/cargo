@@ -170,6 +170,8 @@
                             </li>
                             
                             <li><a href="kursListeAnzeigen.jsp">Kurskatalog</a></li>
+ 
+ <!-- TODO: PROFIL HIER AN MITARBEITER ANPASSEN -->
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mein Profil<span class="caret"></span></a>
                                 <div class="dropdown-menu">
@@ -181,7 +183,7 @@
                                 </div>
                             </li>
 							
-	<!-- TODO -->		<li><a href="LogoutServlet">Logout</a></li>
+	                  		<li><a href="LogoutMitarbeiterServlet">Logout</a></li>
                                                        
                         </ul>
                     </div>

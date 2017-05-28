@@ -3,6 +3,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@page import="logic.KursMgmt"%>
 <%@page import="model.Kurs"%>
+<%@page import="model.Kunde"%>
 <%@page import="model.Mitarbeiter"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -12,6 +13,10 @@
 <html class="no-js">
     <head>
     <% String message = (String) request.getAttribute("message") ;%>
+
+  	<%ServletContext servletcontext=request.getServletContext(); %>
+	<%Kunde kunde = (Kunde) servletcontext.getAttribute("kunde");%>
+	<%Mitarbeiter mitarbeiter = (Mitarbeiter) servletcontext.getAttribute("mitarbeiter");%>
     
         <!-- Basic Page Needs
         ================================================== -->
@@ -104,52 +109,68 @@
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
                     <div class="main-menu">
                         <ul class="nav navbar-nav navbar-right">
+ 
+                             <%if (kunde == null && mitarbeiter == null) {%>					 
                             <li>
                                 <a href="index.jsp" >Home</a>
                             </li> 
-                            
+                            <%}%>
+  
+                            <%if (kunde == null && mitarbeiter != null) {%>					 
+                            <li>
+                                <a href="indexLoggedInAsMitarbeiter.jsp" >Home</a>
+                            </li> 
+                            <%}%>
+ 
+ 
+                            <%if (kunde != null && mitarbeiter == null) {%>					 
+                            <li>
+                                <a href="indexLoggedInAsKunde.jsp" >Home</a>
+                            </li> 
+                            <%}%>
+                                  
+                                  
+                            <%if (kunde == null && mitarbeiter != null) {%>					                                                      
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mitarbeiter<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="mitarbeiterListe.jsp">Mitarbeiterliste</a></li>
+                                        <li><a href="mitarbeiterListe">Mitarbeiterliste</a></li>
                                         <li><a href="mitarbeiterHinzufuegen.jsp">Mitarbeiter hinzufuegen</a></li>
                                         <li><a href="mitarbeiterLoeschen.jsp">Mitarbeiter loeschen</a></li>
-                                        <li><a href="mitarbeiterAendern.jsp">Mitarbeiter aendern</a></li>
+                                        <li><a href="mitarbeiterAendern">Mitarbeiter aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
-                            
-                               <li class="dropdown">
+   
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kunden<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
                                         <li><a href="kundenListe.jsp">Kundenliste</a></li>
                                     </ul>
                                 </div>
-                            </li>  
-                                                    
+                            </li>
+                                                     
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mentoring<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="mentoringListe.jsp">Mentoringliste</a></li>
+                                        <li><a href="mentoringListe">Mentoringliste</a></li>
                                         <li><a href="mentoringHinzufuegen.jsp">Mentoring hinzufuegen</a></li>
                                         <li><a href="mentoringLoeschen.jsp">Mentoring loeschen</a></li>
-                                        <li><a href="mentoringAendern.jsp">Mentoring aendern</a></li>
+                                        <li><a href="mentoringAendern">Mentoring aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
- 
-
-                                                       
+                            
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Immobilien<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="immobilienListe.jsp">Immobilienliste</a></li>
+                                        <li><a href="immobilienListe">Immobilienliste</a></li>
                                         <li><a href="immobilieHinzufuegen.jsp">Immobilie hinzufuegen</a></li>
-                                        <li><a href="immobilieAendern.jsp">Immobilie aendern</a></li>
+                                        <li><a href="immobilieAendern">Immobilie aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -159,7 +180,7 @@
                                 <div class="dropdown-menu">
                                     <ul>
                                         <li><a href="kontoAnzeigen.jsp">Konto anzeigen</a></li>
-                                        <li><a href="transaktionsliste.jsp">Transaktionsliste</a></li>
+                                        <li><a href="transaktionsliste">Transaktionsliste</a></li>
                                         <li><a href="transaktionLoeschen.jsp">Transaktion loeschen</a></li>
                                     </ul>
                                 </div>
@@ -169,10 +190,10 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fahrzeuge<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="fahrzeugListe.jsp">Fahrzeugliste</a></li>
+                                        <li><a href="fahrzeugListe">Fahrzeugliste</a></li>
                                         <li><a href="fahrzeugHinzufuegen.jsp">Fahrzeug hinzufuegen</a></li>
                                         <li><a href="fahrzeugLoeschen.jsp">Fahrzeug loeschen</a></li>
-                                        <li><a href="fahrzeugAendern.jsp">Fahrzeug aendern</a></li>
+                                        <li><a href="fahrzeugAendern">Fahrzeug aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -186,20 +207,31 @@
                                     </ul>
                                 </div>
                             </li>
+                        <%}%>
+                            
                             
                             <li><a href="kursListeAnzeigen.jsp">Kurskatalog</a></li>
-                            <li class="dropdown">
+                            
+                           <%if (kunde != null && mitarbeiter == null) {%>					                           
+                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mein Profil<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="meinProfil.jsp">Meine Daten</a></li>
-                                        <li><a href="meineKurse.jsp">Meine Kurse</a></li>
-                                        <li><a href="passwortAendern.jsp">Passwort aendern</a></li>
+                                        <li><a href="meineKundendaten.jsp">Meine Daten</a></li>
+                                        <li><a href="meineKundenKurse.jsp">Meine Kurse</a></li>
+                                        <li><a href="meinKundenPasswortAendern.jsp">Passwort aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
+                            <%}%>
 							
-							<li><a href="LogoutServlet">Logout</a></li>
+                           <%if (kunde != null) {%>					                           							
+							<li><a href="LogoutKundeServlet">Logout</a></li>
+                            <%}%>
+                           <%if (mitarbeiter != null) {%>					                           							
+							<li><a href="LogoutMitarbeiterServlet">Logout</a></li>
+                            <%}%>
+
                             
                         </ul>
                     </div>
@@ -224,6 +256,12 @@
                             
                             <!-- Slider -->
                             <section class="cd-intro">
+                                <h2>
+                                   <%if (kunde != null) {%>					
+							        Sie sind eingeloggt als: <%=kunde.getUsername()%> 
+							        <%}%>                                
+                                </h2>
+
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
   <br>
                                 <span>Kurskatalog:</span><br>

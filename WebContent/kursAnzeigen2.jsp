@@ -3,6 +3,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@page import="logic.KursMgmt"%>
 <%@page import="model.Kurs"%>
+<%@page import="model.Kunde"%>
 <%@page import="model.Mitarbeiter"%>
 <%@page import="java.text.SimpleDateFormat"%>
 
@@ -10,6 +11,10 @@
 <html class="no-js">
     <head>
     <% String message = (String) request.getAttribute("message") ;%>
+
+ 	<%ServletContext servletcontext=request.getServletContext(); %>
+	<%Kunde kunde = (Kunde) servletcontext.getAttribute("kunde");%>
+	<%Mitarbeiter mitarbeiter = (Mitarbeiter) servletcontext.getAttribute("mitarbeiter");%>
     
         <!-- Basic Page Needs
         ================================================== -->
@@ -107,7 +112,9 @@
                             </li> 
                             
                             <li><a href="kursListeAnzeigen.jsp">Kurskatalog</a></li>
-                            
+						   
+						             
+                           <%if (kunde != null) {%>					                           							
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mein Profil<span class="caret"></span></a>
                                 <div class="dropdown-menu">
@@ -118,9 +125,14 @@
                                     </ul>
                                 </div>
                             </li>
+						   <%}%>
 							
-							<li><a href="LogoutServlet">Logout</a></li>
-
+                           <%if (kunde != null) {%>					                           							
+							<li><a href="LogoutKundeServlet">Logout</a></li>
+                            <%}%>
+                           <%if (mitarbeiter != null) {%>					                           							
+							<li><a href="LogoutMitarbeiterServlet">Logout</a></li>
+                            <%}%>
                             
                         </ul>
                     </div>

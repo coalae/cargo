@@ -3,6 +3,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@page import="logic.KursMgmt"%>
 <%@page import="model.Kurs"%>
+<%@page import="model.Kunde"%>
 <%@page import="model.Mitarbeiter"%>
 <%@page import="java.text.SimpleDateFormat"%>
 
@@ -11,7 +12,11 @@
     <head>
     <% String message = (String) request.getAttribute("message") ;%>
 	<% String kursId = (String) request.getAttribute("kursId") ;%>    
-    
+
+ 	<%ServletContext servletcontext=request.getServletContext(); %>
+	<%Kunde kunde = (Kunde) servletcontext.getAttribute("kunde");%>
+	<%Mitarbeiter mitarbeiter = (Mitarbeiter) servletcontext.getAttribute("mitarbeiter");%>
+	    
         <!-- Basic Page Needs
         ================================================== -->
         <meta charset="utf-8">
@@ -103,10 +108,28 @@
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
                     <div class="main-menu">
                         <ul class="nav navbar-nav navbar-right">
+ 
+                             <%if (kunde == null && mitarbeiter == null) {%>					 
                             <li>
                                 <a href="index.jsp" >Home</a>
                             </li> 
-                            
+                            <%}%>
+  
+                            <%if (kunde == null && mitarbeiter != null) {%>					 
+                            <li>
+                                <a href="indexLoggedInAsMitarbeiter.jsp" >Home</a>
+                            </li> 
+                            <%}%>
+ 
+ 
+                            <%if (kunde != null && mitarbeiter == null) {%>					 
+                            <li>
+                                <a href="indexLoggedInAsKunde.jsp" >Home</a>
+                            </li> 
+                            <%}%>
+                                  
+                                  
+                            <%if (kunde == null && mitarbeiter != null) {%>					                                                      
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mitarbeiter<span class="caret"></span></a>
                                 <div class="dropdown-menu">
@@ -119,7 +142,7 @@
                                 </div>
                             </li>
    
-                               <li class="dropdown">
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kunden<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
@@ -183,20 +206,31 @@
                                     </ul>
                                 </div>
                             </li>
+                        <%}%>
+                            
                             
                             <li><a href="kursListeAnzeigen.jsp">Kurskatalog</a></li>
-                            <li class="dropdown">
+                            
+                           <%if (kunde != null && mitarbeiter == null) {%>					                           
+                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mein Profil<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="meinProfil.jsp">Meine Daten</a></li>
-                                        <li><a href="meineKurse.jsp">Meine Kurse</a></li>
-                                        <li><a href="passwortAendern.jsp">Passwort aendern</a></li>
+                                        <li><a href="meineKundendaten.jsp">Meine Daten</a></li>
+                                        <li><a href="meineKundenKurse.jsp">Meine Kurse</a></li>
+                                        <li><a href="meinKundenPasswortAendern.jsp">Passwort aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
+                            <%}%>
 							
-							<li><a href="LogoutServlet">Logout</a></li>
+                           <%if (kunde != null) {%>					                           							
+							<li><a href="LogoutKundeServlet">Logout</a></li>
+                            <%}%>
+                           <%if (mitarbeiter != null) {%>					                           							
+							<li><a href="LogoutMitarbeiterServlet">Logout</a></li>
+                            <%}%>
+
                             
                         </ul>
                     </div>
@@ -221,6 +255,13 @@
                             
                             <!-- Slider -->
                             <section class="cd-intro">
+   
+                                 <h2>
+                                   <%if (kunde != null) {%>					
+							        Sie sind eingeloggt als: <%=kunde.getUsername()%> 
+							        <%}%>                                
+                                </h2>
+                                
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
    <br>
                                 <span>Kursdaten von Kurs:</span>
@@ -293,13 +334,13 @@
                           <span><%=ausgewaehlterKurs.getImmobilie()%></span><br>
 						  <br>
 
-					    <%if(freiePlaetze>0) {%>
+<!-- KURSBUCHUNG NUR FUER KUNDEN OFFEN -->
+					    <%if(freiePlaetze>0 && kunde!=null) {%>
 					   	<form action="KursBuchenServlet" Method="POST" >
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
 						  <input type="submit" value="Kurs buchen"> 
 						  <input type="hidden" name="kursId" value=<%=ausgewaehlterKurs.getId()%>>
-						  <%int kundenId=1;%>
-						  <input type="hidden" name="kundenId" value=<%=kundenId%>>  <!-- ACHTUNG weil muss logged in kundenId nehmen --> 						    
+						  <input type="hidden" name="kundenId" value=<%=kunde.getId()%>>  <!-- ACHTUNG weil muss logged in kundenId nehmen --> 						    
 						  </h2>
 						</form>	
 						<%}%>					

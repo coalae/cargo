@@ -1,12 +1,19 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
+<%@page import="logic.KundenMgmt"%>
+<%@page import="model.Kunde"%>
+<%@page import="model.Mitarbeiter"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js">
     <head>
     <% String message = (String) request.getAttribute("message") ;%>
+ 
+    <%ServletContext servletcontext=request.getServletContext(); %>
+	<%Kunde kunde = (Kunde) servletcontext.getAttribute("kunde");%>
+	<%Mitarbeiter mitarbeiter = (Mitarbeiter) servletcontext.getAttribute("mitarbeiter");%>
+ 
     
         <!-- Basic Page Needs
         ================================================== -->
@@ -99,13 +106,30 @@
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
                     <div class="main-menu">
                         <ul class="nav navbar-nav navbar-right">
+ 
+                            <%if (kunde == null && mitarbeiter == null) {%>					 
                             <li>
                                 <a href="index.jsp" >Home</a>
                             </li> 
-                       
+                            <%}%>
+  
+                            <%if (kunde == null && mitarbeiter != null) {%>					 
+                            <li>
+                                <a href="indexLoggedInAsMitarbeiter.jsp" >Home</a>
+                            </li> 
+                            <%}%>
+ 
+ 
+                            <%if (kunde != null && mitarbeiter == null) {%>					 
+                            <li>
+                                <a href="indexLoggedInAsKunde.jsp" >Home</a>
+                            </li> 
+                            <%}%>
+                                                        
                             
                             <li><a href="kursListeAnzeigen.jsp">Kurskatalog</a></li>
                             
+                            <%if (kunde != null && mitarbeiter == null) {%>					                           
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mein Profil<span class="caret"></span></a>
                                 <div class="dropdown-menu">
@@ -117,10 +141,15 @@
                                     </ul>
                                 </div>
                             </li>
+                            <%}%>
                                                       
-            <!-- CHECK IF LOGGED IN -->                                       							
-							<li><a href="LogoutServlet">Logout</a></li>
-                            
+                            <%if (kunde != null && mitarbeiter == null) {%>					                           
+							<li><a href="LogoutKundeServlet">Logout</a></li>
+                             <%}%>
+                             
+                            <%if (kunde == null && mitarbeiter != null) {%>					                           
+							<li><a href="LogoutMitarbeiterServlet">Logout</a></li>
+                             <%}%>                            
                         </ul>
                     </div>
                 </nav>

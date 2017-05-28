@@ -11,6 +11,9 @@
  <!-- TODO: ANPASSEN AUF SESSION OBJECT UND USERNAME DES EINGELOGGTEN KUNDE, hier noch anhand von Dummy Bsp -->
  <!--     String username = (String) request.getAttribute("username") ;  -->
 	<% String message = (String) request.getAttribute("message") ;%>    
+
+  	<%ServletContext servletcontext=request.getServletContext(); %>
+	<%Kunde kunde = (Kunde) servletcontext.getAttribute("kunde");%>
     
         <!-- Basic Page Needs
         ================================================== -->
@@ -120,7 +123,7 @@
                                 </div>
                             </li>
 							
-							<li><a href="LogoutServlet">Logout</a></li>
+							<li><a href="LogoutKundeServlet">Logout</a></li>
 
 		                            
                         </ul>
@@ -146,16 +149,21 @@
                             
                             <!-- Slider -->
                             <section class="cd-intro">
+ 
+                                 <h2>
+                                   <%if (kunde != null) {%>					
+							        Sie sind eingeloggt als: <%=kunde.getUsername()%> 
+							        <%}%>                                
+                                </h2>
+ 
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
 
  			<%KundenMgmt km = new KundenMgmt();%>
- 			<!--  ACHTUNG: hier noch Dummy eingeloggte Kunden Daten -->
-			<%Kunde eingeloggterKunde = km.getKundeByUsername("martinm");%>
 			<%SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");%> 
  
                                 <span>Mein Passwort aendern:</span>
                                 <br>
-                                <span> (Id <%=eingeloggterKunde.getId()%>) </span>
+                                <span> (Id <%=kunde.getId()%>) </span>
 
                                 </h1>
                                 </section> <!-- cd-intro -->
@@ -165,14 +173,14 @@
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>Name:</span>
                           <br>
-                          <span><%=eingeloggterKunde.getVorname()%> <%=eingeloggterKunde.getNachname()%></span>
+                          <span><%=kunde.getVorname()%> <%=kunde.getNachname()%></span>
 						  <br> </h2>
 		
 
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>Username:</span>
                           <br>
-                          <span><%=eingeloggterKunde.getUsername()%></span>
+                          <span><%=kunde.getUsername()%></span>
 						  <br> </h2>
 
 						  
@@ -180,12 +188,12 @@
 						  
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>Password</span><br>
-						  <input type="text" name="password" placeholder="<%=eingeloggterKunde.getPassword()%>" required>
+						  <input type="text" name="password" placeholder="<%=kunde.getPassword()%>" required>
 						  <br> </h2>
 						  
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
 						  <span> <input type="submit" value="Aenderungen bestaetigen"> </span> 
-						  <input type="hidden" name="kundeFuerUpdate" value=<%=eingeloggterKunde.getId()%>> 
+						  <input type="hidden" name="kundeFuerUpdate" value=<%=kunde.getId()%>> 
 						  </h2>
 	  
 						  <br>				

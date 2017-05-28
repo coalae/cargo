@@ -10,6 +10,8 @@
 <html class="no-js">
     <head>
     <% String message = (String) request.getAttribute("message") ;%>
+    <%ServletContext servletcontext=request.getServletContext(); %>
+	<%Mitarbeiter mitarbeiter = (Mitarbeiter) servletcontext.getAttribute("mitarbeiter");%>
     
         <!-- Basic Page Needs
         ================================================== -->
@@ -197,7 +199,7 @@
                                 </div>
                             </li>
 							
-							<li><a href="LogoutServlet">Logout</a></li>
+							<li><a href="LogoutMitarbeiterServlet">Logout</a></li>
                             
                         </ul>
                     </div>

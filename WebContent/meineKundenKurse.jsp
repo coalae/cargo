@@ -16,6 +16,9 @@
  <!-- TODO: ANPASSEN AUF SESSION OBJECT UND USERNAME DES EINGELOGGTEN KUNDE, hier noch anhand von Dummy Bsp -->
  <!--     String username = (String) request.getAttribute("username") ;  -->
 	<% String message = (String) request.getAttribute("message") ;%>    
+ 
+   	<%ServletContext servletcontext=request.getServletContext(); %>
+	<%Kunde kunde = (Kunde) servletcontext.getAttribute("kunde");%>
     
         <!-- Basic Page Needs
         ================================================== -->
@@ -159,13 +162,17 @@
  			<%KundenMgmt km = new KundenMgmt();%>
  			<%KursMgmt kum = new KursMgmt();%>
  			<!--  ACHTUNG: hier noch Dummy eingeloggte Kunden Daten -->
-			<%Kunde eingeloggterKunde = km.getKundeByUsername("martinm");%>
-			<%ArrayList<Kurs> meineKurse = kum.getKurslisteForTeilnehmer(eingeloggterKunde.getId()); %>
+			<%ArrayList<Kurs> meineKurse = kum.getKurslisteForTeilnehmer(kunde.getId()); %>
  
                                 <span>Meine Kurse:</span>
                                 <br>
-                                <span> (Id <%=eingeloggterKunde.getId()%>) </span>
+                                <span> (Id <%=kunde.getId()%>) </span>
 
+                                <h2>
+                                   <%if (kunde != null) {%>					
+							        Sie sind eingeloggt als: <%=kunde.getUsername()%> 
+							        <%}%>                                
+                                </h2>
                                 </h1>
                                 </section> <!-- cd-intro -->
                                 <!-- /.slider -->

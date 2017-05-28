@@ -1,12 +1,14 @@
 package controller;
 
 import logic.KursMgmt;
+import model.Kunde;
 import model.Kurs;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,9 +51,9 @@ public class KursteilnahmeStornierenServlet extends HttpServlet {
 							
 						// KURSTEILNAHME loeschen
 						try{
-							//TODO kundenId vom eingeloggten Kunde nehmen - hier nur Dummy-Id
-							int dummyKundenId = 1;
-							km.deleteTeilnehmerFromKurs(dummyKundenId, kursId);
+							ServletContext servletcontext=request.getServletContext();
+							Kunde kunde = (Kunde) servletcontext.getAttribute("kunde");							
+							km.deleteTeilnehmerFromKurs(kunde.getId(), kursId);
 							String message = "Kursteilnahme wurde storniert.";
 							request.setAttribute("message", message);
 							RequestDispatcher view = request.getRequestDispatcher("meineKundenKurse.jsp");

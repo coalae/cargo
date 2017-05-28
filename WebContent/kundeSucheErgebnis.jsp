@@ -12,7 +12,10 @@
 <html class="no-js">
     <head>
     <% String message = (String) request.getAttribute("message") ;%>
-    
+
+  	<%ServletContext servletcontext=request.getServletContext(); %>
+	<%Mitarbeiter mitarbeiter = (Mitarbeiter) servletcontext.getAttribute("mitarbeiter");%>
+      
         <!-- Basic Page Needs
         ================================================== -->
         <meta charset="utf-8">
@@ -186,6 +189,9 @@
                             </li>
                             
                             <li><a href="kursListeAnzeigen.jsp">Kurskatalog</a></li>
+  
+  
+  <!-- TODO: PROFIL HIER AUF MITARBEITER ANPASSEN -->
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mein Profil<span class="caret"></span></a>
                                 <div class="dropdown-menu">
@@ -197,8 +203,7 @@
                                 </div>
                             </li>
 							
-					<!-- CHECK IF LOGGED IN  -->		
-							<li><a href="LogoutServlet">Logout</a></li>
+ 							<li><a href="LogoutMitarbeiterServlet">Logout</a></li>
                             
                         </ul>
                     </div>
