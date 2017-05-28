@@ -135,6 +135,27 @@ public class KundenMgmt {
 		return exists;
 	}
 	
+	/**
+	 * Kunden-Login prueft, ob username und password uebereinstimmen, und ob Login moeglich.
+	 * @param username
+	 * @param password
+	 * @return boolean
+	 */
+	public boolean login(String username, String password) {
+		if (username.isEmpty() || password.isEmpty())
+			return false;
+		try {
+			checkKundeExists(username);
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
+
+		Kunde kunde = this.getKundeByUsername(username);
+		if (kunde.getPassword().equals(password)) {
+			return true;
+		}
+		return false;
+	}
 
 	/* main Funktion fuer Tests	*/ 
 	public static void main(String[] args){

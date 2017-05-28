@@ -8,9 +8,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js">
     <head>
- <!-- TODO: ANPASSEN AUF SESSION OBJECT UND USERNAME DES EINGELOGGTEN KUNDE, hier noch anhand von Dummy Bsp -->
  <!--     String username = (String) request.getAttribute("username") ;  -->
 	<% String message = (String) request.getAttribute("message") ;%>    
+ 
+  	<%ServletContext servletcontext=request.getServletContext(); %>
+	<%Kunde kunde = (Kunde) servletcontext.getAttribute("kunde");%>
+ 
     
         <!-- Basic Page Needs
         ================================================== -->
@@ -123,9 +126,7 @@
 							<li><a href="LogoutServlet">Logout</a></li>
 
 			
-							
-							<li><a href="LogoutServlet">Logout</a></li>
-                            
+						                            
                         </ul>
                     </div>
                 </nav>
@@ -149,16 +150,21 @@
                             
                             <!-- Slider -->
                             <section class="cd-intro">
+                            
+                                <h2>
+                                   <%if (kunde != null) {%>					
+							        Sie sind eingeloggt als: <%=kunde.getUsername()%> 
+							        <%}%>                                
+                                </h2>
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
 
  			<%KundenMgmt km = new KundenMgmt();%>
- 			<!--  ACHTUNG: hier noch Dummy eingeloggte Kunden Daten -->
-			<%Kunde eingeloggterKunde = km.getKundeByUsername("martinm");%>
 			<%SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");%> 
- 
+
+     
                                 <span>Meine Kundendaten:</span>
                                 <br>
-                                <span> (Id <%=eingeloggterKunde.getId()%>) </span>
+                                <span> (Id <%=kunde.getId()%>) </span>
 
                                 </h1>
                                 </section> <!-- cd-intro -->
@@ -168,31 +174,31 @@
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>Name:</span>
                           <br>
-                          <span><%=eingeloggterKunde.getVorname()%> <%=eingeloggterKunde.getNachname()%></span>
+                          <span><%=kunde.getVorname()%> <%=kunde.getNachname()%></span>
 						  <br> </h2>
 						
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>IBAN (Kontonummer): </span>
                           <br>
-                          <span><%=eingeloggterKunde.getIban()%></span><br>
+                          <span><%=kunde.getIban()%></span><br>
                           </select> </h2>
 						  
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>BIC (Bank code): </span>
                           <br>
-                          <span><%=eingeloggterKunde.getBic()%></span><br>
+                          <span><%=kunde.getBic()%></span><br>
                           </select> </h2>
                           						  
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>Username: </span>
                           <br>
-                          <span><%=eingeloggterKunde.getUsername()%></span><br>
+                          <span><%=kunde.getUsername()%></span><br>
                           </select> </h2>
 
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>Password:</span>
                           <br>						  
-                          <span><%=eingeloggterKunde.getPassword()%></span><br>
+                          <span><%=kunde.getPassword()%></span><br>
 						  <br> </h2>
 	  
 						  <br>				
