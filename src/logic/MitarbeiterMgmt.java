@@ -1,5 +1,7 @@
 package logic;
 
+import java.text.ParseException;
+
 import model.Kunde;
 import model.Mitarbeiter;
 import repository.DatabaseMitarbeiterDAO;
@@ -9,12 +11,13 @@ import repository.MitarbeiterDAO;
 public class MitarbeiterMgmt {
 
 	private MitarbeiterDAO mitarbeiterdao;
-
+	private DatabaseMitarbeiterDAO dbzugang;
 	/**
 	 * Konstruktor
 	 */
 	public MitarbeiterMgmt(){
-		setMitarbeiterdao();
+		mitarbeiterdao= new DatabaseMitarbeiterDAO();
+		dbzugang= new DatabaseMitarbeiterDAO();
 	}
 	
 	/** 
@@ -28,13 +31,37 @@ public class MitarbeiterMgmt {
 	/**
 	 * Set-Methode fuer die Instanzvariable kundendao
 	 */
-	public void setMitarbeiterdao(){
-		this.mitarbeiterdao = new DatabaseMitarbeiterDAO();
+	public void setMitarbeiterdao(String vor,String nach, String sv, String spezi, String typ,
+			String gebdate, String user,String pw, String status){
+		int svnr=0;
+		int mittyp=0;
+		int statusint=0;
+			try{
+				svnr=Integer.parseInt(sv);
+				mittyp=Integer.parseInt(typ);
+				if(status.equalsIgnoreCase("Aktiv")){
+					statusint=1;
+				}
+			}
+			catch(NumberFormatException e){e.getMessage();}
+			System.out.println("Bin hier im Management");
+			dbzugang.insert(vor, nach, svnr, spezi, mittyp, gebdate, user, pw, statusint);
 	}
-	
+	public void delete(String sozial){
+		int svnr=0;
+		try{
+			System.out.println(sozial);
+			svnr=Integer.parseInt(sozial);
+		}
+		catch(NumberFormatException e){e.getMessage();}
+		dbzugang.deleteMitarbeiter(svnr);
+	}
 	
 	public Mitarbeiter getMitarbeiterById(int id){
 		Mitarbeiter mitarbeiter = mitarbeiterdao.getMitarbeiterById(id);
 		return mitarbeiter;
+	}
+	public void aendern(String user,String oldpw,String newpw){
+		dbzugang.update(user, oldpw, newpw);
 	}
 }
