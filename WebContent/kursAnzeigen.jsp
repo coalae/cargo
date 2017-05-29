@@ -130,16 +130,8 @@
                                   
                                   
                             <%if (kunde == null && mitarbeiter != null) {%>					                                                      
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mitarbeiter<span class="caret"></span></a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li><a href="mitarbeiterListe">Mitarbeiterliste</a></li>
-                                        <li><a href="mitarbeiterHinzufuegen.jsp">Mitarbeiter hinzufuegen</a></li>
-                                        <li><a href="mitarbeiterLoeschen.jsp">Mitarbeiter loeschen</a></li>
-                                        <li><a href="mitarbeiterAendern">Mitarbeiter aendern</a></li>
-                                    </ul>
-                                </div>
+                            <li>
+                                <a href="verwaltenMitarbeiter.jsp" >Mitarbeiter</a>
                             </li>
    
                             <li class="dropdown">
