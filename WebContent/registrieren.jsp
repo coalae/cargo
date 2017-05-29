@@ -145,7 +145,7 @@
 
 <br>
 
-     <a href="mitarbeiterRegistrieren.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Mitarbeiteraccount erstellen</a>
+    <!--  <a href="mitarbeiterRegistrieren.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Mitarbeiteraccount erstellen</a> -->
 
 					 
 						<% if (message != null){%>
