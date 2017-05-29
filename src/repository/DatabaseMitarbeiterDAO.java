@@ -13,7 +13,7 @@ import java.util.GregorianCalendar;
 
 import model.Mitarbeiter;
 
-public class DatabaseMitarbeiterDAO {
+public class DatabaseMitarbeiterDAO implements MitarbeiterDAO {
 	
 	private static final String all = "Select * from Mitarbeiter";
 	private static final String delID = "DELETE from Mitarbeiter where mitarbeiterid = ?";

@@ -188,7 +188,7 @@
 						  <br> </h2>						  
 						  
                           <h2><span>Password:</span><br>
-						  <input type="text" name="password" required>
+						  <input type="password" name="password" required>
 						  <br> </h2>						  
 
 						  						  					  
