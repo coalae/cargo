@@ -153,17 +153,7 @@
                                     </ul>
                                 </div>
                             </li>
-                            
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Finanzen<span class="caret"></span></a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li><a href="kontoAnzeigen.jsp">Konto anzeigen</a></li>
-                                        <li><a href="transaktionsliste.jsp">Transaktionsliste</a></li>
-                                        <li><a href="transaktionLoeschen.jsp">Transaktion loeschen</a></li>
-                                    </ul>
-                                </div>
-                            </li>
+                           
                             
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fahrzeuge<span class="caret"></span></a>
