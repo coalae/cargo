@@ -159,25 +159,22 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Immobilien<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="immobilienListe">Immobilienliste</a></li>
-                                        <li><a href="immobilieHinzufuegen.jsp">Immobilie hinzufuegen</a></li>
-                                        <li><a href="immobilieAendern">Immobilie aendern</a></li>
+                                        <li><a href="immobilienListe.jsp">Verwaltung</a></li>
+                                        <li><a href="ListeImmobilie.jsp">Liste</a></li>
                                     </ul>
                                 </div>
                             </li>
-                            
                             
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fahrzeuge<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="fahrzeugListe">Fahrzeugliste</a></li>
-                                        <li><a href="fahrzeugHinzufuegen.jsp">Fahrzeug hinzufuegen</a></li>
-                                        <li><a href="fahrzeugLoeschen.jsp">Fahrzeug loeschen</a></li>
-                                        <li><a href="fahrzeugAendern">Fahrzeug aendern</a></li>
+                                        <li><a href="fahrzeugListe.jsp">Verwaltung</a></li>
+                                        <li><a href="ListeFahrzeug.jsp">Liste</a></li>
                                     </ul>
                                 </div>
                             </li>
+                            
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kurse <span class="caret"></span></a>
                                 <div class="dropdown-menu active">
@@ -313,7 +310,7 @@
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>Freie Plaetze:</span>
                           <br>  
-                          <%int freiePlaetze=ausgewaehlterKurs.getMaxAnzahl()-km.getTeilnehmerlisteForKurs(Integer.parseInt(kursId)).size();%>
+                          <%int freiePlaetze=ausgewaehlterKurs.getMaxAnzahl()-ausgewaehlterKurs.getTeilnehmerliste().size();%>
                           <span><%=freiePlaetze%></span><br>
 						  <br> </h2>
 						  

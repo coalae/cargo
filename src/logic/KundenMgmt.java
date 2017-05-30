@@ -164,8 +164,9 @@ public class KundenMgmt {
 	}
 
 	/* main Funktion fuer Tests	*/ 
-	public static void main(String[] args){
-		KundenMgmt kundenmgmt = new KundenMgmt();
+	// public static void main(String[] args){
+	//	KundenMgmt kundenmgmt = new KundenMgmt();
+		
 		/* TEST getKundenListe
 		ArrayList<Kunde> liste=kundenmgmt.getKundenListe();
 		for(int i=0;i<liste.size();i++){
@@ -207,6 +208,6 @@ public class KundenMgmt {
 		/* TEST checkKundeExists 
 		System.out.println(kundenmgmt.checkKundeExists("tarat"));
 		*/
-	}
+	// }
    
 }

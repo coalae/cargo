@@ -204,8 +204,9 @@ public class KursMgmt {
 		
 
 	/* main Funktion fuer Tests	*/ 
-	public static void main(String[] args){
-		KursMgmt kursmgmt = new KursMgmt();
+	// public static void main(String[] args){
+	// 	KursMgmt kursmgmt = new KursMgmt();
+	
 		/* TEST getKursListe
 		ArrayList<Kurs> liste=kursmgmt.getKursListe();
 		for(int i=0;i<liste.size();i++){
@@ -292,6 +293,6 @@ public class KursMgmt {
 			System.out.println(sl.get(i).getKursname());			
 		} 
 		*/
-	}
+	// }
 
 }

@@ -49,12 +49,6 @@ public class DatabaseKundenDAO implements KundenDAO {
             ResultSet rs = prest.executeQuery();
             
             while (rs.next()) {
-            /*	DB CHECK
-                System.out.println(rs.getInt(1));
-            	System.out.println(rs.getString(2));
-            	System.out.println(rs.getString(3));
-            */
-            
              int id=rs.getInt(1);
              String vorname=rs.getString(2);
              String nachname=rs.getString(3);
@@ -114,12 +108,7 @@ public class DatabaseKundenDAO implements KundenDAO {
 	            prest = con.prepareStatement(sql);
 	            ResultSet rs = prest.executeQuery();
 
-	            while (rs.next()) {
-	             /* DB CHECK 
-	            	System.out.println(rs.getInt(1));
-	            	System.out.println(rs.getString(2));
-	            	System.out.println(rs.getString(3));
-	             */        
+	            while (rs.next()) {      
 	                int kundenId=rs.getInt(1);
 	                String vorname=rs.getString(2);
 	                String nachname=rs.getString(3);
@@ -188,10 +177,6 @@ public class DatabaseKundenDAO implements KundenDAO {
 		        e.printStackTrace();
 		    }finally {
 		        try {
-		            /*
-		            if (preparedStmt != null)
-		            	preparedStmt.close();
-		            */
 		            if (con != null)
 		                con.close();
 		        } catch (SQLException e) {
@@ -228,8 +213,6 @@ public class DatabaseKundenDAO implements KundenDAO {
             e.printStackTrace();
         } finally {
             try {
-               // if (stmt != null)
-               //     stmt.close();
                 if (con != null)
                     con.close();
             } catch (SQLException e) {
@@ -246,14 +229,11 @@ public class DatabaseKundenDAO implements KundenDAO {
 	 */
 	@Override
 	public void updateKunde(Kunde kunde) {
-		 // TESTDATEN:	 
-		 // Kunde kunde1 = new Kunde(3, "VornameUpdate", "NachnameUpdate", 11111, "BICupdate", "usernameUpdate", "pwUpdate", true);
 			
 		 String sql; 
 		 sql = "UPDATE Kunde SET vorname=?, nachname=?, iban=?, bic=?, username=?, passw=?, active=? WHERE kundenId = ?";
 		
 			Connection con = null;
-	        //User user = null;
 	        try {
 	            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
 	            con = DriverManager.getConnection(DBAdresse, username, password);
@@ -292,37 +272,22 @@ public class DatabaseKundenDAO implements KundenDAO {
 		    }
 		    return;		
 	}	
-	
-	
-
-
-/*}
-	UpdateUser updateUser = new UpdateUser();
-	boolean check = false;
-	try {
-	check = updateUser.execute(user).get();
-	} catch (InterruptedException e) {
-	e.printStackTrace();
-	} catch (ExecutionException e) {
-	e.printStackTrace();
-	}
-	return check;
-	}
-*/  
-   
+	   
     
 	/*
 	 * main Funktion fuer Tests
 	 * @param args
 	*/ 
+	/*
 	public static void main(String[] args){
 		DatabaseKundenDAO dao = new DatabaseKundenDAO();
-		// dao.select();
-		// dao.insert();
-		// dao.update();
+		 dao.select();
+		 dao.insert();
+		 dao.update();
 		 Kunde kundeById = dao.getKundeById(2);
 		 System.out.println("UN: " + kundeById.getUsername() + " PW " + kundeById.getPassword());
-		// dao.deleteKundeById(3);
+		 dao.deleteKundeById(3);
 	}
+	*/
    
 }
