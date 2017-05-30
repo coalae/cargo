@@ -117,13 +117,12 @@
                                 </div>
                             </li>
                             
-                            <li class="dropdown">
+                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Immobilien<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="immobilienListe.jsp">Immobilienliste</a></li>
-                                        <li><a href="immobilieHinzufuegen.jsp">Immobilie hinzufuegen</a></li>
-                                        <li><a href="immobilieAendern.jsp">Immobilie aendern</a></li>
+                                        <li><a href="immobilienListe.jsp">Immobilien verwalten</a></li>
+                                        <li><a href="ListeImmobilie.jsp">Immobilieliste</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -132,10 +131,8 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fahrzeuge<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="fahrzeugListe.jsp">Fahrzeugliste</a></li>
-                                        <li><a href="fahrzeugHinzufuegen.jsp">Fahrzeug hinzufuegen</a></li>
-                                        <li><a href="fahrzeugLoeschen.jsp">Fahrzeug loeschen</a></li>
-                                        <li><a href="fahrzeugAendern.jsp">Fahrzeug aendern</a></li>
+                                        <li><a href="fahrzeugListe.jsp">Fahrzeug verwalten</a></li>
+                                        <li><a href="ListeFahrzeug.jsp">Fahrzeugliste</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -205,7 +202,7 @@
 							<form action="ImmobilienController" method="post">
 
 							<label>Typ</label> <br> 
-							<input name="typ"id="typ" requiert="requiert" type="int" placeholder="Modell"> 
+							<input name="typ"id="typ" requiert="requiert" type="int" placeholder="typ"> 
 							<br> 
 							<label>Name</label><br> 
 							<input name="name" id="name" requiert="requiert" type="text" placeholder="Name"> 
@@ -221,6 +218,7 @@
 						<div style="display: none" id="loeschen">
 							<h4>
 								<center>
+								
 									<form action="ImmobilienController" method="post">
 									<label>immobilienID</label>
 									<br>
@@ -236,6 +234,10 @@
 							<h4>
 							<center>
 									<form action="ImmobilienController" method="post">
+									<label>ID</label>
+									<br>
+									<input type="text" name="id" id="id">
+									<br>
 									<label>Typ</label>
 									<br>
 									<input type="text" name="typ" id="typ">
@@ -244,6 +246,8 @@
 									<br>
 									<input type="text" name="name" id="name">
 									<br>
+									<input type="hidden" name="pageName" value="aendern">
+									<button type="submit">Best&auml;tigen</button>
 									
 								</center>
 							</h4>

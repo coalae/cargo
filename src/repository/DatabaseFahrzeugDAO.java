@@ -9,6 +9,11 @@ import java.sql.Statement;
 
 import model.Fahrzeug;
 
+/**
+ * Hier wird die Datenbankverbindung hergestellt und die fahrzeug Objekte verwertet
+ * @author Nikola Babic
+ *
+ */
 
 public class DatabaseFahrzeugDAO implements FahrzeugDAO {
   private static final String auslesen = "Select * from Fahrzeug";
@@ -23,7 +28,9 @@ public class DatabaseFahrzeugDAO implements FahrzeugDAO {
   DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
   Connection connection;
 
-
+/**
+ * Konstruktor
+ */
   public DatabaseFahrzeugDAO() {
 	  try {
 		  connection = DatabaseHandler.getConnection();
@@ -73,8 +80,10 @@ public class DatabaseFahrzeugDAO implements FahrzeugDAO {
     		catch(SQLException e){e.getMessage();}
     	}
     	
-    
-
+/**
+ * Retouriert eine Liste von typ Fahrzeug.    
+ * @return returnFahrzeug
+ */
 	public ArrayList<Fahrzeug> getFahrzeugList () {
 		ArrayList<Fahrzeug> returnFahrzeug = new ArrayList<Fahrzeug>();
 		String SQLFahrzeug =  "SELECT fahrzeugid, marke, modell, baujahr, farbe FROM Fahrzeug";
@@ -100,7 +109,11 @@ public class DatabaseFahrzeugDAO implements FahrzeugDAO {
 			return returnFahrzeug;
 	}
 
-	
+	/**
+	 * Holt ein bestimmtes Fahrzeug
+	 * @param int id
+	 * @return fahrzeug
+	 */ 
 	public Fahrzeug getFahrzeugbyID(int id) {
 		String SQLFahrzeug =  "SELECT fahrzeugid, marke, modell, baujahr, farbe FROM Fahrzeug WHERE fahrzeugid=' " + id + " ' ";
 		Fahrzeug fahrzeug  = null;
@@ -128,28 +141,35 @@ public class DatabaseFahrzeugDAO implements FahrzeugDAO {
 		
 	}
     
-	
+	/**
+	 * Aktualisiert die Marke
+	 * @param id
+	 * @param upmarke
+	 */
 	public void updateMarke (int id, String upmarke) {
 		try {
-			String update =" UPDATE Fahrzeug SET marke =' " + upmarke +  " 'WHERE fahrzeugid=' "+id +"'";  
+			String update =" UPDATE Fahrzeug SET marke =' " + upmarke + " 'where fahrzeugid=' " +id+ " ' ";  
 			PreparedStatement connect = connection.prepareStatement(update);
-			connect.setString(2,upmarke);
-			connect.executeQuery();
-			//connect.close();
+			connect.execute();
+			connect.close();
 		}
 		catch(SQLException e){e.getStackTrace();}
 		
 	}
     
+	
+	/**
+	 * Aktualisiert die Modell
+	 * @param id
+	 * @param upmodell
+	 */
 	public void updateModell (int id, String upmodel) {
 		try {
-			System.out.println("im Update Modell - try" + id + upmodel);
-			String update =" UPDATE Fahrzeug SET modell =' " + upmodel + " ' WHERE fahrzeugid=  '"+id + "'";  
+			String update =" UPDATE Fahrzeug SET modell =' " + upmodel + " 'where fahrzeugid=' " +id+ " ' ";  
 			PreparedStatement connect = connection.prepareStatement(update);
-		//	connect.setString(3,upmodel);
-			System.out.println("In Modell update" + update);
-			connect.executeQuery();
-			//connect.close();
+		
+			connect.execute();
+			connect.close();
 			
 			//PreparedStatement stm = connection.prepareStatement(update);
             //ResultSet rs = stm.executeQuery();
@@ -158,26 +178,35 @@ public class DatabaseFahrzeugDAO implements FahrzeugDAO {
 		
 	}
 	
+	
+	/**
+	 * Aktualisiert die Jahre
+	 * @param id
+	 * @param jahr
+	 */
 	public void updateJahr (int id, String jahr) {
 		try {
-			String update =" UPDATE Fahrzeug SET baujahr =' " + jahr + " 'WHERE fahrzeugid= '"+ id+ "'"; 
-			
+			String update =" UPDATE Fahrzeug SET baujahr =' " + jahr + " 'where fahrzeugid=' " +id+ " ' ";  
 			PreparedStatement connect = connection.prepareStatement(update);
-			connect.setString(3,jahr);
-			connect.executeQuery();
-			//connect.close();
+
+			connect.execute();
+			connect.close();
 		}
 		catch(SQLException e){e.getStackTrace();}
 		
 	}
     
+	/**
+	 * Aktualisiert die Farbe
+	 * @param id
+	 * @param upfarbe
+	 */
 	public void updateFarbe (int id, String upfarbe) {
 		try {
-			String update =" UPDATE Fahrzeug SET farbe =' " + upfarbe + " 'WHERE fahrzeugid= ' "+id + " ' ";  
+			String update =" UPDATE Fahrzeug SET typ =' " + upfarbe + " 'where immobilienid=' " +id+ " ' ";  
 			PreparedStatement connect = connection.prepareStatement(update);
-			connect.setString(4,upfarbe);
-			connect.executeQuery();
-			//connect.close();
+			connect.execute();
+			connect.close();
 		}
 		catch(SQLException e){e.getStackTrace();}
 		

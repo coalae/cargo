@@ -32,6 +32,7 @@ public class FahrzeugAdminController extends HttpServlet {
 	}
 
 	/**
+	 * Hier werden die einzelnen requested geholt. Hier werden Farhzeuge gelöscht, geändert und erzeugt
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,7 +46,7 @@ public class FahrzeugAdminController extends HttpServlet {
 			//int baujahr2 = Integer.parseInt(baujahr);
 			
 			fahrzeugM.addFahrzeug(marke, modell, baujahr, farbe);
-			request.getRequestDispatcher("indexLoggedInAsMitarbeiter.jsp").include(request, response);
+			request.getRequestDispatcher("fahrzeugListe.jsp").include(request, response);
 			
 		}
 		
@@ -53,40 +54,23 @@ public class FahrzeugAdminController extends HttpServlet {
 			String fahrzeugid = request.getParameter("fahrzeugid");
 			int id = Integer.parseInt(fahrzeugid);
 			fahrzeugM.deleteFahrzeug(id);
-			request.getRequestDispatcher("indexLoggedInAsMitarbeiter.jsp").include(request, response);
+			request.getRequestDispatcher("fahrzeugListe.jsp").include(request, response);
 		}
 		
 		if(request.getParameter("pageName").equalsIgnoreCase("aendern")){
 			String fahrzeugid = request.getParameter("id");
 			String marke=request.getParameter("marke");
 			String modell=request.getParameter("modell");
-		String baujahr=request.getParameter("baujahr");
+			String baujahr=request.getParameter("baujahr");
 			String farbe=request.getParameter("farbe");
 			
-			System.out.println(fahrzeugid + marke + modell + baujahr);
-			
-		//	if(marke != " ") {
 				int id = Integer.parseInt(fahrzeugid);
 				fahrzeugM.updateMarke(id, marke);
-				System.out.println("bin noch im Controller");
-	//		}
-			
-	//		if(modell != "") {
-			//	int id = Integer.parseInt(fahrzeugid);
 				fahrzeugM.updateModell(id, modell);
-	//		}
-			
-		//	if(baujahr != "") {
-		//		int id = Integer.parseInt(fahrzeugid);
-				fahrzeugM.updateJahr(id, baujahr);
-		//	}
-			
-		//	if(farbe != "") {
-		//		int id = Integer.parseInt(fahrzeugid);
+				fahrzeugM.updateMarke(id, baujahr);
 				fahrzeugM.updateFarbe(id, farbe);
-	//		}	
-	
-			request.getRequestDispatcher("indexLoggedInAsMitarbeiter.jsp").include(request, response);
+
+			request.getRequestDispatcher("fahrzeugListe.jsp").include(request, response);
 	}
 
 	}

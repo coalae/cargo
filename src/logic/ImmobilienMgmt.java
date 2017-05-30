@@ -10,7 +10,7 @@ public class ImmobilienMgmt {
 	private DatabaseImmobilienDAO ImmoDAO = new DatabaseImmobilienDAO();
 	
 	public void deleteGebäude(int id) {
-		ImmoDAO.deleteGebäude(id);
+		ImmoDAO.deleteGebaude(id);
 	}
 	
 	
@@ -19,12 +19,12 @@ public class ImmobilienMgmt {
 		ImmoDAO.insert(typ, name);
 	}
 	
-	public ArrayList<Immobilie> getGebäudeList () {
-		return ImmoDAO.getGebäudeList();
+	public ArrayList<Immobilie> getGebaudeList () {
+		return ImmoDAO.getGebaudeList();
 	}
 	
 	public Immobilie getGebäudebyID(int id) {
-		return ImmoDAO.getGebäudebyID(id);
+		return ImmoDAO.getGebaudebyID(id);
 	}
 	
 	public void updatetyp (int id, int typ) {

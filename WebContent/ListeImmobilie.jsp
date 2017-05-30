@@ -2,9 +2,11 @@
     pageEncoding="ISO-8859-1"%>
 <%@page import="logic.KursMgmt"%>
 <%@page import="logic.FahrzeugMgmt"%>
+<%@page import="logic.ImmobilienMgmt"%>
 <%@page import="model.Kurs"%>
 <%@page import="model.Kunde"%>
 <%@page import="model.Fahrzeug"%>
+<%@page import="model.Immobilie"%>
 <%@page import="model.Mitarbeiter"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -127,7 +129,7 @@
                                 </div>
                             </li>
                             
-                            <li class="dropdown">
+                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Immobilien<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
@@ -200,7 +202,7 @@
 
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
   <br>
-                                <span>FahrzeugListe:</span><br>
+                                <span>ImmobilienListe:</span><br>
                       <!--          <span class="cd-words-wrapper">
                                     <b class="is-visible">CarGo Driving School</b>
                                     <b>CarGo Fahrschule</b>
@@ -209,8 +211,8 @@
                                 </section> <!-- cd-intro -->
                                 <!-- /.slider -->
 
-			<%FahrzeugMgmt FahrM = new FahrzeugMgmt();%>
-			<%ArrayList<Fahrzeug> fahrzeugliste = FahrM.getfahrzeugListe();%>
+			<%ImmobilienMgmt immoM = new ImmobilienMgmt();%>
+			<%ArrayList<Immobilie> immobilienliste = immoM.getGebaudeList() ;%>
 			 
 						  
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
@@ -218,22 +220,19 @@
                           
                           	<table class="table table-striped">
 								  <tr>
-								  	<th><div align="center"><h3>FahrzeugID</h3></div></th>
-								  	<th><div align="center"><h3>Marke</h3></div></th>
-								  	<th><div align="center"><h3>Modell</h3></div></th>
-								  	<th><div align="center"><h3>Baujahr</h3></div></th>
-								  	<th><div align="center"><h3>Farbe</h3></div></th>
+								  	<th><div align="center"><h3>ImmobilienID</h3></div></th>
+								  	<th><div align="center"><h3>Typ</h3></div></th>
+								  	<th><div align="center"><h3>Name</h3></div></th>
+								  	
 								  </tr>
 
-								 <%for(int i = 0; i<fahrzeugliste.size(); i++){%>
+								 <%for(int i = 0; i<immobilienliste.size(); i++){%>
 								 
 								  	<tr>
-								  		<td><div align="center"><h3><%=fahrzeugliste.get(i).getId() %></h3></div></td>
-								  		<td><div align="center"><h3><%=fahrzeugliste.get(i).getMarke() %></h3></div></td>
-								  		<td><div align="center"><h3><%=fahrzeugliste.get(i).getModell() %></h3></div></td>
-								  		<td><div align="center"><h3><%=fahrzeugliste.get(i).getBaujahr() %></h3></div></td>
-								  		<td><div align="center"><h3><%=fahrzeugliste.get(i).getFarbe() %></h3></div></td>
-
+								  		<td><div align="center"><h3><%=immobilienliste.get(i).getId() %></h3></div></td>
+								  		<td><div align="center"><h3><%=immobilienliste.get(i).getTyp() %></h3></div></td>
+								  		<td><div align="center"><h3><%=immobilienliste.get(i).getImmobilienname() %></h3></div></td>
+								  	
 								  	</tr>
 							<%}%>
 							</table>			

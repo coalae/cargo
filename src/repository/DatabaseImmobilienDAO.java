@@ -10,6 +10,11 @@ import java.sql.Statement;
 import model.Fahrzeug;
 import model.Immobilie;
 
+/**
+ * Hier wird die Datenbankverbindung hergestellt und die Immobilie Objekte verwertet
+ * @author Nikola Babic
+ *
+ */
 
 public class DatabaseImmobilienDAO implements ImmobilienDAO {
   private static final String auslesen = "Select * from Immobilie";
@@ -21,7 +26,9 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
   DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
   Connection connection;
 
-
+/**
+ * konstruktor
+ */
   public DatabaseImmobilienDAO() {
 	  try {
 		  connection = DatabaseHandler.getConnection();
@@ -53,28 +60,32 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
     	}
     	
     /**
-     * DELETE Fahrzeug
-     * @param FahrzeugID
+     * DELETE GEbäude
+     * @param ImmobilieID
      */
     
-    public void deleteGebäude (int id) {
+    public void deleteGebaude (int id) {
     	try{
     		PreparedStatement connect = connection.prepareStatement(delImmo);
     		connect.setInt(1, id);
+    		connect.execute();
     		connect.close();
     		System.out.println("Inhalt wurde gelöscht");
     		}
     		catch(SQLException e){e.getMessage();}
     	}
     	
-    
+    /**
+     * Retouriert eine Liste von typ Immobilie.    
+     * @return returnGebäude
+     */
 
-	public ArrayList<Immobilie> getGebäudeList () {
-		ArrayList<Immobilie> returnGebäude = null;
-		String SQLGebäude=  "SELECT Immobilienid, typ, name FROM Immobilien";
+	public ArrayList<Immobilie> getGebaudeList () {
+		ArrayList<Immobilie> returnGebaude = new ArrayList<Immobilie>();
+		String SQLGebaude=  "SELECT Immobilienid, typ, immobilienname FROM Immobilie";
 		
 		try {
-			PreparedStatement up =connection.prepareStatement(SQLGebäude);
+			PreparedStatement up =connection.prepareStatement(SQLGebaude);
 			ResultSet rs = up.executeQuery();
 			
 			while (rs.next()) {
@@ -83,18 +94,22 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
 				int typ 	= rs.getInt(2);
 				String name 	= rs.getString(3);
 				
-				Immobilie gebäude = new Immobilie(immobilienid, typ, name);
-				returnGebäude.add(gebäude);
+				Immobilie gebaude = new Immobilie(immobilienid, typ, name);
+				returnGebaude.add(gebaude);
 				
 			}
 			up.close();
     		}
     		catch(SQLException e){e.getMessage();}
-			return returnGebäude;
+			return returnGebaude;
 	}
 
-	
-	public Immobilie getGebäudebyID(int id) {
+	/**
+	 * Holt ein bestimmtes Gebäude
+	 * @param int id
+	 * @return immobilie
+	 */ 
+	public Immobilie getGebaudebyID(int id) {
 		String SQLGebäude =  "SELECT Immobilienid, typ, name FROM Immobilie WHERE immobilienid=' " + id + " ' ";
 		Immobilie gebäude  =null;
 		try {
@@ -118,7 +133,11 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
 		return gebäude;
 	}
     
-	
+	/**
+	 * Ändern die Fahrzeugdaten
+	 * @param int id
+	 * @return typ
+	 */ 
 	public void updatetyp (int id, int typ) {
 		try {
 			String update =" UPDATE Immobilie SET typ =' " + typ + " 'where immobilienid=' " +id+ " ' ";  
@@ -130,6 +149,11 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
 		
 	}
     
+	/**
+	 * Ändern die Fahrzeugdaten
+	 * @param int id
+	 * @return name
+	 */ 
 	public void updatename (int id, String name) {
 		try {
 			String update =" UPDATE Immobilie SET immobilienname =' " + name + " ' where immobilienid='"+id+" ' "; 

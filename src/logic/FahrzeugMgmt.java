@@ -51,11 +51,7 @@ public class FahrzeugMgmt {
 		fahrzeugDAO.updateModell(id, upmodell);
 		System.out.println("Bin im modell update Mgmt"+ upmodell + id);
 	}
-	
-	public void updatebaujahr(int id, String upbaujahr) {
-		fahrzeugDAO.updateJahr(id, upbaujahr);
-	}
-	
+
 	public void updateJahr(int id, String jahr) {
 		fahrzeugDAO.updateMarke(id, jahr);
 	}

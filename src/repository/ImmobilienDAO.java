@@ -8,12 +8,12 @@ public interface ImmobilienDAO {
 
 	 public void insert(int typ, String name);
 	 
-	 public void deleteGebäude (int id);
+	 public void deleteGebaude (int id);
 	
 	 
-	 public ArrayList<Immobilie> getGebäudeList ();
+	 public ArrayList<Immobilie> getGebaudeList ();
 	 
-	 public Immobilie getGebäudebyID(int id);
+	 public Immobilie getGebaudebyID(int id);
 	 
 	 public void updatetyp (int id, int typ);
 	 
