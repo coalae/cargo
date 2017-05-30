@@ -78,7 +78,7 @@
         ==================================================
         Header Section Start
         ================================================== -->
-        <header id="top-bar" class="navbar-fixed-top animated-header">
+         <header id="top-bar" class="navbar-fixed-top animated-header">
             <div class="container">
                 <div class="navbar-header">
                     <!-- responsive nav button -->
@@ -99,46 +99,37 @@
                     </div>
                     <!-- /logo -->
                 </div>
-                                                                                <br> <br> <br>  <br> <br>
+                
+                <br> <br> <br> <br> <br> 
                 
                 <!-- main menu -->
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
-                    <div class="main-menu">
+                    <div class="main-menu active">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <a href="indexLoggedInAsMitarbeiter.jsp" >Home</a>
                             </li> 
                             
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mitarbeiter<span class="caret"></span></a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li><a href="mitarbeiterListe.jsp">Mitarbeiterliste</a></li>
-                                        <li><a href="mitarbeiterHinzufuegen.jsp">Mitarbeiter hinzufuegen</a></li>
-                                        <li><a href="mitarbeiterLoeschen.jsp">Mitarbeiter loeschen</a></li>
-                                        <li><a href="mitarbeiterAendern.jsp">Mitarbeiter aendern</a></li>
-                                    </ul>
-                                </div>
+                            <li>
+                                <a href="verwaltenMitarbeiter.jsp" >Mitarbeiter</a>
                             </li>
- 
-                             
-                               <li class="dropdown">
+   
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kunden<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
                                         <li><a href="kundenListe.jsp">Kundenliste</a></li>
                                     </ul>
                                 </div>
-                            </li>  
-                                  
-                                                             
+                            </li>
+                                                     
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mentoring<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
                                         <li><a href="mentoringListe.jsp">Mentoringliste</a></li>
                                         <li><a href="mentoringHinzufuegen.jsp">Mentoring hinzufuegen</a></li>
-                                        <li><a href="mentoringLoeschen.jsp">Mentoring loeschen</a></li>
+                                        <li><a href="mentoringLoeschenauswaehlen.jsp">Mentoring loeschen</a></li>
                                         <li><a href="mentoringAendern.jsp">Mentoring aendern</a></li>
                                     </ul>
                                 </div>
@@ -151,17 +142,6 @@
                                         <li><a href="immobilienListe.jsp">Immobilienliste</a></li>
                                         <li><a href="immobilieHinzufuegen.jsp">Immobilie hinzufuegen</a></li>
                                         <li><a href="immobilieAendern.jsp">Immobilie aendern</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Finanzen<span class="caret"></span></a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li><a href="kontoAnzeigen.jsp">Konto anzeigen</a></li>
-                                        <li><a href="transaktionsliste.jsp">Transaktionsliste</a></li>
-                                        <li><a href="transaktionLoeschen.jsp">Transaktion loeschen</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -189,6 +169,8 @@
                             </li>
                             
                             <li><a href="kursListeAnzeigen.jsp">Kurskatalog</a></li>
+ 
+ <!-- TODO: PROFIL HIER AN MITARBEITER ANPASSEN -->
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mein Profil<span class="caret"></span></a>
                                 <div class="dropdown-menu">
@@ -200,17 +182,14 @@
                                 </div>
                             </li>
 							
-							<li><a href="LogoutMitarbeiterServlet">Logout</a></li>
-                            
+	                  		<li><a href="LogoutMitarbeiterServlet">Logout</a></li>
+                                                       
                         </ul>
                     </div>
                 </nav>
                 <!-- /main nav -->
             </div>
         </header>
-        
-        
-        
         
         
         <!--
