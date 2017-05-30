@@ -250,8 +250,23 @@
 									<br>
 									<input type="text" name="marke" id="marke">
 									<br>
+									
+									<label>Modell</label>
+									<br>
+									<input type="text" name="modell" id="modell">
+									<br>
+									<label>Baujahr</label>
+									<br>
+									<input type="text" name="baujahr" id="baujahr">
+									<br>
+									<label>Farbe</label>
+									<br>
+									<input type="text" name="farbe" id="farbe">
+									<br>
+									
 									<input type="hidden" name="pageName" value="aendern">
 									<button type="submit">Best&auml;tigen</button>
+									
 									</form>
 								</center>
 							</h4>

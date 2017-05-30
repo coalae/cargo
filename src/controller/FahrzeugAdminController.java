@@ -59,28 +59,33 @@ public class FahrzeugAdminController extends HttpServlet {
 		if(request.getParameter("pageName").equalsIgnoreCase("aendern")){
 			String fahrzeugid = request.getParameter("id");
 			String marke=request.getParameter("marke");
-	//		String modell=request.getParameter("modell");
-//			String baujahr=request.getParameter("baujahr");
-	//		String farbe=request.getParameter("farbe");
+			String modell=request.getParameter("modell");
+		String baujahr=request.getParameter("baujahr");
+			String farbe=request.getParameter("farbe");
 			
-
+			System.out.println(fahrzeugid + marke + modell + baujahr);
+			
+		//	if(marke != " ") {
 				int id = Integer.parseInt(fahrzeugid);
 				fahrzeugM.updateMarke(id, marke);
-		/*
-			if(modell != null) {
-				int id = Integer.parseInt(fahrzeugid);
-				fahrzeugM.updateModell(id, modell);
-			}
-			if(baujahr != null) {
-				int id = Integer.parseInt(fahrzeugid);
-				fahrzeugM.updateJahr(id, marke);
-			}
+				System.out.println("bin noch im Controller");
+	//		}
 			
-			if(farbe != null) {
-				int id = Integer.parseInt(fahrzeugid);
+	//		if(modell != "") {
+			//	int id = Integer.parseInt(fahrzeugid);
+				fahrzeugM.updateModell(id, modell);
+	//		}
+			
+		//	if(baujahr != "") {
+		//		int id = Integer.parseInt(fahrzeugid);
+				fahrzeugM.updateJahr(id, baujahr);
+		//	}
+			
+		//	if(farbe != "") {
+		//		int id = Integer.parseInt(fahrzeugid);
 				fahrzeugM.updateFarbe(id, farbe);
-			}	
-		*/	
+	//		}	
+	
 			request.getRequestDispatcher("indexLoggedInAsMitarbeiter.jsp").include(request, response);
 	}
 

@@ -76,7 +76,7 @@ public class DatabaseFahrzeugDAO implements FahrzeugDAO {
     
 
 	public ArrayList<Fahrzeug> getFahrzeugList () {
-		ArrayList<Fahrzeug> returnFahrzeug = null;
+		ArrayList<Fahrzeug> returnFahrzeug = new ArrayList<Fahrzeug>();
 		String SQLFahrzeug =  "SELECT fahrzeugid, marke, modell, baujahr, farbe FROM Fahrzeug";
 		
 		try {
@@ -103,7 +103,7 @@ public class DatabaseFahrzeugDAO implements FahrzeugDAO {
 	
 	public Fahrzeug getFahrzeugbyID(int id) {
 		String SQLFahrzeug =  "SELECT fahrzeugid, marke, modell, baujahr, farbe FROM Fahrzeug WHERE fahrzeugid=' " + id + " ' ";
-		Fahrzeug fahrzeug  =null;
+		Fahrzeug fahrzeug  = null;
 		try {
 			PreparedStatement up =connection.prepareStatement(SQLFahrzeug);
 			ResultSet rs = up.executeQuery();
@@ -131,8 +131,9 @@ public class DatabaseFahrzeugDAO implements FahrzeugDAO {
 	
 	public void updateMarke (int id, String upmarke) {
 		try {
-			String update =" UPDATE Fahrzeug SET marke =" + upmarke + "where fahrzeugid='"+id;  
-			PreparedStatement connect = connection.prepareStatement(update);
+			String update =" UPDATE Fahrzeug SET marke =' " + upmarke +  " 'where fahrzeugid=' "+id + " ' ";  
+			PreparedStatement connect = connection.prepareStatement(upMarke);
+			connect.setString(2,upmarke);
 			connect.execute();
 			connect.close();
 		}
@@ -142,8 +143,9 @@ public class DatabaseFahrzeugDAO implements FahrzeugDAO {
     
 	public void updateModell (int id, String upmodel) {
 		try {
-			String update =" UPDATE Fahrzeug SET marke =" + upmodel + "where fahrzeugid='"+id;  
-			PreparedStatement connect = connection.prepareStatement(update);
+			String update =" UPDATE Fahrzeug SET model =' " + upmodel + " ' where fahrzeugid=' "+id +" ' " ;  
+			PreparedStatement connect = connection.prepareStatement(upModell);
+			connect.setString(3,upmodel);
 			connect.execute();
 			connect.close();
 		}
@@ -153,8 +155,10 @@ public class DatabaseFahrzeugDAO implements FahrzeugDAO {
 	
 	public void updateJahr (int id, String jahr) {
 		try {
-			String update =" UPDATE Fahrzeug SET marke =' " + jahr + " 'where fahrzeugid=' "+ id+ " ' ";  
-			PreparedStatement connect = connection.prepareStatement(update);
+			String update =" UPDATE Fahrzeug SET jahr =' " + jahr + " 'where fahrzeugid=' "+ id+ " ' "; 
+			
+			PreparedStatement connect = connection.prepareStatement(upJahr);
+			connect.setString(3,jahr);
 			connect.execute();
 			connect.close();
 		}
@@ -164,8 +168,9 @@ public class DatabaseFahrzeugDAO implements FahrzeugDAO {
     
 	public void updatefarbe (int id, String upfarbe) {
 		try {
-			String update =" UPDATE Fahrzeug SET marke =' " + upfarbe + " 'where fahrzeugid=' "+id+ " ' ";  
-			PreparedStatement connect = connection.prepareStatement(update);
+			String update =" UPDATE Fahrzeug SET farbe =' " + upfarbe + " 'where fahrzeugid=' "+id+ " ' ";  
+			PreparedStatement connect = connection.prepareStatement(upFarbe);
+			connect.setString(4,upfarbe);
 			connect.execute();
 			connect.close();
 		}
