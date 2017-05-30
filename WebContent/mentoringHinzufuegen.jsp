@@ -117,10 +117,9 @@
                                 <a href="indexLoggedInAsMitarbeiter.jsp" >Home</a>
                             </li> 
                             
-                       		<li>
-                                <a href="verwaltenMitarbeiter.jsp">Mitarbeiter</a>
-                             </li>   
-                          
+                            <li>
+                                <a href="verwaltenMitarbeiter.jsp" >Mitarbeiter</a>
+                            </li>
    
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kunden<span class="caret"></span></a>
@@ -137,7 +136,7 @@
                                     <ul>
                                         <li><a href="mentoringListe.jsp">Mentoringliste</a></li>
                                         <li><a href="mentoringHinzufuegen.jsp">Mentoring hinzufuegen</a></li>
-                                        <li><a href="mentoringLoeschen.jsp">Mentoring loeschen</a></li>
+                                        <li><a href="mentoringLoeschenauswaehlen.jsp">Mentoring loeschen</a></li>
                                         <li><a href="mentoringAendern.jsp">Mentoring aendern</a></li>
                                     </ul>
                                 </div>

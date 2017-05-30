@@ -120,10 +120,9 @@
                                 <a href="indexLoggedInAsMitarbeiter.jsp" >Home</a>
                             </li> 
                             
-                       		<li>
-                                <a href="verwaltenMitarbeiter.jsp">Mitarbeiter</a>
-                             </li>   
-                          
+                            <li>
+                                <a href="verwaltenMitarbeiter.jsp" >Mitarbeiter</a>
+                            </li>
    
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kunden<span class="caret"></span></a>
@@ -201,7 +200,6 @@
                 <!-- /main nav -->
             </div>
         </header>
-        
         <!--
         ==================================================
         Slider Section Start
