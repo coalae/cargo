@@ -34,6 +34,12 @@ public class LoginController extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * wenn als @param login übergeben startet das erste if
+	 * zuerst wird geprüft gibt es so einen Nutzer in der Datenbank
+	 * Wenn nein dann wird er wieder auf die Index Seite geleitet
+	 * Wenn der Login als Mitarbeiter erkannt wird dan wird er auf die indexloggedasMitarbeiter geleitet
+	 * Wenn der Login als Kunde erkannt wird wird er auf die Kunden Seite geleitet
+	 * Als Sicherheit haben wir noch eine Prüfung die auf die index verweist
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("pageName").equalsIgnoreCase("login")){
@@ -45,7 +51,6 @@ public class LoginController extends HttpServlet {
 			if(value.equalsIgnoreCase("Mitarbeiter")){
 				//Weiter zur MitarbeiterSeite bzw zum Servlet
 				String spez=lmg.spezi(name, pwd);
-				System.out.println(spez+" hallo");
 				if(spez=="Admin"){
 					session.setAttribute("marker", spez);
 					request.getRequestDispatcher("indexLoggedInAsMitarbeiter.jsp").include(request, response);
@@ -63,10 +68,10 @@ public class LoginController extends HttpServlet {
 				}
 			}
 			else if(value.equalsIgnoreCase("Kunde")){
-				//weiter zur Kunden Seite bzw zum Servlet
+				request.getRequestDispatcher("indexLoggedInAsKunde.jsp").include(request, response);
 			}
 			else if(value==null){
-				//Keiner Gefunden Fehler ausgeben
+				request.getRequestDispatcher("index.jsp").include(request, response);
 			}
 			
 		}

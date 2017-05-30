@@ -52,11 +52,6 @@ public class DatabaseKursDAO implements KursDAO {
             ResultSet rs = prest.executeQuery();
             
             while (rs.next()) {
-            /*	DB CHECK
-                System.out.println(rs.getInt(1));
-            	System.out.println(rs.getString(2));
-            	System.out.println(rs.getString(3));
-            */
              int kursId=rs.getInt(1);
              String kursname=rs.getString(2);
              String level=rs.getString(3);
@@ -81,9 +76,10 @@ public class DatabaseKursDAO implements KursDAO {
     	     endecal.setLenient(false);
      	     beginncal.setTime(sdf.parse(endestr));
      	     
-			 // TEST MIT DUMMY-betreuerId und DUMMY-immobilienId
+     	     // neuen Kurs anlegen
              Kurs kurs=new Kurs(kursId,kursname,level,beginncal,endecal,preis,betreuerId,maxAnzahl,immobilie,teilnehmerliste);
              
+             // Kurs zur Kursliste hinzufuegen
              kursList.add(kurs);
             }
         } catch (SQLException e) {
@@ -136,11 +132,6 @@ public class DatabaseKursDAO implements KursDAO {
 	            ResultSet rs = prest.executeQuery();
 	            
 	            while (rs.next()) {
-	             /*	DB CHECK
-	                System.out.println(rs.getInt(1));
-	            	System.out.println(rs.getString(2));
-	            	System.out.println(rs.getString(3));
-	            */
 	             int kursId=rs.getInt(1);
 	             String kursname=rs.getString(2);
 	             String level=rs.getString(3);
@@ -166,8 +157,8 @@ public class DatabaseKursDAO implements KursDAO {
 	    	     GregorianCalendar endecal = new GregorianCalendar();
 	     	     beginncal.setTime(sdf.parse(endestr));
 	     	     
-				 // TEST MIT DUMMY-betreuerId und DUMMY-immobilienId
-	             kurs=new Kurs(kursId,kursname,level,beginncal,endecal,preis,betreuerId,maxAnzahl,immobilie,teilnehmerliste); 
+	     	     // neuen Kurs anlegen
+	     	     kurs=new Kurs(kursId,kursname,level,beginncal,endecal,preis,betreuerId,maxAnzahl,immobilie,teilnehmerliste); 
 	            }
 	        } catch (SQLException e) {
 	        } catch (ParseException e) {
@@ -226,8 +217,6 @@ public class DatabaseKursDAO implements KursDAO {
               // execute the preparedstatement
               preparedStmt.execute();
               
-              // close
-              // preparedStmt.close();
               con.close();
 		    } catch (SQLException e) {
 		        e.printStackTrace();
@@ -259,7 +248,7 @@ public class DatabaseKursDAO implements KursDAO {
             e.printStackTrace();
         }
 		
-	    String sql = "DELETE FROM kurs WHERE kursId='" + id + "'";
+	    String sql = "DELETE FROM Kurs WHERE kursId='" + id + "'";
 
         try {
         	Statement stmt = con.createStatement();        	         	 
@@ -268,8 +257,6 @@ public class DatabaseKursDAO implements KursDAO {
             e.printStackTrace();
         } finally {
             try {
-               // if (stmt != null)
-               //     stmt.close();
                 if (con != null)
                     con.close();
             } catch (SQLException e) {
@@ -354,7 +341,7 @@ public class DatabaseKursDAO implements KursDAO {
         try {
         	
               // insert statement
-              String query = " insert into Teilnehmer (kundenId,kursId)"
+              String query = " insert into teilnehmer (kundenId,kursId)"
                 + " values (?, ?)";
 
               // create insert preparedstatement
@@ -408,8 +395,6 @@ public class DatabaseKursDAO implements KursDAO {
             e.printStackTrace();
         } finally {
             try {
-               // if (stmt != null)
-               //     stmt.close();
                 if (con != null)
                     con.close();
             } catch (SQLException e) {
@@ -447,11 +432,8 @@ public class DatabaseKursDAO implements KursDAO {
 	            prest = con.prepareStatement(sql);
 	            ResultSet rs = prest.executeQuery();
 
-	            while (rs.next()) {
- 	            	// TEST CHECK DATA: System.out.println(rs.getInt(1));
-	                    
+	            while (rs.next()) {                    
 	                int kundenId=rs.getInt(1);
-	                // TEST CHECK DATA: System.out.println(kundenId);
 	                teilnehmerliste.add(kundenId);
 	            }
 	        }catch (SQLException e) {
@@ -498,11 +480,8 @@ public class DatabaseKursDAO implements KursDAO {
 	            prest = con.prepareStatement(sql);
 	            ResultSet rs = prest.executeQuery();
 
-	            while (rs.next()) {
- 	            	// TEST CHECK DATA: System.out.println(rs.getInt(1));
-	                    
+	            while (rs.next()) {	                    
 	                int kursId=rs.getInt(1);
-	                // TEST CHECK DATA: System.out.println(kundenId);
 	                kursliste.add(kursId);
 	            }
 	        }catch (SQLException e) {
@@ -516,7 +495,6 @@ public class DatabaseKursDAO implements KursDAO {
 	            } catch (SQLException e) {
 	                e.printStackTrace();
 	            }
-
 	        }
 			return kursliste;
 	}
@@ -526,8 +504,8 @@ public class DatabaseKursDAO implements KursDAO {
 	 * main Funktion fuer Tests
 	 * @param args
 	 */ 
-	public static void main(String[] args){
-		DatabaseKursDAO dao = new DatabaseKursDAO();
+	// public static void main(String[] args){
+	//	DatabaseKursDAO dao = new DatabaseKursDAO();
 		// dao.select();
 		// dao.insert();
 		// dao.update();
@@ -551,6 +529,6 @@ public class DatabaseKursDAO implements KursDAO {
 		}
 		*/
 		
-	}
+	//}
 	
 }

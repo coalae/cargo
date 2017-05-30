@@ -121,8 +121,13 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Immobilien<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
+<<<<<<< HEAD
                                         <li><a href="immobilienListe.jsp">Immobilien verwalten</a></li>
                                         <li><a href="ListeImmobilie.jsp">Immobilieliste</a></li>
+=======
+                                        <li><a href="immobilienListe.jsp">Verwaltung</a></li>
+                                        <li><a href="ListeImmobilie.jsp">Liste</a></li>
+>>>>>>> e9722dda4ce31378b0612dc95903789f88db2177
                                     </ul>
                                 </div>
                             </li>
@@ -131,8 +136,13 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fahrzeuge<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
+<<<<<<< HEAD
                                         <li><a href="fahrzeugListe.jsp">Fahrzeug verwalten</a></li>
                                         <li><a href="ListeFahrzeug.jsp">Fahrzeugliste</a></li>
+=======
+                                        <li><a href="fahrzeugListe.jsp">Verwaltung</a></li>
+                                        <li><a href="ListeFahrzeug.jsp">Liste</a></li>
+>>>>>>> e9722dda4ce31378b0612dc95903789f88db2177
                                     </ul>
                                 </div>
                             </li>

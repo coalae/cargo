@@ -159,8 +159,7 @@
 
  			<%KundenMgmt km = new KundenMgmt();%>
  			<%KursMgmt kum = new KursMgmt();%>
- 			<!--  ACHTUNG: hier noch Dummy eingeloggte Kunden Daten -->
-			<%ArrayList<Kurs> meineKurse = kum.getKurslisteForTeilnehmer(kunde.getId()); %>
+
  
                                 <span>Meine Kurse:</span>
                                 <br>
@@ -202,7 +201,11 @@
 								  </tr>
 		   						
 		   						 <%SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");%>
-
+							
+	
+				<%try {%>
+			                      <% ArrayList<Kurs> meineKurse = kum.getKurslisteForTeilnehmer(kunde.getId()); %>
+	
 								 <%for(int i = 0; i<meineKurse.size(); i++){%>
 								 <%int freiePlaetze=meineKurse.get(i).getMaxAnzahl()-meineKurse.get(i).getTeilnehmerliste().size();%>
 								  	<tr>
@@ -218,7 +221,8 @@
 								  	</tr>
 							<%}%>
 							</table>		
-	  
+	   				<%} catch (NullPointerException e){%>
+	   					<%e.printStackTrace(); }%>
 						  <br>				
 					
 					 

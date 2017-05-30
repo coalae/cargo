@@ -148,10 +148,10 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mentoring<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="mentoringListe">Mentoringliste</a></li>
+                                        <li><a href="mentoringListe.jsp">Mentoringliste</a></li>
                                         <li><a href="mentoringHinzufuegen.jsp">Mentoring hinzufuegen</a></li>
-                                        <li><a href="mentoringLoeschen.jsp">Mentoring loeschen</a></li>
-                                        <li><a href="mentoringAendern">Mentoring aendern</a></li>
+                                        <li><a href="mentoringLoeschenauswaehlen.jsp">Mentoring loeschen</a></li>
+                                        <li><a href="mentoringAendern.jsp">Mentoring aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -160,25 +160,22 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Immobilien<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="immobilienListe">Immobilienliste</a></li>
-                                        <li><a href="immobilieHinzufuegen.jsp">Immobilie hinzufuegen</a></li>
-                                        <li><a href="immobilieAendern">Immobilie aendern</a></li>
+                                        <li><a href="immobilienListe.jsp">Verwaltung</a></li>
+                                        <li><a href="ListeImmobilie.jsp">Liste</a></li>
                                     </ul>
                                 </div>
                             </li>
-                            
                             
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fahrzeuge<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="fahrzeugListe">Fahrzeugliste</a></li>
-                                        <li><a href="fahrzeugHinzufuegen.jsp">Fahrzeug hinzufuegen</a></li>
-                                        <li><a href="fahrzeugLoeschen.jsp">Fahrzeug loeschen</a></li>
-                                        <li><a href="fahrzeugAendern">Fahrzeug aendern</a></li>
+                                        <li><a href="fahrzeugListe.jsp">Verwaltung</a></li>
+                                        <li><a href="ListeFahrzeug.jsp">Liste</a></li>
                                     </ul>
                                 </div>
                             </li>
+                            
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kurse <span class="caret"></span></a>
                                 <div class="dropdown-menu active">

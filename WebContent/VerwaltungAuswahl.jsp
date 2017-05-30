@@ -85,52 +85,124 @@
 
 </head>
 <body>
-	<!--
+ <!--
         ==================================================
         Header Section Start
         ================================================== -->
-	<header id="top-bar" class="navbar-fixed-top animated-header">
-	<div class="container">
-		<div class="navbar-header">
-			<!-- responsive nav button -->
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target=".navbar-collapse">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<!-- /responsive nav button -->
+        <header id="top-bar" class="navbar-fixed-top animated-header">
+            <div class="container">
+                <div class="navbar-header">
+                    <!-- responsive nav button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <!-- /responsive nav button -->
+                    
+                    <!-- logo -->
+                    <div class="navbar-brand">
+                        <a href="indexLoggedInAsMitarbeiter.jsp" >
+                            <img src="images/CargoLogo.JPG" alt="" align="right">
+                            <br>
+                        </a>
+                    </div>
+                    <!-- /logo -->
+                </div>
+                
+                <br> <br> <br> <br> <br> 
+                
+                <!-- main menu -->
+                <nav class="collapse navbar-collapse navbar-right" role="navigation">
+                    <div class="main-menu active">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="indexLoggedInAsMitarbeiter.jsp" >Home</a>
+                            </li> 
+                            
+                       		<li>
+                                <a href="verwaltenMitarbeiter.jsp">Mitarbeiter</a>
+                             </li>   
+                          
+   
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kunden<span class="caret"></span></a>
+                                <div class="dropdown-menu">
+                                    <ul>
+                                        <li><a href="kundenListe.jsp">Kundenliste</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                                                     
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mentoring<span class="caret"></span></a>
+                                <div class="dropdown-menu">
+                                    <ul>
+                                        <li><a href="mentoringListe.jsp">Mentoringliste</a></li>
+                                        <li><a href="mentoringHinzufuegen.jsp">Mentoring hinzufuegen</a></li>
+                                        <li><a href="mentoringLoeschen.jsp">Mentoring loeschen</a></li>
+                                        <li><a href="mentoringAendern.jsp">Mentoring aendern</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Immobilien<span class="caret"></span></a>
+                                <div class="dropdown-menu">
+                                    <ul>
+                                        <li><a href="immobilienListe.jsp">Immobilienliste</a></li>
+                                        <li><a href="immobilieHinzufuegen.jsp">Immobilie hinzufuegen</a></li>
+                                        <li><a href="immobilieAendern.jsp">Immobilie aendern</a></li>
+                                    </ul>
+                                </div>
+                            </li>
 
-			<!-- logo -->
-			<div class="navbar-brand">
-				<a href="indexLoggedInAsKunde.jsp"> <img
-					src="images/CargoLogo.JPG" alt="" align="right"> <br>
-				</a>
-			</div>
-			<!-- /logo -->
-		</div>
-		<br> <br>
-
-		<!-- main menu -->
-		<nav class="collapse navbar-collapse navbar-right" role="navigation">
-		<div class="main-menu">
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="index.jsp">Zurück</a></li>
-
-
-
-
-
-				<li><a href="LogoutKundeServlet">Logout</a></li>
-
-
-
-			</ul>
-		</div>
-		</nav>
-		<!-- /main nav -->
-	</div>
-	</header>
+                            
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fahrzeuge<span class="caret"></span></a>
+                                <div class="dropdown-menu">
+                                    <ul>
+                                        <li><a href="fahrzeugListe.jsp">Fahrzeugliste</a></li>
+                                        <li><a href="fahrzeugHinzufuegen.jsp">Fahrzeug hinzufuegen</a></li>
+                                        <li><a href="fahrzeugLoeschen.jsp">Fahrzeug loeschen</a></li>
+                                        <li><a href="fahrzeugAendern.jsp">Fahrzeug aendern</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kurse <span class="caret"></span></a>
+                                <div class="dropdown-menu active">
+                                    <ul>
+                                        <li><a href="kursHinzufuegen.jsp">Kurs hinzufuegen</a></li>
+                                        <li><a href="kursLoeschen.jsp">Kurs loeschen</a></li>
+                                        <li><a href="kursAendern.jsp">Kursdaten abfragen</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            
+                            <li><a href="kursListeAnzeigen.jsp">Kurskatalog</a></li>
+ 
+ <!-- TODO: PROFIL HIER AN MITARBEITER ANPASSEN -->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mein Profil<span class="caret"></span></a>
+                                <div class="dropdown-menu">
+                                    <ul>
+                                        <li><a href="meinProfil.jsp">Meine Daten</a></li>
+                                        <li><a href="meineKurse.jsp">Meine Kurse</a></li>
+                                        <li><a href="passwortAendern.jsp">Passwort aendern</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+							
+	                  		<li><a href="LogoutMitarbeiterServlet">Logout</a></li>
+                                                       
+                        </ul>
+                    </div>
+                </nav>
+                <!-- /main nav -->
+            </div>
+        </header>
 
 
 
