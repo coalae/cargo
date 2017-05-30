@@ -354,7 +354,7 @@ public class DatabaseKursDAO implements KursDAO {
         try {
         	
               // insert statement
-              String query = " insert into Teilnehmer (kundenId,kursId)"
+              String query = " insert into teilnehmer (kundenId,kursId)"
                 + " values (?, ?)";
 
               // create insert preparedstatement

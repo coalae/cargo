@@ -311,17 +311,18 @@ public class DatabaseKundenDAO implements KundenDAO {
 */  
    
     
-	/* 
+	/*
 	 * main Funktion fuer Tests
 	 * @param args
-	 
+	*/ 
 	public static void main(String[] args){
 		DatabaseKundenDAO dao = new DatabaseKundenDAO();
-		 dao.select();
+		// dao.select();
 		// dao.insert();
 		// dao.update();
-		// Kunde kundeById = dao.getKundeById(1);
+		 Kunde kundeById = dao.getKundeById(2);
+		 System.out.println("UN: " + kundeById.getUsername() + " PW " + kundeById.getPassword());
 		// dao.deleteKundeById(3);
 	}
-   */
+   
 }
