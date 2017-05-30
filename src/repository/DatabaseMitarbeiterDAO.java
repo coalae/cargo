@@ -6,17 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
-import org.eclipse.jdt.internal.compiler.parser.ParserBasicInformation;
-
-import model.Mentoring;
 import model.Mitarbeiter;
-
+/**
+ * 
+ * @author Gregor Langner
+ * Klasse mit der verbindung zur Datenbank um alle Mitarbeiter aktionen durchführen zu können
+ *
+ */
 public class DatabaseMitarbeiterDAO implements MitarbeiterDAO {
 	
 	private static final String all = "Select * from Mitarbeiter";
@@ -27,7 +25,10 @@ public class DatabaseMitarbeiterDAO implements MitarbeiterDAO {
 	private static final String add = "Insert into Mitarbeiter values (?,?,?,?,?,?,?,?,?,?)";
 	DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
 	Connection connection;
-	
+	/**
+	 * {@code DatabaseMitarbeiterDAO()}
+	 * Der Konstruktor :)
+	 */
 	public DatabaseMitarbeiterDAO() {
 		try{
 			connection= DatabaseHandler.getConnection();
@@ -45,7 +46,7 @@ public class DatabaseMitarbeiterDAO implements MitarbeiterDAO {
 	
 	
 	/**
-	 * INSERT Mitarbeiter
+	 * Einfügen eines neuen Mitarbeiters in die Datenbank
 	 */
 	public void insert(String vor,String nach,int svnr,String spezi,int mittyp,String gebdate,
 			String user,String pw,int statusint){
@@ -71,15 +72,16 @@ public class DatabaseMitarbeiterDAO implements MitarbeiterDAO {
 		 
  
 	/**
-	 * UPDATE Mitarbeiter (by Id)
+	 * UPDATE Mitarbeiter neues Passwort 
 	 */
 	public void update(String user,String oldpw,String newpw) {
 		try{
-			String update="UPDATE Mitarbeiter SET passw ='"+ newpw +"' where username='"+user+"'";
-			System.out.println(update);
-			PreparedStatement up =connection.prepareStatement(update);
-			up.execute();
-			up.close();
+
+				String update="UPDATE Mitarbeiter SET passw ='"+ newpw +"' where username='"+user+"'";
+				System.out.println(update);
+				PreparedStatement up =connection.prepareStatement(update);
+				up.execute();
+				up.close();
 		}catch(Exception e){e.getMessage();}
 	}
 
@@ -97,101 +99,9 @@ public class DatabaseMitarbeiterDAO implements MitarbeiterDAO {
     	}
     	catch(SQLException e){e.getStackTrace();}
 	}
-    
-    
-    
-	public ArrayList<Mitarbeiter> getMiarbeiterListe() {
-		
-        ArrayList<Mitarbeiter> mitarbeiterliste = new ArrayList<Mitarbeiter>();
-        
-        String sql;   
-        sql = "SELECT mitarbeiterid, vorname, nachname, svnr, spezialisierung, mitarbeitertyp, geburtsdatum, username, passw, active FROM Mitarbeiter";
-        
-        try {
-
-            PreparedStatement stm = connection.prepareStatement(sql);
-            ResultSet rs = stm.executeQuery();
-            
-            while (rs.next()) {
-             int mitarbeiterid=rs.getInt(1);
-             String vorname=rs.getString(2);
-             String nachname=rs.getString(3);
-             int svnr = rs.getInt(4);
-             String spezialisierung=rs.getString(5);
-             int mitarbeitertyp=rs.getInt(6);
-             String geburtsdatum = rs.getString(7);
-             String username = rs.getString(8);
-             String passw = rs.getString(9);
-             String active = rs.getString(10);
-             
-             boolean active_ = Boolean.parseBoolean(active);
-             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
-             GregorianCalendar cal = new GregorianCalendar();
-     	     Date geburtsdatum_ = sdf.parse(geburtsdatum);
-     	     cal.setTime(geburtsdatum_);
-                    
-    		Mitarbeiter mitarbeiter = new Mitarbeiter(mitarbeiterid, vorname, nachname, svnr, spezialisierung, mitarbeitertyp, cal, username, passw, active_);
-    		
-             mitarbeiterliste.add(mitarbeiter);
-             
-             System.out.println(mitarbeiter);
-             
-             
-             
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-			e.printStackTrace();
-		} 
-        return mitarbeiterliste;
-        
-     }	
-    
-    
 	@Override
 	public Mitarbeiter getMitarbeiterById(int id) {
-		String sql;
-		Mitarbeiter mitarbeiter = null;
-	    sql = "SELECT mitarbeiterid, vorname, nachname, svnr, spezialisierung, mitarbeitertyp, geburtsdatum, username, passw, active from Mitarbeiter WHERE mitarbeiterid='" + id + "'";
-	        
-	        try {
-
-	           PreparedStatement stm = connection.prepareStatement(sql);
-	            ResultSet rs = stm.executeQuery();
-	            
-	            while (rs.next()){
-	            int mitarbeiterid=rs.getInt(1);
-	             String vorname=rs.getString(2);
-	             String nachname=rs.getString(3);
-	             int svnr = rs.getInt(4);
-	             String spezialisierung=rs.getString(5);
-	             int mitarbeitertyp=rs.getInt(6);
-	             String geburtsdatum = rs.getString(7);
-	             String username = rs.getString(8);
-	             String passw = rs.getString(9);
-	             String active = rs.getString(10);
-	             
-	             boolean active_ = Boolean.parseBoolean(active);
-	             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
-	             GregorianCalendar cal = new GregorianCalendar();
-	     	     Date geburtsdatum_ = sdf.parse(geburtsdatum);
-	     	     cal.setTime(geburtsdatum_);
-	                    
-	     	     mitarbeiter = new Mitarbeiter(mitarbeiterid, vorname, nachname, svnr, spezialisierung, mitarbeitertyp, cal, username, passw, active_);
-	             
-	            }
-	            stm.close();
-	              
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (ParseException e) {
-				e.printStackTrace();
-			} 
-	        
-	        
-	        return mitarbeiter;
-
-	}	
-
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

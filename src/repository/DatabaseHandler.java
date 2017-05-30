@@ -5,7 +5,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseHandler {
-
+/**
+ * Klasse DatabaseHandler
+ * Ist als Singelton Pattern realisiert
+ * Wenn es eine Instance gibt wird diese zurück gegeben
+ * Wenn die Connection null ist wird eine erstellt 
+ * sollte eine Connection vorhanden sein wird diese zurück gegeben 
+ */
 	private static DatabaseHandler instance = null;
 
 	private static Connection connection = null;
