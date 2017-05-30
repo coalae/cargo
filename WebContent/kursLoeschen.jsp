@@ -129,7 +129,7 @@
                                     <ul>
                                         <li><a href="mentoringListe.jsp">Mentoringliste</a></li>
                                         <li><a href="mentoringHinzufuegen.jsp">Mentoring hinzufuegen</a></li>
-                                        <li><a href="mentoringLoeschen.jsp">Mentoring loeschen</a></li>
+                                        <li><a href="mentoringLoeschenauswaehlen.jsp">Mentoring loeschen</a></li>
                                         <li><a href="mentoringAendern.jsp">Mentoring aendern</a></li>
                                     </ul>
                                 </div>

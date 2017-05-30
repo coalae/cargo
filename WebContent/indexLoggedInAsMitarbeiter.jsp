@@ -111,7 +111,7 @@
                                     <ul>
                                         <li><a href="mentoringListe.jsp">Mentoringliste</a></li>
                                         <li><a href="mentoringHinzufuegen.jsp">Mentoring hinzufuegen</a></li>
-                                        <li><a href="mentoringLoeschen.jsp">Mentoring loeschen</a></li>
+                                        <li><a href="mentoringLoeschenauswaehlen.jsp">Mentoring loeschen</a></li>
                                         <li><a href="mentoringAendern.jsp">Mentoring aendern</a></li>
                                     </ul>
                                 </div>
@@ -133,7 +133,7 @@
                                 <div class="dropdown-menu">
                                     <ul>
                                         <li><a href="fahrzeugListe.jsp">Fahrzeugliste</a></li>
-                                        <li><a href="ListeFarhzeug.jsp">Fahrzeug hinzufuegen</a></li>
+                                        <li><a href="fahrzeugHinzufuegen.jsp">Fahrzeug hinzufuegen</a></li>
                                         <li><a href="fahrzeugLoeschen.jsp">Fahrzeug loeschen</a></li>
                                         <li><a href="fahrzeugAendern.jsp">Fahrzeug aendern</a></li>
                                     </ul>
