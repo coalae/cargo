@@ -51,20 +51,20 @@ public class MentoringLoeschenServlet extends HttpServlet {
     							
     						// Mentoring loeschen
     						try{
-    							Integer mentoringid = Integer.parseInt(request.getParameter("mentoringid"));
-
+    							Integer mentoringid = Integer.parseInt(request.getParameter("mentid"));
+    							    					
     							Mentoring mentoring = mm.getMentoringById(mentoringid);
     							mm.deleteMentoring(mentoring.getMentoringId());
     							String message = "Mentoring wurde geloescht.";
     							request.setAttribute("message", message);
-    							RequestDispatcher view = request.getRequestDispatcher("mentoringLoeschen.jsp");
+    							RequestDispatcher view = request.getRequestDispatcher("mentoringLoeschenauswaehlen.jsp");
     							view.forward(request, response);
     						} catch (Exception e) {
     							e.printStackTrace();
     							out.println("Mentoring existiert nicht - Kein Loeschen durchgefuehrt!");
     							String message = "Mentoring existiert nicht - Kein Loeschen durchgefuehrt!";
     							request.setAttribute("message", message);
-    							RequestDispatcher view = request.getRequestDispatcher("mentoringLoeschen.jsp");
+    							RequestDispatcher view = request.getRequestDispatcher("mentoringLoeschenauswaehlen.jsp");
     							view.forward(request, response);
     						}		
     	}

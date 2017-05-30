@@ -2,21 +2,19 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@page import="logic.MentoringMgmt"%>
-<%@page import="logic.MitarbeiterMgmt"%>
 <%@page import="model.Mentoring"%>
 <%@page import="model.Mitarbeiter"%>
+<%@page import="model.Mitarbeiter"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="java.text.SimpleDateFormat"%>
-
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js">
     <head>
     <% String message = (String) request.getAttribute("message") ;%>
-    <%ServletContext servletcontext=request.getServletContext(); %>
+
+  	<%ServletContext servletcontext=request.getServletContext(); %>
 	<%Mitarbeiter mitarbeiter = (Mitarbeiter) servletcontext.getAttribute("mitarbeiter");%>
-	<% String mentoringId = (String) request.getAttribute("mentoringId") ;%>
     
         <!-- Basic Page Needs
         ================================================== -->
@@ -71,7 +69,6 @@
         <script src="js/main.js"></script>
         	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
     </head>
     <body>
         <!--
@@ -99,7 +96,9 @@
                     </div>
                     <!-- /logo -->
                 </div>
-                                                                                <br> <br> <br>  <br> <br>
+                
+                                                <br> <br> <br> <br> <br> 
+                
                 
                 <!-- main menu -->
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
@@ -120,18 +119,16 @@
                                     </ul>
                                 </div>
                             </li>
- 
-                             
-                               <li class="dropdown">
+                            
+                           <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kunden<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
                                         <li><a href="kundenListe.jsp">Kundenliste</a></li>
                                     </ul>
                                 </div>
-                            </li>  
-                                  
-                                                             
+                            </li>
+                            
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mentoring<span class="caret"></span></a>
                                 <div class="dropdown-menu">
@@ -189,6 +186,8 @@
                             </li>
                             
                             <li><a href="kursListeAnzeigen.jsp">Kurskatalog</a></li>
+
+<!-- TODO: PROFIL HIER AUF MITARBEITER ANPASSEN -->
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mein Profil<span class="caret"></span></a>
                                 <div class="dropdown-menu">
@@ -225,16 +224,17 @@
                             
                             <!-- Slider -->
                             <section class="cd-intro">
- 
+
                                 <h2>
                                    <%if (mitarbeiter != null) {%>					
 							        Sie sind eingeloggt als: <%=mitarbeiter.getUsername()%> 
 							        <%}%>                                
                                 </h2>
- 
+                                
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-  <br>
-                                <span>Mentoring loeschen:</span><br>
+                                                                <br>  
+                                
+                                <span>Mentoringdaten abfragen</span><br>
                       <!--          <span class="cd-words-wrapper">
                                     <b class="is-visible">CarGo Driving School</b>
                                     <b>CarGo Fahrschule</b>
@@ -243,82 +243,28 @@
                                 </section> <!-- cd-intro -->
                                 <!-- /.slider -->
 
-			<%MentoringMgmt mm = new MentoringMgmt();%>
-			<%MitarbeiterMgmt mam = new MitarbeiterMgmt();%>
-			<%Mentoring ausgewaehltesMentoring = mm.getMentoringById(Integer.parseInt(mentoringId));%>
-			<% int mentor = ausgewaehltesMentoring.getMentorId(); %>
-			<% int mentee = ausgewaehltesMentoring.getMenteeId(); %>
-			<%Mitarbeiter ausgewaehlterMentor = mam.getMitarbeiterById(mentor); %>
-			<%Mitarbeiter ausgewaehlterMentee = mam.getMitarbeiterById(mentee); %>
-			
-			<%SimpleDateFormat sdf = new SimpleDateFormat("yyyy");%> 
-
+			<%MentoringMgmt	mm = new MentoringMgmt();%>
+			<%ArrayList<Mentoring> mentoringliste = mm.getMentoringListe();%>
 			 
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Mentoringid:</span>
-                          <br>
-                          <span><%=ausgewaehltesMentoring.getMentoringId()%></span>
-						  <br> </h2>
+					<form action="MentoringSuchenfuerLoeschen" Method="GET" >
 						
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Mentorid:</span>
-                          <br>
-                          <span><%=ausgewaehltesMentoring.getMentorId()%></span>
-						  <br> </h2>
-						  
+                          <span>MentoringId auswaehlen:</span><br><br>
+						  <select name="mentoringId" required>  						  
+  						    <%for(int i=0; i<mentoringliste.size();i++) {%>
+  						  	 <%int id = mentoringliste.get(i).getMentoringId();%>
+  						   	 <option value="<%=id%>"><%=mentoringliste.get(i).getMentoringId()%></option>  						   	 
+  						  <%} %>
+                          </select> </h2>
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Mentorvorname: </span>
-                          <br>
-                          <span><%=ausgewaehlterMentor.getVorname()%></span>
-                          <br> </h2>
-						  
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Mentornachname: </span>
-                          <br>
-                          <span><%=ausgewaehlterMentor.getNachname()%></span>
-                          <br> </h2>
-                          
-                          <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Menteeid:</span>
-                          <br>
-                          <span><%=ausgewaehltesMentoring.getMenteeId()%></span>
-						  <br> </h2>
-                          
-                          <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Menteevorname: </span>
-                          <br>
-                          <span><%=ausgewaehlterMentee.getVorname()%></span>
-                          <br> </h2>
-                          
-                           <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Menteenachname: </span>
-                          <br>
-                          <span><%=ausgewaehlterMentee.getNachname()%></span>
-                          <br> </h2>
-                          
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Thema: </span>
-                          <br>
-                          <span><%=ausgewaehltesMentoring.getThema()%></span><br>
-                          <br> </h2>
-                          
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Beginnjahr: </span>
-                          <br>
-                          <span><%=sdf.format(ausgewaehltesMentoring.getBeginnJahr())%></span><br>
-                          <br> </h2>
-
-			 
-					<form action="MentoringLoeschenServlet" Method="POST" >
-						  
-						  
-						  <br>
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-						  <input value=<%=(String) request.getAttribute("mentoringId") %> type="hidden" name="mentid">
-						  <span>	  <input type="submit" name="Löschen" value="Löschen" > </span> 
+						  <input type="submit" value="Mentoringdaten abfragen">   
 						  </h2>
-						  					 
+			
 					</form>	
+						  
+
+
+
 					
 					 
 						<% if (message != null){%>
@@ -330,7 +276,7 @@
 							
 
 						  <br>
-					<a href="mentoringLoeschenauswaehlen.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Zurück</a>
+					<a href="indexLoggedInAsMitarbeiter.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Home</a>
 						                                
                             </div>
                         </div>

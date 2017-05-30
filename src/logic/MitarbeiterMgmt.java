@@ -67,7 +67,6 @@ public class MitarbeiterMgmt {
 	
 	public Mitarbeiter getMitarbeiterById(int id){
 		Mitarbeiter mitarbeiter = dbzugang.getMitarbeiterById(id);
-		System.out.println(id + " Ich bin im Mgmt!");
 		return mitarbeiter;
 	}
 	public void aendern(String user,String oldpw,String newpw){
