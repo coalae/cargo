@@ -14,11 +14,12 @@ import model.Kunde;
  * Das Interface KundenDAO bietet Methoden fuer das Speichern, Loeschen, Veraendern von 
  * Instanzen der Klasse Kunde.
  * @author Cordula Eggerth
+ * (als kommentare stehen rechts die lokalen mariaDB-daten fuer die vorab-tests)
  */
 public class DatabaseKundenDAO implements KundenDAO {
-	private String DBAdresse = "jdbc:mariadb://localhost:3306/cargo";
-	private String username = "root";
-	private String password = "coalacoala1";
+	private String DBAdresse = "jdbc:mysql://langnerg86.mysql.univie.ac.at/langnerg86?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; // jdbc:mariadb://localhost:3306/cargo
+	private String username = "langnerg86"; // root
+	private String password = "dbkzlxlq1"; // coalacoala1
 	
 	/**
 	 * get kundenliste (i.e. SELECT * FROM kunde).
@@ -30,7 +31,7 @@ public class DatabaseKundenDAO implements KundenDAO {
 		Connection con = null;
         ArrayList<Kunde> kundenList = new ArrayList<Kunde>();
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");  // org.mariadb.jdbc.Driver
             con = DriverManager.getConnection(DBAdresse, username, password);
 
         } catch (ClassNotFoundException e) {
@@ -96,7 +97,7 @@ public class DatabaseKundenDAO implements KundenDAO {
 		Connection con = null;
 		Kunde suchKunde = null;
 		try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
             con = DriverManager.getConnection(DBAdresse, username, password);
 
         } catch (ClassNotFoundException e) {
@@ -155,7 +156,7 @@ public class DatabaseKundenDAO implements KundenDAO {
 	public void addKunde(Kunde kunde) {
 		Connection con = null;
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
             con = DriverManager.getConnection(DBAdresse, username, password);
 
         } catch (ClassNotFoundException e) {
@@ -209,7 +210,7 @@ public class DatabaseKundenDAO implements KundenDAO {
   		Connection con = null;
 		
 		try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
             con = DriverManager.getConnection(DBAdresse, username, password);
 
         } catch (ClassNotFoundException e) {
@@ -254,7 +255,7 @@ public class DatabaseKundenDAO implements KundenDAO {
 			Connection con = null;
 	        //User user = null;
 	        try {
-	            Class.forName("org.mariadb.jdbc.Driver");
+	            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
 	            con = DriverManager.getConnection(DBAdresse, username, password);
 
 	        } catch (ClassNotFoundException e) {
