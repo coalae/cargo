@@ -20,9 +20,9 @@ import model.Kurs;
  * @author Cordula Eggerth
  */
 public class DatabaseKursDAO implements KursDAO {
-	private String DBAdresse = "jdbc:mariadb://localhost:3306/cargo";
-	private String username = "root";
-	private String password = "coalacoala1";
+	private String DBAdresse = "jdbc:mysql://langnerg86.mysql.univie.ac.at/langnerg86?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";  // jdbc:mariadb://localhost:3306/cargo
+	private String username = "langnerg86"; // root
+	private String password = "dbkzlxlq1"; // coalacoala1
 
 	
 	/**
@@ -34,7 +34,7 @@ public class DatabaseKursDAO implements KursDAO {
 		Connection con = null;
         ArrayList<Kurs> kursList = new ArrayList<Kurs>();
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
             con = DriverManager.getConnection(DBAdresse, username, password);
 
         } catch (ClassNotFoundException e) {
@@ -117,7 +117,7 @@ public class DatabaseKursDAO implements KursDAO {
 		Connection con = null;
 		Kurs kurs = null;
 		try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
             con = DriverManager.getConnection(DBAdresse, username, password);
 
         } catch (ClassNotFoundException e) {
@@ -196,7 +196,7 @@ public class DatabaseKursDAO implements KursDAO {
 		Connection con = null;
 
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
             con = DriverManager.getConnection(DBAdresse, username, password);
 
         } catch (ClassNotFoundException e) {
@@ -250,7 +250,7 @@ public class DatabaseKursDAO implements KursDAO {
   		Connection con = null;
 		
 		try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
             con = DriverManager.getConnection(DBAdresse, username, password);
 
         } catch (ClassNotFoundException e) {
@@ -294,7 +294,7 @@ public class DatabaseKursDAO implements KursDAO {
 		
 			Connection con = null;
 	        try {
-	            Class.forName("org.mariadb.jdbc.Driver");
+	            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
 	            con = DriverManager.getConnection(DBAdresse, username, password);
 
 	        } catch (ClassNotFoundException e) {
@@ -342,7 +342,7 @@ public class DatabaseKursDAO implements KursDAO {
 	public void addTeilnehmerToKurs(int kundenId, int kursId){
 		Connection con = null;
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
             con = DriverManager.getConnection(DBAdresse, username, password);
 
         } catch (ClassNotFoundException e) {
@@ -390,7 +390,7 @@ public class DatabaseKursDAO implements KursDAO {
   		Connection con = null;
 		
 		try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
             con = DriverManager.getConnection(DBAdresse, username, password);
 
         } catch (ClassNotFoundException e) {
@@ -431,7 +431,7 @@ public class DatabaseKursDAO implements KursDAO {
     	ArrayList<Integer> teilnehmerliste=new ArrayList<Integer>();
 		 
 		try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
             con = DriverManager.getConnection(DBAdresse, username, password);
 
         } catch (ClassNotFoundException e) {
@@ -482,7 +482,7 @@ public class DatabaseKursDAO implements KursDAO {
     	ArrayList<Integer> kursliste=new ArrayList<Integer>();
 		 
 		try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
             con = DriverManager.getConnection(DBAdresse, username, password);
 
         } catch (ClassNotFoundException e) {
