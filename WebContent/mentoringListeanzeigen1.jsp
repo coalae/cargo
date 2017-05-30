@@ -272,13 +272,10 @@
                                 
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
    <br>
-                                <span>Mentoringteilnehmer:</span>
+                                <span>Mentoring:</span>
                                 <br>
-                                <span> (Id <%=mentoringId%>) </span>
-                      <!--          <span class="cd-words-wrapper">
-                                    <b class="is-visible">CarGo Driving School</b>
-                                    <b>CarGo Fahrschule</b>
-                                </span> -->
+                               
+                      
                                 </h1>
                                 </section> <!-- cd-intro -->
                                 <!-- /.slider -->
@@ -286,13 +283,16 @@
 			<%MentoringMgmt mm = new MentoringMgmt();%>
 			<%MitarbeiterMgmt mam = new MitarbeiterMgmt();%>
 			<%Mentoring ausgewaehltesMentoring = mm.getMentoringById(Integer.parseInt(mentoringId));%>
-			<%Mitarbeiter mentor = mam.getMitarbeiterById(ausgewaehltesMentoring.getMentorId()); %>
-			<%Mitarbeiter mentee = mam.getMitarbeiterById(ausgewaehltesMentoring.getMenteeId()); %>
-			<%SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");%> 
+			<% int mentor = ausgewaehltesMentoring.getMentorId(); %>
+			<% int mentee = ausgewaehltesMentoring.getMenteeId(); %>
+			<%Mitarbeiter ausgewaehlterMentor = mam.getMitarbeiterById(mentor); %>
+			<%Mitarbeiter ausgewaehlterMentee = mam.getMitarbeiterById(mentee); %>
+			
+			<%SimpleDateFormat sdf = new SimpleDateFormat("yyyy");%> 
 
 			 
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Mentoringnummer:</span>
+                          <span>Mentoringid:</span>
                           <br>
                           <span><%=ausgewaehltesMentoring.getMentoringId()%></span>
 						  <br> </h2>
@@ -304,27 +304,33 @@
 						  <br> </h2>
 						  
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Mentorvorname:</span>
+                          <span>Mentorvorname: </span>
                           <br>
-                          <span><%=mentor.getVorname()%></span><br>
-						  <br> </h2>
-                          						  
+                          <span><%=ausgewaehlterMentor.getVorname()%></span>
+                          <br> </h2>
+						  
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>Mentornachname: </span>
                           <br>
-                          <span><%=mentor.getNachname()%></span><br>
+                          <span><%=ausgewaehlterMentor.getNachname()%></span>
                           <br> </h2>
+                          
+                          <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
+                          <span>Menteeid:</span>
+                          <br>
+                          <span><%=ausgewaehltesMentoring.getMenteeId()%></span>
+						  <br> </h2>
                           
                           <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>Menteevorname: </span>
                           <br>
-                          <span><%=mentee.getVorname()%></span><br>
+                          <span><%=ausgewaehlterMentee.getVorname()%></span>
                           <br> </h2>
                           
-                          <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
+                           <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>Menteenachname: </span>
                           <br>
-                          <span><%=mentee.getNachname()%></span><br>
+                          <span><%=ausgewaehlterMentee.getNachname()%></span>
                           <br> </h2>
                           
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
@@ -336,10 +342,17 @@
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>Beginnjahr: </span>
                           <br>
-                          <span><%=ausgewaehltesMentoring.getBeginnJahr()%></span><br>
+                          <span><%=sdf.format(ausgewaehltesMentoring.getBeginnJahr())%></span><br>
                           <br> </h2>
-
-						  
+                          
+		<a href="MentoringAendernServlet?mentoringid=<%=ausgewaehltesMentoring.getMentoringId()%>" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Ändern</a> <br>
+		<a href="mentoringListe.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Zurück</a>
+						                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section><!--/#main-slider-->				  
 
             
             

@@ -40,7 +40,7 @@ public class MentoringAnzeigenServlet extends HttpServlet {
 			response.setContentType("text/html");
 
  				
-			String mentoringId = (String) request.getParameter("param1");
+			String mentoringId = (String) request.getParameter("mentoringid");
 						
 							
 						// Mentoring Id weitergeben

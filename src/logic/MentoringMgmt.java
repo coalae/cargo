@@ -3,7 +3,7 @@ package logic;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-
+import model.Kurs;
 import model.Mentoring;
 import repository.DatabaseKursDAO;
 import repository.DatabaseMentoringDAO;
@@ -39,7 +39,7 @@ public class MentoringMgmt {
 			return mentoring;
 		}
 		
-		public Mentoring getKursByThema(String thema){
+		public Mentoring getMentoringByThema(String thema){
 			Mentoring suchMentoring=null;
 			ArrayList<Mentoring> mentoringliste=getMentoringListe();
 			for(int i=0;i<mentoringliste.size();i++){
@@ -50,9 +50,9 @@ public class MentoringMgmt {
 			return suchMentoring;
 		}
 		
-		public ArrayList<Mentoring> getMentoringByMentorId(int mentorId){
+		/*public ArrayList<Mentoring> getMentoringByMentorId(int mentorId){
 	        //??
-		}
+		}*/
 		
 		public Mentoring getMentoringByMenteeId(int menteeId){ 
 			Mentoring mentoring = mentoringdao.getMentoringByMenteeId(menteeId);
@@ -78,6 +78,20 @@ public class MentoringMgmt {
 		}
 		
 		public void updateMentoring (Mentoring mentoring){ 
-			mentoringdao.updateMentoring(mentoring);;	
+			mentoringdao.updateMentoring(mentoring);	
 		}
+		
+		public boolean checkMentoringExists(int mentorid, int menteeid ){
+			boolean exists=false;
+			
+			ArrayList<Mentoring> mentoring=getMentoringListe();
+			
+			for(int i=0;i<mentoring.size();i++){
+				if(mentoring.get(i).getMentorId() == mentorid && mentoring.get(i).getMenteeId() == menteeid){
+					exists=true;
+				}
+			}	
+			return exists;
+		}
+		
 }

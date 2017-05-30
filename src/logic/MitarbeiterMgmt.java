@@ -1,8 +1,10 @@
 package logic;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import model.Kunde;
+import model.Mentoring;
 import model.Mitarbeiter;
 import repository.DatabaseMitarbeiterDAO;
 
@@ -28,6 +30,12 @@ public class MitarbeiterMgmt {
 		return mitarbeiterdao;
 	}
 
+	
+	public ArrayList<Mitarbeiter> getMitarbeiterListe(){
+		ArrayList<Mitarbeiter> mitarbeiterliste= dbzugang.getMiarbeiterListe();
+		return mitarbeiterliste;
+	}
+	
 	/**
 	 * Set-Methode fuer die Instanzvariable kundendao
 	 */
@@ -58,7 +66,8 @@ public class MitarbeiterMgmt {
 	}
 	
 	public Mitarbeiter getMitarbeiterById(int id){
-		Mitarbeiter mitarbeiter = mitarbeiterdao.getMitarbeiterById(id);
+		Mitarbeiter mitarbeiter = dbzugang.getMitarbeiterById(id);
+		System.out.println(id + " Ich bin im Mgmt!");
 		return mitarbeiter;
 	}
 	public void aendern(String user,String oldpw,String newpw){
