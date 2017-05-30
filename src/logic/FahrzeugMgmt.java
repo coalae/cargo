@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.Fahrzeug;
 import repository.DatabaseFahrzeugDAO;
+import repository.FahrzeugDAO;
 
 
 /**
@@ -16,7 +17,7 @@ import repository.DatabaseFahrzeugDAO;
 
 public class FahrzeugMgmt {
 
-	private DatabaseFahrzeugDAO fahrzeugDAO;
+	private FahrzeugDAO fahrzeugDAO;
 	
 	
 	public FahrzeugMgmt() {
@@ -47,11 +48,12 @@ public class FahrzeugMgmt {
 	}
 	
 	public void updateModell(int id, String upmodell) {
-		fahrzeugDAO.updateMarke(id, upmodell);
+		fahrzeugDAO.updateModell(id, upmodell);
+		System.out.println("Bin im modell update Mgmt"+ upmodell + id);
 	}
 	
 	public void updatebaujahr(int id, String upbaujahr) {
-		fahrzeugDAO.updateMarke(id, upbaujahr);
+		fahrzeugDAO.updateJahr(id, upbaujahr);
 	}
 	
 	public void updateJahr(int id, String jahr) {
@@ -59,7 +61,7 @@ public class FahrzeugMgmt {
 	}
 	
 	public void updateFarbe(int id, String upfarbe) {
-		fahrzeugDAO.updateMarke(id, upfarbe);
+		fahrzeugDAO.updateFarbe(id, upfarbe);
 	}
 	
 	

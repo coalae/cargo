@@ -29,7 +29,7 @@ public interface FahrzeugDAO {
 	
 	public void updateJahr (int id, String jahr);
 	
-	public void updatefarbe (int id, String upfarbe);
+	public void updateFarbe (int id, String upfarbe);
 	
 	
 	

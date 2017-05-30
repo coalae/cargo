@@ -131,11 +131,11 @@ public class DatabaseFahrzeugDAO implements FahrzeugDAO {
 	
 	public void updateMarke (int id, String upmarke) {
 		try {
-			String update =" UPDATE Fahrzeug SET marke =' " + upmarke +  " 'where fahrzeugid=' "+id + " ' ";  
-			PreparedStatement connect = connection.prepareStatement(upMarke);
+			String update =" UPDATE Fahrzeug SET marke =' " + upmarke +  " 'WHERE fahrzeugid=' "+id +"'";  
+			PreparedStatement connect = connection.prepareStatement(update);
 			connect.setString(2,upmarke);
-			connect.execute();
-			connect.close();
+			connect.executeQuery();
+			//connect.close();
 		}
 		catch(SQLException e){e.getStackTrace();}
 		
@@ -143,36 +143,41 @@ public class DatabaseFahrzeugDAO implements FahrzeugDAO {
     
 	public void updateModell (int id, String upmodel) {
 		try {
-			String update =" UPDATE Fahrzeug SET model =' " + upmodel + " ' where fahrzeugid=' "+id +" ' " ;  
-			PreparedStatement connect = connection.prepareStatement(upModell);
-			connect.setString(3,upmodel);
-			connect.execute();
-			connect.close();
+			System.out.println("im Update Modell - try" + id + upmodel);
+			String update =" UPDATE Fahrzeug SET modell =' " + upmodel + " ' WHERE fahrzeugid=  '"+id + "'";  
+			PreparedStatement connect = connection.prepareStatement(update);
+		//	connect.setString(3,upmodel);
+			System.out.println("In Modell update" + update);
+			connect.executeQuery();
+			//connect.close();
+			
+			//PreparedStatement stm = connection.prepareStatement(update);
+            //ResultSet rs = stm.executeQuery();
 		}
-		catch(SQLException e){e.getStackTrace();}
+		catch(Exception e){e.getStackTrace();}
 		
 	}
 	
 	public void updateJahr (int id, String jahr) {
 		try {
-			String update =" UPDATE Fahrzeug SET jahr =' " + jahr + " 'where fahrzeugid=' "+ id+ " ' "; 
+			String update =" UPDATE Fahrzeug SET baujahr =' " + jahr + " 'WHERE fahrzeugid= '"+ id+ "'"; 
 			
-			PreparedStatement connect = connection.prepareStatement(upJahr);
+			PreparedStatement connect = connection.prepareStatement(update);
 			connect.setString(3,jahr);
-			connect.execute();
-			connect.close();
+			connect.executeQuery();
+			//connect.close();
 		}
 		catch(SQLException e){e.getStackTrace();}
 		
 	}
     
-	public void updatefarbe (int id, String upfarbe) {
+	public void updateFarbe (int id, String upfarbe) {
 		try {
-			String update =" UPDATE Fahrzeug SET farbe =' " + upfarbe + " 'where fahrzeugid=' "+id+ " ' ";  
-			PreparedStatement connect = connection.prepareStatement(upFarbe);
+			String update =" UPDATE Fahrzeug SET farbe =' " + upfarbe + " 'WHERE fahrzeugid= ' "+id + " ' ";  
+			PreparedStatement connect = connection.prepareStatement(update);
 			connect.setString(4,upfarbe);
-			connect.execute();
-			connect.close();
+			connect.executeQuery();
+			//connect.close();
 		}
 		catch(SQLException e){e.getStackTrace();}
 		
