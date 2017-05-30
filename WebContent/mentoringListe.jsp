@@ -33,6 +33,11 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
+        <!--  jquery  -->
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<!--  fuer datepicker -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <!-- Template CSS Files
         ================================================== -->
         <!-- Twitter Bootstrs CSS -->
@@ -56,8 +61,9 @@
         ================================================== -->
         <!-- modernizr js -->
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        <!-- jquery -->
+        <!-- jquery 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        -->
         <!-- owl carouserl js -->
         <script src="js/owl.carousel.min.js"></script>
         <!-- bootstrap js -->
@@ -70,11 +76,10 @@
         <script src="js/jquery.fancybox.js"></script>
         <!-- template main js -->
         <script src="js/main.js"></script>
-        	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        	
 	<script>
 	$( function() {
-		$( "#datepicker" ).datepicker({ dateFormat: 'dd.mm.yy' });
+		$( "#datepickerBeginnJahr" ).datepicker({ dateFormat: 'yy' });
 	} );
 	</script>
     </head>
@@ -97,52 +102,28 @@
                     
                     <!-- logo -->
                     <div class="navbar-brand">
-                     <!--    <a href="index.jsp" >  -->
+                        <a href="indexLoggedInAsMitarbeiter.jsp" >
                             <img src="images/CargoLogo.JPG" alt="" align="right">
                             <br>
                         </a>
                     </div>
                     <!-- /logo -->
                 </div>
-                                                                                <br> <br> <br>  <br> <br>
+                
+                <br> <br> <br> <br> <br> 
                 
                 <!-- main menu -->
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
-                    <div class="main-menu">
+                    <div class="main-menu active">
                         <ul class="nav navbar-nav navbar-right">
- 
-                             <%if (kunde == null && mitarbeiter == null) {%>					 
-                            <li>
-                                <a href="index.jsp" >Home</a>
-                            </li> 
-                            <%}%>
-  
-                            <%if (kunde == null && mitarbeiter != null) {%>					 
                             <li>
                                 <a href="indexLoggedInAsMitarbeiter.jsp" >Home</a>
                             </li> 
-                            <%}%>
- 
- 
-                            <%if (kunde != null && mitarbeiter == null) {%>					 
-                            <li>
-                                <a href="indexLoggedInAsKunde.jsp" >Home</a>
-                            </li> 
-                            <%}%>
-                                  
-                                  
-                            <%if (kunde == null && mitarbeiter != null) {%>					                                                      
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mitarbeiter<span class="caret"></span></a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li><a href="mitarbeiterListe">Mitarbeiterliste</a></li>
-                                        <li><a href="mitarbeiterHinzufuegen.jsp">Mitarbeiter hinzufuegen</a></li>
-                                        <li><a href="mitarbeiterLoeschen.jsp">Mitarbeiter loeschen</a></li>
-                                        <li><a href="mitarbeiterAendern">Mitarbeiter aendern</a></li>
-                                    </ul>
-                                </div>
-                            </li>
+                            
+                       		<li>
+                                <a href="verwaltenMitarbeiter.jsp">Mitarbeiter</a>
+                             </li>   
+                          
    
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kunden<span class="caret"></span></a>
@@ -157,10 +138,10 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mentoring<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="mentoringListe">Mentoringliste</a></li>
+                                        <li><a href="mentoringListe.jsp">Mentoringliste</a></li>
                                         <li><a href="mentoringHinzufuegen.jsp">Mentoring hinzufuegen</a></li>
-                                        <li><a href="mentoringLoeschen.jsp">Mentoring loeschen</a></li>
-                                        <li><a href="mentoringAendern">Mentoring aendern</a></li>
+                                        <li><a href="mentoringLoeschenauswaehlen.jsp">Mentoring loeschen</a></li>
+                                        <li><a href="mentoringAendern.jsp">Mentoring aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -169,20 +150,9 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Immobilien<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="immobilienListe">Immobilienliste</a></li>
+                                        <li><a href="immobilienListe.jsp">Immobilienliste</a></li>
                                         <li><a href="immobilieHinzufuegen.jsp">Immobilie hinzufuegen</a></li>
-                                        <li><a href="immobilieAendern">Immobilie aendern</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Finanzen<span class="caret"></span></a>
-                                <div class="dropdown-menu">
-                                    <ul>
-                                        <li><a href="kontoAnzeigen.jsp">Konto anzeigen</a></li>
-                                        <li><a href="transaktionsliste">Transaktionsliste</a></li>
-                                        <li><a href="transaktionLoeschen.jsp">Transaktion loeschen</a></li>
+                                        <li><a href="immobilieAendern.jsp">Immobilie aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -191,10 +161,10 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fahrzeuge<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="fahrzeugListe">Fahrzeugliste</a></li>
+                                        <li><a href="fahrzeugListe.jsp">Fahrzeugliste</a></li>
                                         <li><a href="fahrzeugHinzufuegen.jsp">Fahrzeug hinzufuegen</a></li>
                                         <li><a href="fahrzeugLoeschen.jsp">Fahrzeug loeschen</a></li>
-                                        <li><a href="fahrzeugAendern">Fahrzeug aendern</a></li>
+                                        <li><a href="fahrzeugAendern.jsp">Fahrzeug aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -208,48 +178,29 @@
                                     </ul>
                                 </div>
                             </li>
-                        <%}%>
-                            
                             
                             <li><a href="kursListeAnzeigen.jsp">Kurskatalog</a></li>
-                            
-                           <%if (kunde != null && mitarbeiter == null) {%>					                           
-                             <li class="dropdown">
+ 
+ <!-- TODO: PROFIL HIER AN MITARBEITER ANPASSEN -->
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mein Profil<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="meineKundendaten.jsp">Meine Daten</a></li>
-                                        <li><a href="meineKundenKurse.jsp">Meine Kurse</a></li>
-                                        <li><a href="meinKundenPasswortAendern.jsp">Passwort aendern</a></li>
+                                        <li><a href="meinProfil.jsp">Meine Daten</a></li>
+                                        <li><a href="meineKurse.jsp">Meine Kurse</a></li>
+                                        <li><a href="passwortAendern.jsp">Passwort aendern</a></li>
                                     </ul>
                                 </div>
                             </li>
-                            <%}%>
 							
-                            <%if (kunde == null && mitarbeiter == null) {%>					                           							
-							<li><a href="registrieren.jsp">Registrieren</a></li>
-                            <%}%>
-                           <%if (kunde == null && mitarbeiter == null) {%>					                           							
-							<li><a href="login.jsp">Login</a></li>
-                            <%}%>
-                           <%if (kunde != null) {%>					                           							
-							<li><a href="LogoutKundeServlet">Logout</a></li>
-                            <%}%>
-                           <%if (mitarbeiter != null) {%>					                           							
-							<li><a href="LogoutMitarbeiterServlet">Logout</a></li>
-                            <%}%>
-
-                            
+	                  		<li><a href="LogoutMitarbeiterServlet">Logout</a></li>
+                                                       
                         </ul>
                     </div>
                 </nav>
                 <!-- /main nav -->
             </div>
         </header>
-        
-        
-        
-        
         
         <!--
         ==================================================
@@ -282,51 +233,29 @@
 
 			<%MentoringMgmt mm = new MentoringMgmt();%>
 			<%MitarbeiterMgmt mam = new MitarbeiterMgmt();%>
-			<%SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");%> 
+			<%SimpleDateFormat sdf = new SimpleDateFormat("yyyy");%> 
 			<%ArrayList<Mentoring> mentoringliste = mm.getMentoringListe();%>
-		
-			 
-					<form action="MentoringSucheServlet" Method="POST" >
-						
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Keyword fuer Suche eingeben:</span><br><br>
-						  <input type="text" name="keywordSuche" required = "required">
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-						  <input type="submit" value="Kurse suchen">   
-						  </h2>
-			
-					</form>	
-						  
-						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>Gesamte Mentoringliste: </span><br><br>				
-                          
+	
+			  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
+                                             
                           	<table class="table table-striped">
 								  <tr>
 								  	<th><div align="center"><h3>Link</h3></div></th>
 								  	<th><div align="center"><h3>Mentoringid</h3></div></th>
 								  	<th><div align="center"><h3>Mentorid</h3></div></th>
-								  	<th><div align="center"><h3>Mentorvorname</h3></div></th>
-								  	<th><div align="center"><h3>Mentornachname</h3></div></th> 
 								  	<th><div align="center"><h3>Menteeid</h3></div></th> 								  	 
-								  	<th><div align="center"><h3>Menteevorname</h3></div></th> 
-								  	<th><div align="center"><h3>Menteenachname</h3></div></th>  
-								    <th><div align="center"><h3>Thema</h3></div></th>
+								  	<th><div align="center"><h3>Thema</h3></div></th>
 								     <th><div align="center"><h3>Beginnjahr</h3></div></th>
 								  </tr>
 
 								 <%for(int i = 0; i<mentoringliste.size(); i++){%>
 									
 								  	<tr>
-								  	<%Mitarbeiter mentor = mam.getMitarbeiterById(mentoringliste.get(i).getMentorId());%>
-								  	<%Mitarbeiter mentee = mam.getMitarbeiterById(mentoringliste.get(i).getMenteeId());%>
-								  		<td><div align="center"><h3><a href="MentoringAnzeigenServlet?param1=<%=mentoringliste.get(i).getMentoringId()%>"> Mentoringliste anzeigen <%// =kursliste.get(i).getId()%></a></h3></div></td>    
+								   	
+								  		<td><div align="center"><h3><a href="MentoringAnzeigenServlet?mentoringid=<%=mentoringliste.get(i).getMentoringId()%>"> Details anzeigen <%// =kursliste.get(i).getId()%></a></h3></div></td>    
 								  		<td><div align="center"><h3><%=mentoringliste.get(i).getMentoringId() %></h3></div></td>
 								  		<td><div align="center"><h3><%=mentoringliste.get(i).getMentorId() %></h3></div></td>
-								  		<td><div align="center"><h3><%=mentor.getVorname() %></h3></div></td>
-								  		<td><div align="center"><h3><%=mentor.getNachname() %></h3></div></td>
 								  		<td><div align="center"><h3><%=mentoringliste.get(i).getMenteeId() %></h3></div></td>
-								  		<td><div align="center"><h3><%=mentee.getVorname() %></h3></div></td>
-								  		<td><div align="center"><h3><%=mentee.getNachname() %></h3></div></td>
 								  		<td><div align="center"><h3><%=mentoringliste.get(i).getThema() %></h3></div></td>
 								  		<td><div align="center"><h3><%=sdf.format(mentoringliste.get(i).getBeginnJahr())%></h3></div></td>
 								  	</tr>

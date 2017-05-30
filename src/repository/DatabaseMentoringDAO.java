@@ -16,10 +16,14 @@ import model.Mentoring;
 
 public class DatabaseMentoringDAO implements MentoringDAO {
 	
-	private String DBAdresse = "jdbc:mariadb://localhost:3306/cargo";
-	private String username = "root";
-	private String password = "coalacoala1";
-
+	DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+	Connection connection;
+	
+	public DatabaseMentoringDAO() {
+		try{
+			connection= DatabaseHandler.getConnection();
+		}catch(SQLException e){e.printStackTrace();}
+	}
 	
 	/*
 	private static final String all = "Select * from Mentoringbeziehung";
@@ -34,27 +38,20 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 	private static final String ausMentee = "Select * from Mentoringbeziehung where menteeid=?";
 	*/
 	
+	
+
 	@Override
 	public ArrayList<Mentoring> getMentoringListe() {
-		Connection con = null;
+		
         ArrayList<Mentoring> mentoringList = new ArrayList<Mentoring>();
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            con = DriverManager.getConnection(DBAdresse, username, password);
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        
         String sql;   
-        sql = "Select * from Mentoringbeziehung";
-        PreparedStatement prest = null;
+        sql = "SELECT mentoringid, mentorid, menteeid, thema, jahr FROM Mentoringbeziehung";
+        
         try {
 
-            prest = con.prepareStatement(sql);
-            ResultSet rs = prest.executeQuery();
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
             
             while (rs.next()) {
             /*	DB CHECK
@@ -79,46 +76,32 @@ public class DatabaseMentoringDAO implements MentoringDAO {
      	     Mentoring mentoring = new Mentoring(mentoringId, mentorId, menteeId, thema, mentoringjahr);
      	    
              mentoringList.add(mentoring);
+             
+             
+             
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ParseException e) {
 			e.printStackTrace();
-		} finally {
-            try {
-                if (prest != null)
-                    prest.close();
-                if (con != null)
-                    con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }
+		} 
         return mentoringList;
-	}	
+        
+     }	
 	
 	@Override
 	public Mentoring getMentoringById(int id) {
-		Connection con = null;
+		
 		Mentoring mentoring = null;
-		try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            con = DriverManager.getConnection(DBAdresse, username, password);
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+		
 
 	    String sql;
 	    sql = "SELECT * from Mentoringbeziehung WHERE mentoringid='" + id + "'";
-	        PreparedStatement prest = null;
+	        
 	        try {
 
-	            prest = con.prepareStatement(sql);
-	            ResultSet rs = prest.executeQuery();
+	           PreparedStatement stm = connection.prepareStatement(sql);
+	            ResultSet rs = stm.executeQuery();
 	            
 	            while (rs.next()) {
 	            	 int mentoringId=rs.getInt(1);
@@ -134,30 +117,22 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 	         	     mentoringjahr = sdf.parse(jahr);
 	             
 	             mentoring=new Mentoring(mentoringId, mentorId, menteeId, thema, mentoringjahr); 
+	             stm.close();
+	             
 	            }
 	        } catch (SQLException e) {
 	        } catch (ParseException e) {
 				e.printStackTrace();
-			} finally {
-	            try {
-	                if (prest != null)
-	                    prest.close();
-	                if (con != null)
-	                    con.close();
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-
-	        }
+			} 
 	        return mentoring;
 		}
 
 	
 	@Override
 	public Mentoring getMentoringByMenteeId(int id) {
-		Connection con = null;
+		
 		Mentoring mentoring = null;
-		try {
+		/*try {
             Class.forName("org.mariadb.jdbc.Driver");
             con = DriverManager.getConnection(DBAdresse, username, password);
 
@@ -166,14 +141,14 @@ public class DatabaseMentoringDAO implements MentoringDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+*/
 	    String sql;
 	    sql = "SELECT * from Mentoringbeziehung WHERE menteeid='" + id + "'";
-	        PreparedStatement prest = null;
+	        
 	        try {
 
-	            prest = con.prepareStatement(sql);
-	            ResultSet rs = prest.executeQuery();
+	            PreparedStatement stm = connection.prepareStatement(sql);
+	            ResultSet rs = stm.executeQuery();
 	            
 	            while (rs.next()) {
 	            	 int mentoringId=rs.getInt(1);
@@ -189,21 +164,13 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 	         	     mentoringjahr = sdf.parse(jahr);
 	             
 	             mentoring=new Mentoring(mentoringId, mentorId, menteeId, thema, mentoringjahr); 
+	             stm.close();
+	             
 	            }
 	        } catch (SQLException e) {
 	        } catch (ParseException e) {
 				e.printStackTrace();
-			} finally {
-	            try {
-	                if (prest != null)
-	                    prest.close();
-	                if (con != null)
-	                    con.close();
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-
-	        }
+			}
 	        return mentoring;
 		}
 
@@ -221,48 +188,33 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 	}
 	@Override
 	public void addMentoring(Mentoring mentoring) {
-		Connection con = null;
 
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            con = DriverManager.getConnection(DBAdresse, username, password);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+			
         try {
         	
               // insert statement
               String query = "INSERT INTO Mentoringbeziehung (mentoringid,mentorid, menteeid,thema,jahr) VALUES (?,?,?,?,?)";
 	
               // create insert preparedstatement
-              PreparedStatement preparedStmt = con.prepareStatement(query);
+              PreparedStatement stm = connection.prepareStatement(query);
               SimpleDateFormat sdf = new SimpleDateFormat("YYYY"); 
-              preparedStmt.setInt (1, mentoring.getMentoringId());
-              preparedStmt.setInt (2, mentoring.getMentorId());
-              preparedStmt.setInt (3, mentoring.getMenteeId());
-              preparedStmt.setString(4, mentoring.getThema());
-              preparedStmt.setString (5, sdf.format(mentoring.getBeginnJahr()));
+              stm.setInt (1, 0);
+              stm.setInt (2, mentoring.getMentorId());
+              stm.setInt (3, mentoring.getMenteeId());
+              stm.setString(4, mentoring.getThema());
+              stm.setString (5, sdf.format(mentoring.getBeginnJahr()));
             
               // execute the preparedstatement
-              preparedStmt.execute();
+              stm.execute();
               
               // close
-              // preparedStmt.close();
-              con.close();
+              stm.close();
+             
 		  } catch (SQLException e) {
 		        e.printStackTrace();
-		  }finally {
-		        try {
-		            if (con != null)
-		                con.close();
-		        } catch (SQLException e) {
-		            e.printStackTrace();
-		        }
-		    }		
+		  }
+		    
 	}
 		
 
@@ -270,9 +222,9 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 	public void deleteMentoring(int id) {
 		// TODO Auto-generated method stub
 		
-		Connection con = null;
 		
-		try {
+		
+		/*try {
             Class.forName("org.mariadb.jdbc.Driver");
             con = DriverManager.getConnection(DBAdresse, username, password);
 
@@ -281,25 +233,16 @@ public class DatabaseMentoringDAO implements MentoringDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-		
-	    String sql = "DELETE from Mentoringbeziehung WHERE mentoringid =" + id + "'";
+		*/
+	    String sql = "DELETE from Mentoringbeziehung WHERE mentoringid ='" + id + "'"; 
 
         try {
-        	Statement stmt = con.createStatement();        	         	 
+        	PreparedStatement stmt = connection.prepareStatement(sql);        	         	 
         	stmt.execute(sql);            
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-               // if (stmt != null)
-               //     stmt.close();
-                if (con != null)
-                    con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }
+        } 
+            
         return;
 	}	
 	
@@ -309,8 +252,8 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 	public void updateMentoring(Mentoring mentoring) {
 		 String sql = "UPDATE Mentoringbeziehung SET mentorid=?, menteeid=?, thema =?, jahr=? where mentoringid =?";
 		
-			Connection con = null;
-	        try {
+			
+	        /*try {
 	            Class.forName("org.mariadb.jdbc.Driver");
 	            con = DriverManager.getConnection(DBAdresse, username, password);
 
@@ -318,12 +261,12 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 	            e.printStackTrace();
 	        } catch (SQLException e) {
 	            e.printStackTrace();
-	        }
+	        }*/
 	        
 		    PreparedStatement preparedStmt = null;
 		    try {
 		    	SimpleDateFormat sdf = new SimpleDateFormat("YYYY"); 
-		        preparedStmt = con.prepareStatement(sql);
+		        preparedStmt = connection.prepareStatement(sql);
 		        preparedStmt.setInt(1, mentoring.getMentorId());
 		        preparedStmt.setInt(2, mentoring.getMenteeId());
 		        preparedStmt.setString(3, mentoring.getThema());
@@ -334,17 +277,9 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 		        preparedStmt.executeUpdate();
 		    } catch (SQLException e) {
 		        e.printStackTrace();
-		    }finally {
-		        try {
-		            if (preparedStmt != null)
-		                preparedStmt.close();
-		            if (con != null)
-		                con.close();
-		        } catch (SQLException e) {
-		            e.printStackTrace();
-		        }
-		
 		    }
+		
+		    
 		    return;		
 	}    
 		

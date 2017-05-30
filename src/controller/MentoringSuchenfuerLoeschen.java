@@ -19,14 +19,14 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class KursAnzeigenServlet.
  * Im KursAnzeigenServlet kann ein einzelner Kurs angezeigt werden.
  */
-@WebServlet("/MentoringAnzeigenServlet")
-public class MentoringAnzeigenServlet extends HttpServlet {
+@WebServlet("/MentoringSuchenfuerLoeschen")
+public class MentoringSuchenfuerLoeschen extends HttpServlet {
 		private static final long serialVersionUID = 1L;
  
 	    /**
 	     * Constructor
 	     */
-	    public MentoringAnzeigenServlet() {
+	    public MentoringSuchenfuerLoeschen() {
 	        super();
 	    }
 
@@ -40,19 +40,19 @@ public class MentoringAnzeigenServlet extends HttpServlet {
 			response.setContentType("text/html");
 
  				
-			String mentoringId = (String) request.getParameter("mentoringid");
+			String mentoringId = (String) request.getParameter("mentoringId");
 						
 							
 						// Mentoring Id weitergeben
 						try{
 							request.setAttribute("mentoringId",mentoringId);
-							RequestDispatcher view = request.getRequestDispatcher("mentoringListeanzeigen1.jsp");
+							RequestDispatcher view = request.getRequestDispatcher("mentoringLoeschen.jsp");
 							view.forward(request, response);
 						} catch (Exception e) {
 							e.printStackTrace();
 							String message = "Fehler!";
 							request.setAttribute("message", message);
-							RequestDispatcher view = request.getRequestDispatcher("mentoringListeanzeigen1.jsp");
+							RequestDispatcher view = request.getRequestDispatcher("mentoringLoeschenauswaehlen.jsp");
 							view.forward(request, response);
 						}	
 		}
