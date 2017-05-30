@@ -121,13 +121,8 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Immobilien<span class="caret"></span></a>
                                 <div class="dropdown-menu">
                                     <ul>
-
                                         <li><a href="immobilienListe.jsp">Immobilien verwalten</a></li>
                                         <li><a href="ListeImmobilie.jsp">Immobilieliste</a></li>
-
-                                        <li><a href="immobilienListe.jsp">Verwaltung</a></li>
-                                        <li><a href="ListeImmobilie.jsp">Liste</a></li>
-
                                     </ul>
                                 </div>
                             </li>
@@ -138,8 +133,6 @@
                                     <ul>
                                         <li><a href="fahrzeugListe.jsp">Fahrzeug verwalten</a></li>
                                         <li><a href="ListeFahrzeug.jsp">Fahrzeugliste</a></li>
-                                        <li><a href="fahrzeugListe.jsp">Verwaltung</a></li>
-                                        <li><a href="ListeFahrzeug.jsp">Liste</a></li>
                                     </ul>
                                 </div>
                             </li>
