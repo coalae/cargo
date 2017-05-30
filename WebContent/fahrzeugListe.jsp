@@ -133,7 +133,7 @@
                                 <div class="dropdown-menu">
                                     <ul>
                                         <li><a href="fahrzeugListe.jsp">Fahrzeugliste</a></li>
-                                        <li><a href="ListeFarhzeug.jsp">Fahrzeug hinzufuegen</a></li>
+                                        <li><a href="fahrzeugHinzufuegen.jsp">Fahrzeug hinzufuegen</a></li>
                                         <li><a href="fahrzeugLoeschen.jsp">Fahrzeug loeschen</a></li>
                                         <li><a href="fahrzeugAendern.jsp">Fahrzeug aendern</a></li>
                                     </ul>
@@ -173,65 +173,126 @@
             </div>
         </header>
         
+        
         <!--
         ==================================================
         Slider Section Start
         ================================================== -->
-        <section id="hero-area" >
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <div class="block wow fadeInUp" data-wow-delay=".3s">
-                            
-                            <!-- Slider -->
-                            <section class="cd-intro">
-                                <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-   <br>
-                                <span>Willkommen bei</span><br>
-                                <span class="cd-words-wrapper">
-                                    <b class="is-visible">CarGo Driving School</b>
-                                    <b>CarGo Fahrschule</b>
-                                </span>
-                                </h1>
-                                </section> <!-- cd-intro -->
-                                <!-- /.slider -->
-                                <h2 class="wow fadeInUp animated" data-wow-delay=".6s" >
-                                    Wir freuen uns ueber Ihren Besuch bei der CarGo Fahrschule in Wien! 
-                                    <br>
-                                    Bei uns koennen Sie sich schnell und einfach ueber die Fahrkurse 
-                                    <br>
-                                    ihrer Wahl informieren, Kurse suchen und buchen.
-                                    <br>
-									Natuerlich koennen Sie uns auch vor Ort besuchen, wo wir Sie persoenlich beraten.
-                                </h2>
-					<a href="kursListeAnzeigen.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Kurskatalog
-					</a>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section><!--/#main-slider-->
+	<section id="hero-area">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<div class="block wow fadeInUp" data-wow-delay=".3s">
 
-            
-            <!--
-            ==================================================
-            Call To Action Section Start
-            ================================================== -->
-            <section id="call-to-action">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="block">
-                                <h2 class="title wow fadeInDown" data-wow-delay=".3s" data-wow-duration="500ms">Unsere Kontaktdaten</h1>
-                                <h3 class="wow fadeInDown" data-wow-delay=".5s" data-wow-duration="500ms">Fahrschule CarGo <br> Waehringer Strasse 29 <br> 1090 Wien <br> Austria</h3>
-                                <a href="lageplan.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Lageplan</a>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </section>
-                
-        </body>
+					<!-- Slider -->
+					<section class="cd-intro">
+
+					<h1 class="wow fadeInUp animated cd-headline slide"
+						data-wow-delay=".4s">
+						<center>
+							<div style="display: inline">
+								<button onclick="fahrzeughinzu();">Fahrzeug
+									hinzuf&uuml;gen</button>
+								<button onclick="fahrzeugloes();">Fahrzeug
+									l&ouml;schen</button>
+								<button onclick="fahrzeugaendern();">FahrzeugDaten
+									&auml;ndern</button>
+							</div>
+						</center>
+
+						<div style="display: none" id="anlegen">
+						<h4> 
+						<center>
+							<form action="FahrzeugAdminController" method="post">
+							<label>Marke</label> <br> 
+							<input name="Marke" id="marke" required="requiert" type="text" placeholder="Marke">
+							<br>
+							<label>Modell</label> <br> 
+							<input name="Modell"id="modell" required="requiert" type="text" placeholder="Modell"> 
+							<br> 
+							<label>Baujahr</label><br> 
+							<input name="Baujahr" id="baujahr" required="requiert" type="int" placeholder="Baujahr"> 
+							<br> 
+							<label>Farbe</label> <br> 
+							<input type="Farbe" name="farbe" id="farbe" placeholder="Farbe">
+							<br> 
+						
+								<input type="hidden" name="pageName" value="anlegen">
+								<button type="submit">Best&auml;tigen</button>
+							</form>
+							</center>
+						</h4>
+					</div>
+
+						<div style="display: none" id="loeschen">
+							<h4>
+								<center>
+									<form action="FahrzeugAdminController" method="post">
+									<label>FahrzeugID</label>
+									<br>
+									<input type="int" name="fahrzeugid" id="fahrzeugid" placeholder="fahrzeugid" required="requiert">
+									<input type="hidden" name="pageName" value="loeschen">
+									<button type="submit">Best&auml;tigen</button>
+									</form>
+								</center>
+							</h4>
+						</div>
+						
+						<div style="display: none" id="aendern">
+							<h4>
+							<center>
+									<form action="FahrzeugAdminController" method="post">
+									<label>ID</label>
+									<br>
+									<input type="text" name="id" id="id">
+									<br>
+									<label>Marke</label>
+									<br>
+									<input type="text" name="marke" id="marke">
+									<br>
+									<input type="hidden" name="pageName" value="aendern">
+									<button type="submit">Best&auml;tigen</button>
+									</form>
+								</center>
+							</h4>
+							
+						</div>
+						<form action=FahrzeugAdminController method="post">
+							<input type=hidden name="pageName" value="back">
+							<button type="submit">Zur&uuml;ck</button>
+						</form>
+						<script language="javascript">
+							function fahrzeughinzu() {
+								document.getElementById("anlegen").style.display = "inline";
+								document.getElementById("loeschen").style.display = "none";
+								document.getElementById("aendern").style.display = "none";
+							}
+							function fahrzeugloes() {
+								document.getElementById("anlegen").style.display = "none";
+								document.getElementById("loeschen").style.display = "inline";
+								document.getElementById("aendern").style.display = "none";
+							}
+							function fahrzeugaendern() {
+								document.getElementById("anlegen").style.display = "none";
+								document.getElementById("loeschen").style.display = "none";
+								document.getElementById("aendern").style.display = "inline";
+							}
+							function fahrzeugreset() {
+								document.getElementById("anlegen").style.display = "none";
+								document.getElementById("loeschen").style.display = "none";
+								document.getElementById("aendern").style.display = "none";
+							}
+						</script>
+					
+				</div>
+			
+			</div>
+		
+		</div>
+	</div>
+	
+	</section>
+	<!--/#main-slider-->
+</body>
 </html>
+        

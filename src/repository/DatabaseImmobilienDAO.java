@@ -13,6 +13,7 @@ import model.Immobilie;
 
 public class DatabaseImmobilienDAO implements ImmobilienDAO {
   private static final String auslesen = "Select * from Immobilie";
+  private static final String suche="Select * from Immobilie where id = ?";
   private static final String addImmo =  "Insert into Immobilie (immobilienid, typ, immobilienname) values (?,?,?)";
   private static final String delImmo = 	"Delete from Immobilie where immobilienid= ?";
 
@@ -70,7 +71,7 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
 
 	public ArrayList<Immobilie> getGebäudeList () {
 		ArrayList<Immobilie> returnGebäude = null;
-		String SQLGebäude=  "SELECT fahrzeugid, marke, modell, baujahr, farbe FROM Fahrzeug";
+		String SQLGebäude=  "SELECT Immobilienid, typ, name FROM Immobilien";
 		
 		try {
 			PreparedStatement up =connection.prepareStatement(SQLGebäude);
@@ -94,7 +95,7 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
 
 	
 	public Immobilie getGebäudebyID(int id) {
-		String SQLGebäude =  "SELECT fahrzeugid, marke, modell, baujahr, farbe FROM Fahrzeug WHERE fahrzeugid=" + id;
+		String SQLGebäude =  "SELECT Immobilienid, typ, name FROM Immobilie WHERE immobilienid=' " + id + " ' ";
 		Immobilie gebäude  =null;
 		try {
 			PreparedStatement up =connection.prepareStatement(SQLGebäude);
@@ -120,7 +121,7 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
 	
 	public void updatetyp (int id, int typ) {
 		try {
-			String update =" UPDATE Immobilie SET typ =" + typ + "where immobilienid='"+id;  
+			String update =" UPDATE Immobilie SET typ =' " + typ + " 'where immobilienid=' " +id+ " ' ";  
 			PreparedStatement connect = connection.prepareStatement(update);
 			connect.execute();
 			connect.close();
@@ -131,7 +132,7 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
     
 	public void updatename (int id, String name) {
 		try {
-			String update =" UPDATE Immobilie SET immobilienname =" + name + "where immobilienid='"+id;  
+			String update =" UPDATE Immobilie SET immobilienname =' " + name + " ' where immobilienid='"+id+" ' "; 
 			PreparedStatement connect = connection.prepareStatement(update);
 			connect.execute();
 			connect.close();
@@ -144,3 +145,4 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
   }
 
 
+ 

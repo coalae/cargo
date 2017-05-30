@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="logic.KursMgmt"%>
+<%@page import="logic.FahrzeugMgmt"%>
+<%@page import="model.Kurs"%>
+<%@page import="model.Kunde"%>
+<%@page import="model.Fahrzeug"%>
+<%@page import="model.Mitarbeiter"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.text.SimpleDateFormat"%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js">
     <head>
@@ -133,7 +143,7 @@
                                 <div class="dropdown-menu">
                                     <ul>
                                         <li><a href="fahrzeugListe.jsp">Fahrzeugliste</a></li>
-                                        <li><a href="ListeFarhzeug.jsp">Fahrzeug hinzufuegen</a></li>
+                                        <li><a href="fahrzeugHinzufuegen.jsp">Fahrzeug hinzufuegen</a></li>
                                         <li><a href="fahrzeugLoeschen.jsp">Fahrzeug loeschen</a></li>
                                         <li><a href="fahrzeugAendern.jsp">Fahrzeug aendern</a></li>
                                     </ul>
@@ -173,6 +183,8 @@
             </div>
         </header>
         
+        
+        
         <!--
         ==================================================
         Slider Section Start
@@ -185,53 +197,57 @@
                             
                             <!-- Slider -->
                             <section class="cd-intro">
+                                <h2>
+                                           
+                                </h2>
+
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-   <br>
-                                <span>Willkommen bei</span><br>
-                                <span class="cd-words-wrapper">
+  <br>
+                                <span>FahrzeugListe:</span><br>
+                      <!--          <span class="cd-words-wrapper">
                                     <b class="is-visible">CarGo Driving School</b>
                                     <b>CarGo Fahrschule</b>
-                                </span>
+                                </span> -->
                                 </h1>
                                 </section> <!-- cd-intro -->
                                 <!-- /.slider -->
-                                <h2 class="wow fadeInUp animated" data-wow-delay=".6s" >
-                                    Wir freuen uns ueber Ihren Besuch bei der CarGo Fahrschule in Wien! 
-                                    <br>
-                                    Bei uns koennen Sie sich schnell und einfach ueber die Fahrkurse 
-                                    <br>
-                                    ihrer Wahl informieren, Kurse suchen und buchen.
-                                    <br>
-									Natuerlich koennen Sie uns auch vor Ort besuchen, wo wir Sie persoenlich beraten.
-                                </h2>
-					<a href="kursListeAnzeigen.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Kurskatalog
-					</a>
-                                
+
+			<%FahrzeugMgmt FahrM = new FahrzeugMgmt();%>
+			<%ArrayList<Fahrzeug> fahrzeugliste = FahrM.getfahrzeugListe();%>
+			 
+						  
+						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
+                          <span>Gesamte Kursliste: </span><br><br>				
+                          
+                          	<table class="table table-striped">
+								  <tr>
+								  	<th><div align="center"><h3>FahrzeugID</h3></div></th>
+								  	<th><div align="center"><h3>Marke</h3></div></th>
+								  	<th><div align="center"><h3>Modell</h3></div></th>
+								  	<th><div align="center"><h3>Baujahr</h3></div></th>
+								  	<th><div align="center"><h3>Farbe</h3></div></th>
+								  </tr>
+
+								 <%for(int i = 0; i<fahrzeugliste.size(); i++){%>
+								 
+								  	<tr>
+								  		<td><div align="center"><h3><%=fahrzeugliste.get(i).getId() %></h3></div></td>
+								  		<td><div align="center"><h3><%=fahrzeugliste.get(i).getMarke() %></h3></div></td>
+								  		<td><div align="center"><h3><%=fahrzeugliste.get(i).getModell() %></h3></div></td>
+								  		<td><div align="center"><h3><%=fahrzeugliste.get(i).getBaujahr() %></h3></div></td>
+								  		<td><div align="center"><h3><%=fahrzeugliste.get(i).getFarbe() %></h3></div></td>
+
+								  	</tr>
+							<%}%>
+							</table>			
+						  <br>
+		<!-- TODO: ANPASSEN, je nach rolle, als die man eingeloggt ist -->
+					<a href="index.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Home</a>
+						                                
                             </div>
                         </div>
                     </div>
                 </div>
             </section><!--/#main-slider-->
-
-            
-            <!--
-            ==================================================
-            Call To Action Section Start
-            ================================================== -->
-            <section id="call-to-action">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="block">
-                                <h2 class="title wow fadeInDown" data-wow-delay=".3s" data-wow-duration="500ms">Unsere Kontaktdaten</h1>
-                                <h3 class="wow fadeInDown" data-wow-delay=".5s" data-wow-duration="500ms">Fahrschule CarGo <br> Waehringer Strasse 29 <br> 1090 Wien <br> Austria</h3>
-                                <a href="lageplan.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Lageplan</a>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </section>
-                
         </body>
 </html>

@@ -30,16 +30,8 @@ public class FahrzeugMgmt {
 	}
 	
 	
-	public boolean deleteFahrzeug(int id) {
+	public void deleteFahrzeug(int id) {
 		fahrzeugDAO.deleteFahrzeug(id);
-		
-		
-		ArrayList<Fahrzeug>fList = fahrzeugDAO.getFahrzeugList();
-		for (Fahrzeug f : fList) {
-			if(f.getId()==id)
-				return true;
-		}
-		return false;
 	}
 	
 	public void addFahrzeug(String marke, String modell, String baujahr, String farbe) {
