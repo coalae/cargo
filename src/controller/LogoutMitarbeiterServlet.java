@@ -29,6 +29,7 @@ public class LogoutMitarbeiterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getServletContext().setAttribute("mitarbeiter", null);
+		request.getSession().setAttribute("session", null);
 		request.setAttribute("message", "Logout erfolgreich!");
 		RequestDispatcher view = request.getRequestDispatcher("index.jsp");
 		view.forward(request, response);

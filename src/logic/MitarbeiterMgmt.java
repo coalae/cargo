@@ -1,6 +1,9 @@
 package logic;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import model.Kunde;
 import model.Mitarbeiter;
@@ -26,6 +29,18 @@ public class MitarbeiterMgmt {
 	 */
 	public MitarbeiterDAO getMitarbeiterdao(){
 		return mitarbeiterdao;
+	}
+	
+	public ArrayList<Mitarbeiter> getMitarbeiterListe(){
+		ArrayList<Mitarbeiter> mitarbeiterliste = null;
+		try {
+			mitarbeiterliste = dbzugang.getMitarbeiterListe();
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mitarbeiterliste;
 	}
 
 	/**
@@ -58,14 +73,24 @@ public class MitarbeiterMgmt {
 	}
 	
 	public Mitarbeiter getMitarbeiterById(int id){
-		Mitarbeiter mitarbeiter = mitarbeiterdao.getMitarbeiterById(id);
+		Mitarbeiter mitarbeiter = dbzugang.getMitarbeiterById(id);
 		return mitarbeiter;
 	}
+	
 	public void aendern(String user,String oldpw,String newpw){
 		LoginMgmt lmg= new LoginMgmt();
 		String test= lmg.check(user, oldpw);
 		if(test!=null){
 			dbzugang.update(user, oldpw, newpw);
 		}
+	}
+	public Mitarbeiter context(String name,String pwd) throws ParseException{
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
+
+	     GregorianCalendar beginncal = new GregorianCalendar();
+	     beginncal.setLenient(false);
+	     beginncal.setTime(sdf.parse("12.12.1990"));
+		Mitarbeiter zurück = new Mitarbeiter(0,name,"", 0,"",0,beginncal, name, pwd, true);
+		return zurück;
 	}
 }

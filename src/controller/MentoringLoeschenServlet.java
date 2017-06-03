@@ -14,7 +14,7 @@ import logic.MentoringMgmt;
 import model.Mentoring;
 
 /**
- * Servlet implementation class MentoringLoeschenServlet
+ * Mentoring Loeschen
  */
 @WebServlet("/MentoringLoeschenServlet")
 public class MentoringLoeschenServlet extends HttpServlet {
@@ -39,9 +39,8 @@ public class MentoringLoeschenServlet extends HttpServlet {
 
     		/**
     		 * doPost nimmt die Eingaben der Mentoringid entgegen und versucht das Mentoring zu loeschen.
-    		 * Wenn Eingabefelder leer: wird "Eingabe erforderlich" angezeigt.
-    		 * Wenn Fehler waren: Anzeige, dass Fehler.
-    		 * Wenn Kurs geloescht wurde: Nachricht, dass Mentoring geloescht wurde.
+    		 *  Wenn  Mentoring nicht existiert: Ausgabe einer Fehlermeldung
+    		 * Ansonsten Weiterleitung auf mentoringLoeschenauswaehlen
     		 */
     		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     			PrintWriter out = response.getWriter();

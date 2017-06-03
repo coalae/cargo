@@ -4,17 +4,33 @@ import java.util.Date;
 
 public class Mentoring {
 	
+
 	/**
-	 * instanzvariablen
+	 * MentoringId
 	 */
 	private int mentoringId;
-	private int mentorId; // derjenige, der mentor ist
-	private int menteeId; // derjenige, der mentoring bekommt
+	/**
+	 * Id des Mentors
+	 */
+	private int mentorId;
+	
+	/**
+	 * Id des Mentee
+	 */
+	private int menteeId; 
+	
+	/**
+	 * Thema des Mentorings
+	 */
 	private String thema;
+	
+	/**
+	 * Beginnjahr des Mentorings
+	 */
 	private Date beginnJahr;
 
 	/**
-	 * konstruktor
+	 * Konstruktor
 	 * @param mentoringId
 	 * @param mentorId
 	 * @param menteeId

@@ -22,9 +22,8 @@ import javax.servlet.http.HttpServletResponse;
       
 
 /**
- * Servlet implementation class KursAendernServlet.
- * Im KursAendernServlet koennen die Instanzvariablen des Kurs veraendert werde und die Neuerung kann 
- * in der DB gespeichert werden.
+ * Servlet MentoringAendernServlet.
+ * Mentoringthema und Jahr können geändert werden
  */
 @WebServlet("/MentoringAendernServlet")
 public class MentoringAendernServlet extends HttpServlet {
@@ -48,10 +47,10 @@ public class MentoringAendernServlet extends HttpServlet {
 		}
 
 		/**
-		 * doPost nimmt die Eingaben der Mentoringdaten entgegen und versucht, den Kurs zu aendern.
+		 * doPost nimmt die Eingaben der Mentoringdaten entgegen und versucht, versucht das Mentoring zu ändern.
 		 * Wenn Eingabefelder leer: diese Felder werden nicht geaendert.
-		 * Wenn Fehler waren: Anzeige, dass Fehler.
-		 * Wenn Mentoring erstellt wurde: Nachricht, dass Mentoring geaendert wurde (wenn Aenderung eingetragen in Feldern).
+		 * Fehlerbehandlung
+		 * Kein Fehler: Weiterleiten auf mentoringAendern.jsp
 		 */
 		@SuppressWarnings("unused")
 		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

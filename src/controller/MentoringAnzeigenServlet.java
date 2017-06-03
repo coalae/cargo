@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
       
 
 /**
- * Servlet implementation class KursAnzeigenServlet.
- * Im KursAnzeigenServlet kann ein einzelner Kurs angezeigt werden.
+ * MentoringAnzeigenServlet
+ * Einzelnes Mentoring wird angezeigt
  */
 @WebServlet("/MentoringAnzeigenServlet")
 public class MentoringAnzeigenServlet extends HttpServlet {
@@ -31,7 +31,7 @@ public class MentoringAnzeigenServlet extends HttpServlet {
 	    }
 
 		/**
-		 * doGet nimmt die Eingaben KursId param1 entgegen und leitet diesen an kursListeAnzeigen.jsp weiter, wo die
+		 * doGet nimmt die Eingaben mentoringId entgegen und leitet diesen an mentoringListeanzeigen1.jsp weiter, wo die
 		 * Infos ueber den Kurs ausgegeben werden.  
 		 */
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		

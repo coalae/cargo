@@ -254,7 +254,7 @@
 								</select> 
 							<br> 
 							<label>Mitarbeitertyp</label> <br> 
-							<input type="number" name="typ" id="typ" placeholder="weiß ich noch nicht">
+							<input type="number" name="typ" id="typ" placeholder="Standard 1 / sonst 0">
 							<br> 
 							<label>Geburtsdatum</label> <br> 
 							<input type="text" name="gebdate" id="gebdate" requiert="requiert" placeholder="DD-MM-YYYY"> 

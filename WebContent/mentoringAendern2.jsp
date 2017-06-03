@@ -229,7 +229,7 @@
 
 			<%MentoringMgmt mm = new MentoringMgmt();%>
 			<%MitarbeiterMgmt mam = new MitarbeiterMgmt();%>
-			<% int mentid = Integer.parseInt(mentoringid);%>
+			<%int mentid = Integer.parseInt(mentoringid);%>
 			<%Mentoring ausgewaehltesMentoring = mm.getMentoringById(mentid);%>
 			
 			<%SimpleDateFormat sdf = new SimpleDateFormat("yyyy");%> 

@@ -147,7 +147,7 @@
 
 
      
-                                <span>Mitarebier Login:</span>
+                                <span>Mitarbeiter Login:</span>
                                 <br>
                                 <form action="LoginController" method="post">
                              	<label>Username</label>

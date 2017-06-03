@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import logic.LoginMgmt;
+import logic.MitarbeiterMgmt;
+import repository.MitarbeiterDAO;
 
 /**
  * Servlet implementation class LoginController
@@ -17,6 +21,7 @@ import logic.LoginMgmt;
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private LoginMgmt lmg= new LoginMgmt();
+	private MitarbeiterMgmt mmg = new MitarbeiterMgmt();
     /**
      * Default constructor. 
      */
@@ -46,11 +51,19 @@ public class LoginController extends HttpServlet {
 			HttpSession session = request.getSession(true);
 			String name=request.getParameter("name");
 			String pwd=request.getParameter("pwd");
+			System.out.println(name+" "+pwd);
 			String value=lmg.check(name, pwd);
+			System.out.println(value);
 			if(value==null){request.getRequestDispatcher("index.jsp").include(request, response);}
 			if(value.equalsIgnoreCase("Mitarbeiter")){
 				//Weiter zur MitarbeiterSeite bzw zum Servlet
 				String spez=lmg.spezi(name, pwd);
+				try {
+					request.getServletContext().setAttribute("mitarbeiter", mmg.context(name, pwd));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				if(spez=="Admin"){
 					session.setAttribute("marker", spez);
 					request.getRequestDispatcher("indexLoggedInAsMitarbeiter.jsp").include(request, response);
@@ -68,7 +81,7 @@ public class LoginController extends HttpServlet {
 				}
 			}
 			else if(value.equalsIgnoreCase("Kunde")){
-				request.getRequestDispatcher("indexLoggedInAsKunde.jsp").include(request, response);
+				request.getRequestDispatcher("index.jsp").include(request, response);
 			}
 			else if(value==null){
 				request.getRequestDispatcher("index.jsp").include(request, response);

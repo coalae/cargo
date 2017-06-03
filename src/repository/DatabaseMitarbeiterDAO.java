@@ -2,11 +2,30 @@ package repository;
 
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+
+
+
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import org.eclipse.jdt.internal.compiler.parser.ParserBasicInformation;
+
+import model.Mentoring;
 
 import model.Mitarbeiter;
 /**
@@ -23,6 +42,7 @@ public class DatabaseMitarbeiterDAO implements MitarbeiterDAO {
 	private static final String upPassw = "UPDATE from Mitarbeiter SET passw = ? where username=?";
 	private static final String upActiv = "UPDATE from Mitarbeiter SET active = ? where username =?";
 	private static final String add = "Insert into Mitarbeiter values (?,?,?,?,?,?,?,?,?,?)";
+	private static final String objekt="Select * from Mitarbeiter where username=? and passw =?";
 	DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
 	Connection connection;
 	/**
@@ -99,9 +119,98 @@ public class DatabaseMitarbeiterDAO implements MitarbeiterDAO {
     	}
     	catch(SQLException e){e.getStackTrace();}
 	}
+	
+	
+public ArrayList<Mitarbeiter> getMitarbeiterListe() throws java.text.ParseException {
+		
+        ArrayList<Mitarbeiter> mitarbeiterliste = new ArrayList<Mitarbeiter>();
+        
+        String sql;   
+        sql = "SELECT mitarbeiterid, vorname, nachname, svnr, spezialisierung, mitarbeitertyp, geburtsdatum, username, passw, active FROM Mitarbeiter";
+        
+        try {
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            
+            while (rs.next()) {
+             int mitarbeiterid=rs.getInt(1);
+             String vorname=rs.getString(2);
+             String nachname=rs.getString(3);
+             int svnr = rs.getInt(4);
+             String spezialisierung=rs.getString(5);
+             int mitarbeitertyp=rs.getInt(6);
+             String geburtsdatum = rs.getString(7);
+             String username = rs.getString(8);
+             String passw = rs.getString(9);
+             String active = rs.getString(10);
+             
+             boolean active_ = Boolean.parseBoolean(active);
+             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
+             GregorianCalendar cal = new GregorianCalendar();
+     	     Date geburtsdatum_ = sdf.parse(geburtsdatum);
+     	     cal.setTime(geburtsdatum_);
+                    
+    		Mitarbeiter mitarbeiter = new Mitarbeiter(mitarbeiterid, vorname, nachname, svnr, spezialisierung, mitarbeitertyp, cal, username, passw, active_);
+    		
+             mitarbeiterliste.add(mitarbeiter);
+             
+              
+             
+             
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+			e.printStackTrace();
+		} 
+        return mitarbeiterliste;
+        
+     }	
+    
+    
 	@Override
 	public Mitarbeiter getMitarbeiterById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql;
+		Mitarbeiter mitarbeiter = null;
+	    sql = "SELECT mitarbeiterid, vorname, nachname, svnr, spezialisierung, mitarbeitertyp, geburtsdatum, username, passw, active from Mitarbeiter WHERE mitarbeiterid='" + id + "'";
+	        
+	        try {
+
+	           PreparedStatement stm = connection.prepareStatement(sql);
+	            ResultSet rs = stm.executeQuery();
+	            
+	            while (rs.next()){
+	            int mitarbeiterid=rs.getInt(1);
+	             String vorname=rs.getString(2);
+	             String nachname=rs.getString(3);
+	             int svnr = rs.getInt(4);
+	             String spezialisierung=rs.getString(5);
+	             int mitarbeitertyp=rs.getInt(6);
+	             String geburtsdatum = rs.getString(7);
+	             String username = rs.getString(8);
+	             String passw = rs.getString(9);
+	             String active = rs.getString(10);
+	             
+	             boolean active_ = Boolean.parseBoolean(active);
+	             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
+	             GregorianCalendar cal = new GregorianCalendar();
+	     	     java.util.Date geburtsdatum_ = sdf.parse(geburtsdatum);
+	     	     cal.setTime(geburtsdatum_);
+	                    
+	     	     mitarbeiter = new Mitarbeiter(mitarbeiterid, vorname, nachname, svnr, spezialisierung, mitarbeitertyp, cal, username, passw, active_);
+	     	    stm.close();
+	            }
+	           
+	              
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			} 
+	        
+	        
+	        return mitarbeiter;
+
 	}
 }

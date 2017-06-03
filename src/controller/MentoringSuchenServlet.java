@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * Servlet implementation class KursSucheServlet.
- * Im KursSucheServlet kann ein Kurs anhand des kursname gesucht werden in der Gesamtliste.
+ *
+ * 
  */
 @WebServlet("/MentoringSuchenServlet")
 public class MentoringSuchenServlet extends HttpServlet {

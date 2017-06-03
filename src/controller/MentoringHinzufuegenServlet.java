@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
       
 
 /**
- * Servlet implementation class KursHinzufuegenServlet.
- * Im KursHinzufuegenServlet kann ein Kurs hinzugefuegt werden.
+ * 
+ * Im MentoringHinzufuegenServlet wird ein Kurs hinzugefuegt werden.
  */
 @WebServlet("/MentoringHinzufuegenServlet")
 public class MentoringHinzufuegenServlet extends HttpServlet {
@@ -46,7 +46,7 @@ public class MentoringHinzufuegenServlet extends HttpServlet {
 		/**
 		 * doPost nimmt die Eingaben des Mentoring entgegen und versucht, die neue Mentoringbeziehung zu erstellen.
 		 * Wenn Eingabefelder leer: wird "Eingabe erforderlich" angezeigt.
-		 * Wenn Fehler waren: Anzeige, dass Fehler.
+		 * Fehlerbehandlung
 		 * Wenn Mentoring erstellt wurde: Nachricht, dass Mentoring erstellt wurde.
 		 */
 		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
