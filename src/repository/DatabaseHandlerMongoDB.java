@@ -1,17 +1,29 @@
 package repository;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
+import java.util.Arrays;
 
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 
 public class DatabaseHandlerMongoDB {
-	private static final String db ="mongodb://raiz3r:dbkzlxlq1@ds141351.mlab.com:41351/isedatabase";
 	private static DatabaseHandlerMongoDB instance=null;
-	private DatabaseHandlerMongoDB(){}
-	public void erstellen(){
-		MongoClientURI uri = new MongoClientURI(db);
-		MongoClient mongoClient = new MongoClient(uri);
-		
+	private DB db;
+	private DatabaseHandlerMongoDB(){
+		db=erstellen();
 	}
-	
+	private DB erstellen(){
+		char[] pass= new char[9];
+		pass[0]='d';pass[1]='b';pass[2]='k';pass[3]='z';pass[4]='l';pass[5]='x';pass[6]='l';pass[7]='q';pass[8]='1';
+		MongoCredential cres= MongoCredential.createCredential("imseDatabaseHandler", "isedatabase", pass);
+		MongoClient client = new MongoClient(new ServerAddress("ds141351.mlab.com:41351"),Arrays.asList(cres));
+		return db = client.getDB("isedatabase");
+	}
+	public DatabaseHandlerMongoDB getInstance(){
+		if(instance==null){
+			instance=new DatabaseHandlerMongoDB();
+		}
+		return instance;
+	}
 }
