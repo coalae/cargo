@@ -1,11 +1,17 @@
 package repository;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.text.StyledEditorKit.BoldAction;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 /**
  * 
  * @author Gregor Langner
@@ -15,18 +21,19 @@ public class DatabaseLoginDAO implements LoginDAO{
 	private static String checkKunde="Select * from Kunde where username=? and passw=?";
 	private static String checkMitarbeiter="Select * from Mitarbeiter where username= ? and passw= ?";
 	private static String spezi="Select * from Mitarbeiter where username= ? and passw= ?";
-	DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-	private Connection connection;
+	//DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+	//private Connection connection;
+	DatabaseHandlerMongoDB databaseHandler = DatabaseHandlerMongoDB.getInstance();
+	private DB db;
 	/**
 	 * {@code DatabaseLoginDAO}
 	 * Hier wird eine connection zur Datenbank erstellt
 	 */
 	public DatabaseLoginDAO(){
-		try {
-			connection = DatabaseHandler.getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		try{
+			db=databaseHandler.erstellen();
 		}
+		catch(Exception e){e.getMessage();}
 	}
 /**
  * {@code String check (String name,String pw)}
@@ -35,29 +42,34 @@ public class DatabaseLoginDAO implements LoginDAO{
  */
 	@Override
 	public String check(String name, String pwd) {
-		String check=null;
+		String check="";
+		
 		try{
-		PreparedStatement ein = connection.prepareStatement(checkKunde);
-		ein.setString(1, name);
-		ein.setString(2, pwd);
-		ResultSet rs= ein.executeQuery();
-		boolean test=(rs.next());
-			if(test==true){
-				System.out.println("Kunde");
-				return "Kunde";
+			DBCollection kunde=db.getCollection("Kunde");
+			BasicDBObject query = new BasicDBObject("name", name);
+			DBCursor cur = kunde.find(query);
+			System.out.println(cur.size());
+			if(cur.size()>0){
+				for(int i=0;i<cur.size();i++){
+					BasicDBObject test = (BasicDBObject) cur.next();
+					System.out.println(test.getString("pwd"));
+					if(pwd.equalsIgnoreCase(test.getString("pwd"))){
+						check ="Kunde";
+						break;
+					}
+				}
 			}
-		PreparedStatement ein1 = connection.prepareStatement(checkMitarbeiter);
-		ein1.setString(1, name);
-		ein1.setString(2, pwd);
-		ResultSet rs1= ein1.executeQuery();
-		test=(rs1.next());
-			if(test==true){
-				System.out.println("Mitarbeiter");
-				return "Mitarbeiter";
+			else{
+				DBCollection mitarbeiter=db.getCollection("Mitarbeiter");
+				BasicDBObject queryM = new BasicDBObject("name",name);
+				DBCursor curM = mitarbeiter.find(queryM);
+				if(curM.size()>0){
+					for(int i=0;)
+				}
 			}
-			System.out.println(check);
 		}
-		catch(Exception e){System.out.println("Fehler" +e.getMessage());} //noch leer
+		catch(Exception e){}
+		
 		return check;
 	}
 /**
@@ -69,7 +81,7 @@ public class DatabaseLoginDAO implements LoginDAO{
  */
 	@Override
 	public String spez(String name, String pwd) {
-		try{
+		/*try{
 			PreparedStatement aus=connection.prepareStatement(spezi);
 			aus.setString(1, name);
 			aus.setString(2, pwd);
@@ -79,7 +91,7 @@ public class DatabaseLoginDAO implements LoginDAO{
 			if(test==true){
 				return rs.getString(5);
 			}
-		}catch(Exception e){}
+		}catch(Exception e){}*/
 		return null;
 	}
 }
