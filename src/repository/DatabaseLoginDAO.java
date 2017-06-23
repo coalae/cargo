@@ -54,19 +54,23 @@ public class DatabaseLoginDAO implements LoginDAO{
 					BasicDBObject test = (BasicDBObject) cur.next();
 					System.out.println(test.getString("pwd"));
 					if(pwd.equalsIgnoreCase(test.getString("pwd"))){
-						check ="Kunde";
-						break;
+						check =  "Kunde";
 					}
 				}
 			}
-			else{
+			
 				DBCollection mitarbeiter=db.getCollection("Mitarbeiter");
-				BasicDBObject queryM = new BasicDBObject("name",name);
+				BasicDBObject queryM = new BasicDBObject("username",name);
 				DBCursor curM = mitarbeiter.find(queryM);
-				if(curM.size()>0){
-					for(int i=0;)
-				}
-			}
+				System.out.println("Vor Mitarbeiter");
+				System.out.println(curM.size());
+					for(int i=0;i<curM.size();i++){
+						System.out.println("Mitarbeiter");
+						BasicDBObject testM = (BasicDBObject) curM.next();
+						if(pwd.equalsIgnoreCase(testM.getString("passw"))){
+							check=  "Mitarbeiter";
+						}
+					}
 		}
 		catch(Exception e){}
 		
@@ -81,17 +85,6 @@ public class DatabaseLoginDAO implements LoginDAO{
  */
 	@Override
 	public String spez(String name, String pwd) {
-		/*try{
-			PreparedStatement aus=connection.prepareStatement(spezi);
-			aus.setString(1, name);
-			aus.setString(2, pwd);
-			ResultSet rs= aus.executeQuery();
-
-			boolean test=rs.next();
-			if(test==true){
-				return rs.getString(5);
-			}
-		}catch(Exception e){}*/
 		return null;
 	}
 }

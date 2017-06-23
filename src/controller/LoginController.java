@@ -57,33 +57,17 @@ public class LoginController extends HttpServlet {
 			if(value==null){request.getRequestDispatcher("index.jsp").include(request, response);}
 			if(value.equalsIgnoreCase("Mitarbeiter")){
 				//Weiter zur MitarbeiterSeite bzw zum Servlet
-				String spez=lmg.spezi(name, pwd);
+				System.out.println("Bin hier +");
 				try {
 					request.getServletContext().setAttribute("mitarbeiter", mmg.context(name, pwd));
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if(spez=="Admin"){
-					session.setAttribute("marker", spez);
+				System.out.println("Bin hier");
 					request.getRequestDispatcher("indexLoggedInAsMitarbeiter.jsp").include(request, response);
-				}
-				else if(spez.equalsIgnoreCase("It")){
-					session.setAttribute("marker", spez);
-					request.getRequestDispatcher("indexLoggedInAsMitarbeiter.jsp").include(request, response);
-				}
-				else if(spez=="Mitarbeiter"){
-					session.setAttribute("marker", spez);
-					request.getRequestDispatcher("indexLoggedInAsMitarbeiter.jsp").include(request, response);
-				}
-				else if(spez==null){
-					request.getRequestDispatcher("index.jsp").include(request, response);
-				}
+	
 			}
 			else if(value.equalsIgnoreCase("Kunde")){
-				request.getRequestDispatcher("index.jsp").include(request, response);
-			}
-			else if(value==null){
 				request.getRequestDispatcher("index.jsp").include(request, response);
 			}
 			
