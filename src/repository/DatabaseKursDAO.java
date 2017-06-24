@@ -152,7 +152,10 @@ public class DatabaseKursDAO implements KursDAO {
 
     	DBCollection kurscoll = db.getCollection("Kurs");
 		DBCursor cursor = kurscoll.find();
-				
+
+		// GregorianCalendar fuer beginn und ende setzen
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
+	     
 		// System.out.println(kurscoll.count());
 		long next = kurscoll.count();
 		next = next +1;
@@ -161,8 +164,8 @@ public class DatabaseKursDAO implements KursDAO {
 		doc.put("kursid", next);
 		doc.put("kursname", kurs.getKursname());
 		doc.put("kurslevel", kurs.getLevel());
-		doc.put("beginn", kurs.getBeginn());
-		doc.put("ende", kurs.getEnde());
+		doc.put("beginn", sdf.format(kurs.getBeginn().getTime()));
+		doc.put("ende", sdf.format(kurs.getEnde().getTime()));
 		doc.put("preis", kurs.getPreis());
 		doc.put("betreuerid", kurs.getPreis());
 		doc.put("maxanzahl", kurs.getMaxAnzahl());
