@@ -127,7 +127,7 @@ public class DatabaseKursDAO implements KursDAO {
 		    	     GregorianCalendar endecal = new GregorianCalendar();
 		     	     beginncal.setTime(sdf.parse(kursObject.getString("ende")));
 
-					suchKurs=new Kurs(kursObject.getInt("kursid"),kursObject.getString("kursname"),kursObject.getString("kurslevel"),
+					suchKurs=new Kurs(id,kursObject.getString("kursname"),kursObject.getString("kurslevel"),
 		            		 beginncal,endecal,kursObject.getDouble("preis"),kursObject.getInt("betreuerid"),
 		            		 kursObject.getInt("maxanzahl"),kursObject.getInt("immobilie"),teilnehmerliste);
 					
