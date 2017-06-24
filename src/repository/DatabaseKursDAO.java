@@ -1,13 +1,12 @@
 package repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -20,89 +19,80 @@ import model.Kurs;
  * @author Cordula Eggerth
  */
 public class DatabaseKursDAO implements KursDAO {
-	private String DBAdresse = "jdbc:mysql://langnerg86.mysql.univie.ac.at/langnerg86?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";  // jdbc:mariadb://localhost:3306/cargo
-	private String username = "langnerg86"; // root
-	private String password = "dbkzlxlq1"; // coalacoala1
 
+	/**
+	 * Instanzvariablen
+	 */
+	DatabaseHandlerMongoDB databaseHandler = DatabaseHandlerMongoDB.getInstance();
+	DB db;
 	
 	/**
-	 * getKursListe (i.e. SELECT * FROM kurs) holt eine Liste aller Kurse aus der DB.
+	 * Konstruktor
+	 */
+	public DatabaseKursDAO() {
+		try{
+			db = databaseHandler.erstellen();
+		} catch(Exception e) {e.printStackTrace();}
+	}
+	
+	/**
+	 * getKursListe  
 	 * @return ArrayList von Kursen
 	 */
 	@Override
 	public ArrayList<Kurs> getKursListe() {
-		Connection con = null;
-        ArrayList<Kurs> kursList = new ArrayList<Kurs>();
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
-            con = DriverManager.getConnection(DBAdresse, username, password);
+		
+		ArrayList<Kurs> kursList = new ArrayList<Kurs>();
+		DBCollection kurscoll = db.getCollection("Kurs");
+		DBCursor cursor = kurscoll.find();
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+			while(cursor.hasNext()) {
+				// System.out.println(cursor.next());
+				
+				BasicDBObject kursObject = (BasicDBObject) cursor.next();
+				 						
+				try{
+							 
+		             // Teilnehmerliste des Kurses setzen
+		             ArrayList<Integer> teilnehmerliste = getTeilnehmerListe(kursObject.getInt("kursid"));
+		    		
+		             // GregorianCalendar fuer beginn und ende setzen
+		             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
 
-        String sql;   
-        sql = "SELECT kursId, kursname, kurslevel, beginn, ende, preis, betreuerId, maxAnzahl, immobilie FROM Kurs";
-        PreparedStatement prest = null;
-        try {
+		     	     GregorianCalendar beginncal = new GregorianCalendar();
+		     	     beginncal.setLenient(false);
+		     	     beginncal.setTime(sdf.parse(kursObject.getString("beginn")));
+		    	     
+		    	     GregorianCalendar endecal = new GregorianCalendar();
+		    	     endecal.setLenient(false);
+		     	     beginncal.setTime(sdf.parse(kursObject.getString("ende")));
+		     	     
+		     	     // neuen Kurs anlegen
+		             Kurs kurs=new Kurs(kursObject.getInt("kursid"),kursObject.getString("kursname"),kursObject.getString("kurslevel"),
+		            		 beginncal,endecal,kursObject.getDouble("preis"),kursObject.getInt("betreuerid"),kursObject.getInt("maxanzahl"),
+		            		 kursObject.getInt("immobilie"),teilnehmerliste);
+		             
+		             // Kurs zur Kursliste hinzufuegen
+		             kursList.add(kurs);
 
-            prest = con.prepareStatement(sql);
-            ResultSet rs = prest.executeQuery();
-            
-            while (rs.next()) {
-             int kursId=rs.getInt(1);
-             String kursname=rs.getString(2);
-             String level=rs.getString(3);
-             String beginnstr=rs.getString(4);
-             String endestr=rs.getString(5);
-             double preis=rs.getDouble(6);
-             int betreuerId=rs.getInt(7);
-             int maxAnzahl=rs.getInt(8);
-             int immobilie=rs.getInt(9);
-             
-             // Teilnehmerliste des Kurses setzen
-             ArrayList<Integer> teilnehmerliste = getTeilnehmerListe(kursId);
-    		
-             // GregorianCalendar fuer beginn und ende setzen
-             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
+			    }catch(Exception e){
+						System.out.println(e.getMessage());
+				}	
+				
+				// CHECK
+				for (Kurs kurs : kursList) {
+					System.out.println(kurs.getKursname());
+				}				             		             
+			             
+			}
+			
+			return kursList;
 
-     	     GregorianCalendar beginncal = new GregorianCalendar();
-     	     beginncal.setLenient(false);
-     	     beginncal.setTime(sdf.parse(beginnstr));
-    	     
-    	     GregorianCalendar endecal = new GregorianCalendar();
-    	     endecal.setLenient(false);
-     	     beginncal.setTime(sdf.parse(endestr));
-     	     
-     	     // neuen Kurs anlegen
-             Kurs kurs=new Kurs(kursId,kursname,level,beginncal,endecal,preis,betreuerId,maxAnzahl,immobilie,teilnehmerliste);
-             
-             // Kurs zur Kursliste hinzufuegen
-             kursList.add(kurs);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-			e.printStackTrace();
-		} finally {
-            try {
-                if (prest != null)
-                    prest.close();
-                if (con != null)
-                    con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return kursList;
 	}	
 	
 
 	/**
-     * Get Kurs by Id (SELECT ... FROM kurs WHERE kursId= ...).
+     * Get Kurs by Id  
      * Kurs anhand der als int uebergebenen id suchen.
      * @param id
      * @return
@@ -110,72 +100,47 @@ public class DatabaseKursDAO implements KursDAO {
 	@Override
     public Kurs getKursById(int id){
     	  
-		Connection con = null;
-		Kurs kurs = null;
-		try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
-            con = DriverManager.getConnection(DBAdresse, username, password);
+		Kurs suchKurs = null;
+		
+		DBCollection kurscoll = db.getCollection("Kurs");
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+		BasicDBObject idObject = new BasicDBObject("id", id);
+		
+		DBCursor cursor = kurscoll.find(idObject);
+		for (int i=0; i<cursor.size(); i++) {
+			BasicDBObject kursObject = (BasicDBObject) cursor.next();
+			if(id == kursObject.getInt("kursid")){
+				try{
+					
+			        // Teilnehmerliste des Kurses setzen
+			        ArrayList<Integer> teilnehmerliste = null;
+			          if(getTeilnehmerListe(id)!=null || getTeilnehmerListe(id).size()!=0){
+			        	  teilnehmerliste = getTeilnehmerListe(id);
+			          }
+					
+					// GregorianCalendar fuer beginn und ende setzen
+		             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
 
-	    String sql;
-	    sql = "SELECT kursId, kursname, kurslevel, beginn, ende, preis, betreuerId, maxAnzahl, immobilie FROM Kurs" +
-	    		" WHERE kursId='" + id + "'";
-	        PreparedStatement prest = null;
-	        try {
+		     	     GregorianCalendar beginncal = new GregorianCalendar();
+		     	     beginncal.setTime(sdf.parse(kursObject.getString("beginn")));
+		    	     
+		    	     GregorianCalendar endecal = new GregorianCalendar();
+		     	     beginncal.setTime(sdf.parse(kursObject.getString("ende")));
 
-	            prest = con.prepareStatement(sql);
-	            ResultSet rs = prest.executeQuery();
-	            
-	            while (rs.next()) {
-	             int kursId=rs.getInt(1);
-	             String kursname=rs.getString(2);
-	             String level=rs.getString(3);
-	             String beginnstr=rs.getString(4);
-	             String endestr=rs.getString(5);
-	             double preis=rs.getDouble(6);
-	             int betreuerId=rs.getInt(7);
-	             int maxAnzahl=rs.getInt(8);
-	             int immobilie=rs.getInt(9);
-	             
-	             // Teilnehmerliste des Kurses setzen
-	             ArrayList<Integer> teilnehmerliste = null;
-	               if(getTeilnehmerListe(kursId)!=null || getTeilnehmerListe(kursId).size()!=0){
-	            	 teilnehmerliste = getTeilnehmerListe(kursId);
-	               }
+					suchKurs=new Kurs(kursObject.getInt("kursid"),kursObject.getString("kursname"),kursObject.getString("kurslevel"),
+		            		 beginncal,endecal,kursObject.getDouble("preis"),kursObject.getInt("betreuerid"),
+		            		 kursObject.getInt("maxanzahl"),kursObject.getInt("immobilie"),teilnehmerliste);
+					
+			    } catch(Exception e){
+						System.out.println(e.getMessage());
+				}	
+			}
 
-	             // GregorianCalendar fuer beginn und ende setzen
-	             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
-
-	     	     GregorianCalendar beginncal = new GregorianCalendar();
-	     	     beginncal.setTime(sdf.parse(beginnstr));
-	    	     
-	    	     GregorianCalendar endecal = new GregorianCalendar();
-	     	     beginncal.setTime(sdf.parse(endestr));
-	     	     
-	     	     // neuen Kurs anlegen
-	     	     kurs=new Kurs(kursId,kursname,level,beginncal,endecal,preis,betreuerId,maxAnzahl,immobilie,teilnehmerliste); 
-	            }
-	        } catch (SQLException e) {
-	        } catch (ParseException e) {
-				e.printStackTrace();
-			} finally {
-	            try {
-	                if (prest != null)
-	                    prest.close();
-	                if (con != null)
-	                    con.close();
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-
-	        }
-	        return kurs;
 		}
+		
+		return suchKurs;	
+
+	}
 
 
 	/**
@@ -184,51 +149,29 @@ public class DatabaseKursDAO implements KursDAO {
 	 */
 	@Override
 	public void addKurs(Kurs kurs) {
-		Connection con = null;
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
-            con = DriverManager.getConnection(DBAdresse, username, password);
+    	DBCollection kurscoll = db.getCollection("Kurs");
+		DBCursor cursor = kurscoll.find();
+				
+		// System.out.println(kurscoll.count());
+		long next = kurscoll.count();
+		next = next +1;
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+		BasicDBObject doc = new BasicDBObject();
+		doc.put("kursid", next);
+		doc.put("kursname", kurs.getKursname());
+		doc.put("kurslevel", kurs.getLevel());
+		doc.put("beginn", kurs.getBeginn());
+		doc.put("ende", kurs.getEnde());
+		doc.put("preis", kurs.getPreis());
+		doc.put("betreuerid", kurs.getPreis());
+		doc.put("maxanzahl", kurs.getMaxAnzahl());
+		doc.put("immobilie", kurs.getImmobilie());
 
-        try {
-        	
-              // insert statement
-              String query = " insert into Kurs (kursname, kurslevel, beginn, ende, preis, betreuerId, maxAnzahl, immobilie)"
-                + " values (?, ?, ?, ?, ?, ?, ?, ?)";
-
-              // create insert preparedstatement
-              PreparedStatement preparedStmt = con.prepareStatement(query);
-              SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
-              preparedStmt.setString (1, kurs.getKursname());
-              preparedStmt.setString (2, kurs.getLevel());
-              preparedStmt.setString (3, sdf.format(kurs.getBeginn().getTime()));
-              preparedStmt.setString(4, sdf.format(kurs.getEnde().getTime()));
-              preparedStmt.setDouble(5, kurs.getPreis());
-              preparedStmt.setInt(6, kurs.getBetreuerId()); 
-              preparedStmt.setInt(7, kurs.getMaxAnzahl());
-              preparedStmt.setInt(8, kurs.getImmobilie());
-
-              // execute the preparedstatement
-              preparedStmt.execute();
-              
-              con.close();
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }finally {
-		        try {
-		            if (con != null)
-		                con.close();
-		        } catch (SQLException e) {
-		            e.printStackTrace();
-		        }
-		    }		
+		kurscoll.insert(doc);
+	
 	}
+	
 
 	/**
 	 * Bestehenden Kurs loeschen  
@@ -236,35 +179,17 @@ public class DatabaseKursDAO implements KursDAO {
 	 */	
 	@Override
 	public void deleteKurs(int id) {
-  		Connection con = null;
-		
-		try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
-            con = DriverManager.getConnection(DBAdresse, username, password);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-		
-	    String sql = "DELETE FROM Kurs WHERE kursId='" + id + "'";
+	 	   DBCollection kurs = db.getCollection("Kurs");
+	 	   BasicDBObject query = new BasicDBObject("kursid", id);
+	 	   DBCursor cursor = kurs.find(query);
+	 	   for(int i=0;i<cursor.size();i++){
+	 		   BasicDBObject act = (BasicDBObject) cursor.next();
+	 		   if(id == act.getInt("kursid")){
+	 			   kurs.remove(act);
+	 		   }
+	 	   }		
 
-        try {
-        	Statement stmt = con.createStatement();        	         	 
-        	stmt.execute(sql);            
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (con != null)
-                    con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return;
 	}	
 	
 	/**
@@ -274,51 +199,37 @@ public class DatabaseKursDAO implements KursDAO {
 	@Override
 	public void updateKurs(Kurs kurs) {
 		
+		 // update ohne datumsaenderung (beginn und ende gleich)
 		 SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
 
-		 String sql;  // update ohne datum update
-		 sql = "UPDATE Kurs SET kursname=?, kurslevel=?, preis=?, betreuerId=?, maxAnzahl=?, immobilie=? WHERE kursid = ?";
-		
-			Connection con = null;
-	        try {
-	            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
-	            con = DriverManager.getConnection(DBAdresse, username, password);
+			DBCollection kurscoll = db.getCollection("Kurs");
+			BasicDBObject object = new BasicDBObject("kursid", kurs.getId());
+			DBCursor cursor = kurscoll.find(object);
 
-	        } catch (ClassNotFoundException e) {
-	            e.printStackTrace();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	        
-		    PreparedStatement preparedStmt = null;
-		    try {
-		        preparedStmt = con.prepareStatement(sql);
-		        preparedStmt.setString(1, kurs.getKursname());
-		        preparedStmt.setString(2, kurs.getLevel());
-		        // preparedStmt.setString(3, sdf.format(kurs.getBeginn().getTime()));
-		        // preparedStmt.setString(4, sdf.format(kurs.getBeginn().getTime()));
-		        preparedStmt.setDouble(3, kurs.getPreis());
-		        preparedStmt.setInt(4, kurs.getBetreuerId());
-		        preparedStmt.setInt(5, kurs.getMaxAnzahl());
-		        preparedStmt.setInt(6, kurs.getImmobilie());
-		        preparedStmt.setInt(7, kurs.getId());
-		        
-		        preparedStmt.executeUpdate();
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }finally {
-		        try {
-		            if (preparedStmt != null)
-		                preparedStmt.close();
-		            if (con != null)
-		                con.close();
-		        } catch (SQLException e) {
-		            e.printStackTrace();
-		        }
-		
-		    }
-		    return;		
+			if(cursor.size()>0){
+					for(int i=0; i<cursor.size(); i++){
+						BasicDBObject next = (BasicDBObject) cursor.next();
+						if(kurs.getId() == next.getInt("kursid")){
+							
+							BasicDBObject update = new BasicDBObject();
+							
+							update.append("kursid", kurs.getId());
+							update.append("kursname", kurs.getKursname());
+							update.append("kurslevel", kurs.getLevel());
+							update.append("beginn", kurs.getBeginn());
+							update.append("ende", kurs.getEnde());
+							update.append("preis", kurs.getPreis());
+							update.append("betreuerid", kurs.getBetreuerId());
+							update.append("maxanzahl", kurs.getMaxAnzahl());
+							update.append("kurslevel", kurs.getImmobilie());
+							
+							kurscoll.update(new BasicDBObject().append("kursid", kurs.getId()), update);
+						}
+
+				    }
+		     }
 	}    
+
 	
 	/**
 	 * Teilnehmer (anhand der kundenId) zu einem bestimmten Kurs hinzufuegen
@@ -327,43 +238,20 @@ public class DatabaseKursDAO implements KursDAO {
 	 */
 	@Override
 	public void addTeilnehmerToKurs(int kundenId, int kursId){
-		Connection con = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
-            con = DriverManager.getConnection(DBAdresse, username, password);
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
+ 
         	
-              // insert statement
-              String query = " insert into teilnehmer (kundenId,kursId)"
-                + " values (?, ?)";
+    	DBCollection teilnehmercoll = db.getCollection("Teilnehmer");
+		DBCursor cursor = teilnehmercoll.find();
+				
+		// System.out.println(teilnehmercoll.count());
+		long next = teilnehmercoll.count();
+		next = next +1;
 
-              // create insert preparedstatement
-              PreparedStatement preparedStmt = con.prepareStatement(query);
-              preparedStmt.setInt(1, kundenId); 
-              preparedStmt.setInt(2, kursId);
+		BasicDBObject doc = new BasicDBObject();
+		doc.put("kundenid", kundenId);
+		doc.put("kursid", kursId);
 
-              // execute the preparedstatement
-              preparedStmt.execute();
-              
-              // close
-              con.close();
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }finally {
-		        try {
-		            if (con != null)
-		                con.close();
-		        } catch (SQLException e) {
-		            e.printStackTrace();
-		        }
-		    }				
+		teilnehmercoll.insert(doc);
 		
 	}
 	
@@ -374,35 +262,17 @@ public class DatabaseKursDAO implements KursDAO {
 	 */
 	@Override
 	public void deleteTeilnehmerFromKurs(int kundenId, int kursId){
-  		Connection con = null;
-		
-		try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
-            con = DriverManager.getConnection(DBAdresse, username, password);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-		
-	    String sql = "DELETE FROM teilnehmer WHERE kundenId='" + kundenId + "' AND kursId='" + kursId + "'";
-
-        try {
-        	Statement stmt = con.createStatement();        	         	 
-        	stmt.execute(sql);            
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (con != null)
-                    con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return;			
+	 	   DBCollection teilnehmer = db.getCollection("Teilnehmer");
+	 	   BasicDBObject query1 = new BasicDBObject("kundenid", kundenId);
+	 	   BasicDBObject query2 = new BasicDBObject("kursid", kursId);
+	 	   DBCursor cursor = teilnehmer.find(query1,query2);
+	 	   for(int i=0;i<cursor.size();i++){
+	 		   BasicDBObject act = (BasicDBObject) cursor.next();
+	 		   if(kundenId == act.getInt("kundenid") && kursId == act.getInt("kursid")){
+	 			   teilnehmer.remove(act);
+	 		   }
+	 	   }
 	}
 	
 	
@@ -412,44 +282,33 @@ public class DatabaseKursDAO implements KursDAO {
 	 * @return
 	 */
 	public ArrayList<Integer> getTeilnehmerListe(int kursId) {
-		Connection con = null;
-    	ArrayList<Integer> teilnehmerliste=new ArrayList<Integer>();
-		 
-		try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
-            con = DriverManager.getConnection(DBAdresse, username, password);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+		ArrayList<Integer> teilnehmerList = new ArrayList<Integer>();
+		DBCollection teilnehmercoll = db.getCollection("Teilnehmer");
+		DBCursor cursor = teilnehmercoll.find();
 
-	    String sql;  
-	    sql = "SELECT kundenId FROM teilnehmer WHERE kursId='"+kursId+"'";
-	        PreparedStatement prest = null;
-	        try {
-	            prest = con.prepareStatement(sql);
-	            ResultSet rs = prest.executeQuery();
+			while(cursor.hasNext()) {
+				// System.out.println(cursor.next());
+				
+				BasicDBObject teilnehmerObject = (BasicDBObject) cursor.next();
+												
+				try{
+							 
+					teilnehmerList.add(teilnehmerObject.getInt("kundenid"));
+					
+			    }catch(Exception e){
+						System.out.println(e.getMessage());
+				}	
+				
+				// CHECK
+				for (int i=0;i<teilnehmerList.size();i++) {
+					System.out.println(teilnehmerList.get(i));
+				}				             		             
+			             
+			}
+			
+			return teilnehmerList;
 
-	            while (rs.next()) {                    
-	                int kundenId=rs.getInt(1);
-	                teilnehmerliste.add(kundenId);
-	            }
-	        }catch (SQLException e) {
-	            e.printStackTrace();
-	        } finally {
-	            try {
-	                if (prest != null)
-	                    prest.close();
-	                if (con != null)
-	                    con.close();
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-
-	        }
-			return teilnehmerliste;
 	}
   
 	
@@ -460,43 +319,26 @@ public class DatabaseKursDAO implements KursDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getKurslisteForTeilnehmer (int kundenId) {
-		Connection con = null;
-    	ArrayList<Integer> kursliste=new ArrayList<Integer>();
+
+		ArrayList<Integer> kursList=new ArrayList<Integer>();
 		 
-		try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
-            con = DriverManager.getConnection(DBAdresse, username, password);
+		DBCollection teilnehmercoll = db.getCollection("Teilnehmer");
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-	    String sql;  
-	    sql = "SELECT kursId FROM teilnehmer WHERE kundenId='"+kundenId+"'";
-	        PreparedStatement prest = null;
-	        try {
-	            prest = con.prepareStatement(sql);
-	            ResultSet rs = prest.executeQuery();
-
-	            while (rs.next()) {	                    
-	                int kursId=rs.getInt(1);
-	                kursliste.add(kursId);
-	            }
-	        }catch (SQLException e) {
-	            e.printStackTrace();
-	        } finally {
-	            try {
-	                if (prest != null)
-	                    prest.close();
-	                if (con != null)
-	                    con.close();
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-	        }
-			return kursliste;
+	 	BasicDBObject query = new BasicDBObject("kundenid", kundenId);
+	 	   DBCursor cursor = teilnehmercoll.find(query);
+	 	   for(int i=0;i<cursor.size();i++){
+	 		   BasicDBObject act = (BasicDBObject) cursor.next();
+	 		   if(kundenId == act.getInt("kundenid")){
+	 			   kursList.add(act.getInt("kursid"));
+	 		   }
+	 	   }
+					
+				// CHECK
+				for (int i=0;i<kursList.size();i++) {
+					System.out.println(kursList.get(i));
+				}				             		          
+			
+			return kursList;
 	}
 	
 	
@@ -506,9 +348,7 @@ public class DatabaseKursDAO implements KursDAO {
 	 */ 
 	// public static void main(String[] args){
 	//	DatabaseKursDAO dao = new DatabaseKursDAO();
-		// dao.select();
-		// dao.insert();
-		// dao.update();
+	
 		// Kurs kursById = dao.getKursById(1);
 		// dao.deleteKursById(5);
 		/*
