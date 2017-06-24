@@ -1,12 +1,11 @@
 package repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 
 import model.Kunde;
 
@@ -14,265 +13,189 @@ import model.Kunde;
  * Das Interface KundenDAO bietet Methoden fuer das Speichern, Loeschen, Veraendern von 
  * Instanzen der Klasse Kunde.
  * @author Cordula Eggerth
- * (als kommentare stehen rechts die lokalen mariaDB-daten fuer die vorab-tests)
  */
 public class DatabaseKundenDAO implements KundenDAO {
-	private String DBAdresse = "jdbc:mysql://langnerg86.mysql.univie.ac.at/langnerg86?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; // jdbc:mariadb://localhost:3306/cargo
-	private String username = "langnerg86"; // root
-	private String password = "dbkzlxlq1"; // coalacoala1
+
+	/**
+	 * Instanzvariablen
+	 */
+	DatabaseHandlerMongoDB databaseHandler = DatabaseHandlerMongoDB.getInstance();
+	DB db;
 	
 	/**
-	 * get kundenliste (i.e. SELECT * FROM kunde).
+	 * Konstruktor
+	 */
+	public DatabaseKundenDAO() {
+		try{
+			db = databaseHandler.erstellen();
+		}catch(Exception e){e.printStackTrace();}
+	}
+	
+	/**
+	 * get kundenliste 
 	 * Liste aller Kunden aus der DB holen.
 	 * @return ArrayList von Kunden
 	 */
 	@Override
 	public ArrayList<Kunde> getKundenListe() {
-		Connection con = null;
-        ArrayList<Kunde> kundenList = new ArrayList<Kunde>();
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");  // org.mariadb.jdbc.Driver
-            con = DriverManager.getConnection(DBAdresse, username, password);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+		ArrayList<Kunde> kundenList = new ArrayList<Kunde>();
+		DBCollection kundencoll = db.getCollection("Kunde");
+		DBCursor cursor = kundencoll.find();
 
-        String sql;   
-        sql = "SELECT kundenId, vorname, nachname, iban, bic, username, passw, active FROM Kunde";
-        PreparedStatement prest = null;
-        try {
+			while(cursor.hasNext()) {
+				// System.out.println(cursor.next());
+				
+				BasicDBObject kundeObj = (BasicDBObject) cursor.next();
+						
+				boolean active = Boolean.parseBoolean(kundeObj.getString("active"));
+						
+				try{
+							 
+					Kunde kunde=new Kunde(kundeObj.getInt("kundenid"),kundeObj.getString("vorname"),
+				              	kundeObj.getString("nachname"),kundeObj.getInt("iban"),kundeObj.getString("bic"),
+				              	kundeObj.getString("username"),kundeObj.getString("passw"),active);
 
-            prest = con.prepareStatement(sql);
-            ResultSet rs = prest.executeQuery();
-            
-            while (rs.next()) {
-             int id=rs.getInt(1);
-             String vorname=rs.getString(2);
-             String nachname=rs.getString(3);
-             int iban=rs.getInt(4);
-             String bic=rs.getString(5);
-             String username=rs.getString(6);
-             String password=rs.getString(7);
-             boolean active=rs.getBoolean(8);
+					kundenList.add(kunde);
+			    }catch(Exception e){
+						System.out.println(e.getMessage());
+				}	
+				
+				// CHECK
+				for (Kunde kunde : kundenList) {
+					System.out.println(kunde.getNachname());
+				}				             		             
+			             
+			}
+			
+			return kundenList;
 
-             Kunde kunde=new Kunde(id,vorname,nachname,iban,bic,username,password,active);
-             
-             kundenList.add(kunde);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (prest != null)
-                    prest.close();
-                if (con != null)
-                    con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return kundenList;
 	}
 
 
 	/**
-     * Get Kunde by Id (SELECT ... FROM kunde WHERE kundenId= ...).
+     * Get Kunde by Id
      * Kunde anhand der als int uebergebenen id suchen.
      * @param id
      * @return
      */
 	@Override 
 	public Kunde getKundeById(int id){
-		  
-		Connection con = null;
+		 
 		Kunde suchKunde = null;
-		try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
-            con = DriverManager.getConnection(DBAdresse, username, password);
+		
+		DBCollection kundencoll = db.getCollection("Kunde");
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+		BasicDBObject idObject = new BasicDBObject("id", id);
+		
+		DBCursor cursor = kundencoll.find(idObject);
+		for (int i=0; i<cursor.size(); i++) {
+			BasicDBObject kundeObj = (BasicDBObject) cursor.next();
+			if(id == kundeObj.getInt("kundenid")){
+				try{
+					
+					boolean active = Boolean.parseBoolean(kundeObj.getString("active"));					 
+					suchKunde=new Kunde(kundeObj.getInt("kundenid"),kundeObj.getString("vorname"),
+				              	kundeObj.getString("nachname"),kundeObj.getInt("iban"),kundeObj.getString("bic"),
+				              	kundeObj.getString("username"),kundeObj.getString("passw"),active);
 
-	    String sql;  
-	    sql = "SELECT kundenId, vorname, nachname, iban, bic, username, passw, active FROM Kunde WHERE kundenId='" + id + "'";
-	        PreparedStatement prest = null;
-	        try {
+			    } catch(Exception e){
+						System.out.println(e.getMessage());
+				}	
+			}
 
-	            prest = con.prepareStatement(sql);
-	            ResultSet rs = prest.executeQuery();
-
-	            while (rs.next()) {      
-	                int kundenId=rs.getInt(1);
-	                String vorname=rs.getString(2);
-	                String nachname=rs.getString(3);
-	                int iban=rs.getInt(4);
-	                String bic=rs.getString(5);
-	                String username=rs.getString(6);
-	                String password=rs.getString(7);
-	                boolean active=rs.getBoolean(8);
-	                suchKunde=new Kunde(kundenId,vorname,nachname,iban,bic,username,password,active);	
-	            }     
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        } finally {
-	            try {
-	                if (prest != null)
-	                    prest.close();
-	                if (con != null)
-	                    con.close();
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
-
-	        }
-			return suchKunde;
+		}
+		
+		return suchKunde;	
+		
 	}
 	    	
 	
 	/**
-	 * addKunde (INSERT INTO kunde ... VALUES ...).
+	 * addKunde 
 	 * Neuen Kunde hinzufuegen.
 	 * @param kunde
 	 */
 	@Override
 	public void addKunde(Kunde kunde) {
-		Connection con = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
-            con = DriverManager.getConnection(DBAdresse, username, password);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    	DBCollection kundencoll = db.getCollection("Kunde");
+		DBCursor cursor = kundencoll.find();
+				
+		// System.out.println(kundencoll.count());
+		long next = kundencoll.count();
+		next = next +1;
 
-        try {
-        	
-              // insert statement   
-              String query = " insert into Kunde (vorname, nachname, iban, bic, username, passw, active)"
-                + " values (?, ?, ?, ?, ?, ?, ?)";
-              // create insert preparedstatement
-              PreparedStatement preparedStmt = con.prepareStatement(query);
-              preparedStmt.setString (1, kunde.getVorname());
-              preparedStmt.setString (2, kunde.getNachname());
-              preparedStmt.setInt (3, kunde.getIban());
-              preparedStmt.setString(4, kunde.getBic());
-              preparedStmt.setString(5, kunde.getUsername());
-              preparedStmt.setString(6, kunde.getPassword()); 
-              preparedStmt.setBoolean(7, kunde.isActive()); 
+		BasicDBObject doc = new BasicDBObject();
+		doc.put("kundenid", next);
+		doc.put("vorname", kunde.getVorname());
+		doc.put("nachname", kunde.getNachname());
+		doc.put("iban", kunde.getIban());
+		doc.put("bic", kunde.getBic());
+		doc.put("username", kunde.getUsername());
+		doc.put("passw", kunde.getPassword());
+		doc.put("active", 1);
 
-              // execute the preparedstatement
-              preparedStmt.execute();
-              
-              con.close();
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }finally {
-		        try {
-		            if (con != null)
-		                con.close();
-		        } catch (SQLException e) {
-		            e.printStackTrace();
-		        }
-		    }		
+		kundencoll.insert(doc);
+
 	}
 	
 	
 	/**
-	 * deleteKunde (DELETE FROM kunde WHERE kundenId=...).
+	 * deleteKunde 
 	 * Bestehenden Kunde loeschen.
 	 */
 	@Override
 	public void deleteKunde(int id) {
-  		Connection con = null;
+
+ 	   DBCollection kunde = db.getCollection("Kunde");
+ 	   BasicDBObject query = new BasicDBObject("kundenid", id);
+ 	   DBCursor cursor = kunde.find(query);
+ 	   for(int i=0;i<cursor.size();i++){
+ 		   BasicDBObject act = (BasicDBObject) cursor.next();
+ 		   if(id == act.getInt("kundenid")){
+ 			   kunde.remove(act);
+ 		   }
+ 	   }
 		
-		try {
-            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
-            con = DriverManager.getConnection(DBAdresse, username, password);
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-		
-	    String sql = "DELETE FROM Kunde WHERE kundenId='" + id + "'";
-
-        try {
-        	Statement stmt = con.createStatement();        	         	 
-        	stmt.execute(sql);            
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (con != null)
-                    con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }		
 	}	
 	
 	
 	/**
-	 * updateKunde (by Id) (UPDATE kunde SET ... WHERE kundenId=...).
+	 * updateKunde (by Id)  
 	 * Bestehenden Kunde updaten bzw. aendern.
 	 */
 	@Override
 	public void updateKunde(Kunde kunde) {
 			
-		 String sql; 
-		 sql = "UPDATE Kunde SET vorname=?, nachname=?, iban=?, bic=?, username=?, passw=?, active=? WHERE kundenId = ?";
-		
-			Connection con = null;
-	        try {
-	            Class.forName("com.mysql.cj.jdbc.Driver"); // org.mariadb.jdbc.Driver
-	            con = DriverManager.getConnection(DBAdresse, username, password);
+		DBCollection kundencoll = db.getCollection("Kunde");
+		BasicDBObject object = new BasicDBObject("kundenid", kunde.getId());
+		DBCursor cursor = kundencoll.find(object);
 
-	        } catch (ClassNotFoundException e) {
-	            e.printStackTrace();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	        
-		    PreparedStatement preparedStmt = null;
-		    try {
-		        preparedStmt = con.prepareStatement(sql);
-		        preparedStmt.setString(1, kunde.getVorname());
-		        preparedStmt.setString(2, kunde.getNachname());
-		        preparedStmt.setInt(3, kunde.getIban());
-		        preparedStmt.setString(4, kunde.getBic());
-		        preparedStmt.setString(5, kunde.getUsername());
-		        preparedStmt.setString(6, kunde.getPassword());
-		        preparedStmt.setBoolean(7, kunde.isActive());
-		        preparedStmt.setInt(8, kunde.getId());
-		        
-		        preparedStmt.executeUpdate();
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }finally {
-		        try {
-		            if (preparedStmt != null)
-		                preparedStmt.close();
-		            if (con != null)
-		                con.close();
-		        } catch (SQLException e) {
-		            e.printStackTrace();
-		        }
-		
-		    }
-		    return;		
-	}	
-	   
+		if(cursor.size()>0){
+				for(int i=0; i<cursor.size(); i++){
+					BasicDBObject next = (BasicDBObject) cursor.next();
+					if(kunde.getId() == next.getInt("kundenid")){
+						
+						BasicDBObject update = new BasicDBObject();
+						
+						update.append("kundenid", kunde.getId());
+						update.append("vorname", kunde.getVorname());
+						update.append("nachname", kunde.getNachname());
+						update.append("iban", kunde.getIban());
+						update.append("bic", kunde.getBic());
+						update.append("username", kunde.getUsername());
+						update.append("bic", kunde.getBic());
+						update.append("passw", kunde.getPassword());
+						update.append("active", 1);
+						
+						kundencoll.update(new BasicDBObject().append("kundenid", kunde.getId()), update);
+					}
+
+			    }
+	     }
+	}
+		   
     
 	/*
 	 * main Funktion fuer Tests
@@ -281,12 +204,7 @@ public class DatabaseKundenDAO implements KundenDAO {
 	/*
 	public static void main(String[] args){
 		DatabaseKundenDAO dao = new DatabaseKundenDAO();
-		 dao.select();
-		 dao.insert();
-		 dao.update();
-		 Kunde kundeById = dao.getKundeById(2);
-		 System.out.println("UN: " + kundeById.getUsername() + " PW " + kundeById.getPassword());
-		 dao.deleteKundeById(3);
+    	System.out.println("UN: " + kundeById.getUsername() + " PW " + kundeById.getPassword());
 	}
 	*/
    
