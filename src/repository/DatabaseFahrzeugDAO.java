@@ -1,219 +1,180 @@
 package repository;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.bson.Document;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.*;
+import com.mongodb.client.model.CreateCollectionOptions;
+import com.mongodb.client.model.ValidationOptions;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.MongoClientURI;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 
 import model.Fahrzeug;
 
-/**
- * Hier wird die Datenbankverbindung hergestellt und die fahrzeug Objekte verwertet
- * @author Nikola Babic
- *
- */
+public class DatabaseFahrzeugDAO {
 
-public class DatabaseFahrzeugDAO implements FahrzeugDAO {
-  private static final String auslesen = "Select * from Fahrzeug";
-  private static final String addKFZ =  "Insert into Fahrzeug (fahrzeugid,marke,modell,baujahr,farbe) values (?,?,?,?,?)";
-  private static final String delKFZ = 	"Delete from Fahrzeug where fahrzeugid= ?";
-  private static final String upMarke = 	"UPDATE Fahrzeug SET marke = ? where fahrzeugid=?";
-  private static final String upModell = "UPDATE Fahrzeug SET modell = ? where fahrzeugid=?";
-  private static final String upJahr = 	"UPDATE Fahrzeug SET baujahr = ? where fahrzeugid=?";
-  private static final String upFarbe = 	"UPDATE Fahrzeug SET farbe = ? where fahrzeugid=?";
-  private static final String upID = 		"UPDATE Fahrzeug SET fahrzeugid = ? where fahrzeugid=?";
+	DatabaseHandlerMongoDB databasehandler = DatabaseHandlerMongoDB.getInstance();
+	DB db;
 
-  DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-  Connection connection;
-
-/**
- * Konstruktor
- */
-  public DatabaseFahrzeugDAO() {
-	  try {
-		  connection = DatabaseHandler.getConnection();
-	  } catch (SQLException e) {
-		  e.printStackTrace();
-    }
-  }
-  
-     
-    
-    /**
-	 * INSERT Fahrzeug
-	 * @param String Marke, modell, baujahr, farbe
-	 */
-    
-    
-    public void insert(String marke, String modell, String baujahr, String farbe) {
-    	try {
-    		PreparedStatement connect = connection.prepareStatement(addKFZ);
-    		connect.setInt(1,0);
-    		connect.setString(2, marke);
-    		connect.setString(3, modell);
-    		connect.setString(4, baujahr);
-    		connect.setString(5, farbe);
-    		connect.execute();
-    		connect.close();
-    		System.out.println("Letzter Wert wurde hinzugefügt");
-
-    		}
-    		catch(SQLException e){e.getMessage();}
-    	}
-    	
-    /**
-     * DELETE Fahrzeug
-     * @param FahrzeugID
-     */
-    
-    public void deleteFahrzeug (int id) {
-    	try{
-    		PreparedStatement connect = connection.prepareStatement(delKFZ);
-    		connect.setInt(1, id);
-    		connect.execute();
-    		connect.close();
-    		System.out.println("Inhalt wurde gelöscht");
-    		
-    		}
-    		catch(SQLException e){e.getMessage();}
-    	}
-    	
-/**
- * Retouriert eine Liste von typ Fahrzeug.    
- * @return returnFahrzeug
- */
-	public ArrayList<Fahrzeug> getFahrzeugList () {
-		ArrayList<Fahrzeug> returnFahrzeug = new ArrayList<Fahrzeug>();
-		String SQLFahrzeug =  "SELECT fahrzeugid, marke, modell, baujahr, farbe FROM Fahrzeug";
-		
+	public DatabaseFahrzeugDAO() {
 		try {
-			PreparedStatement up =connection.prepareStatement(SQLFahrzeug);
-			ResultSet rs = up.executeQuery();
-			
-			while (rs.next()) {
-				
-				int fahrzeugid  = rs.getInt(1);
-				String marke 	= rs.getString(2);
-				String modell 	= rs.getString(3);
-				String baujahr	= rs.getString(4);
-				String farbe 		= rs.getString(5);
-				
-				Fahrzeug fahrzeug = new Fahrzeug(fahrzeugid, marke, modell, baujahr, farbe);
-				returnFahrzeug.add(fahrzeug);
-			}
-			up.close();
-    		}
-    		catch(SQLException e){e.getMessage();}
-			return returnFahrzeug;
+			db = databasehandler.erstellen();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	/**
-	 * Holt ein bestimmtes Fahrzeug
-	 * @param int id
-	 * @return fahrzeug
-	 */ 
 	public Fahrzeug getFahrzeugbyID(int id) {
-		String SQLFahrzeug =  "SELECT fahrzeugid, marke, modell, baujahr, farbe FROM Fahrzeug WHERE fahrzeugid=' " + id + " ' ";
-		Fahrzeug fahrzeug  = null;
-		try {
-			PreparedStatement up =connection.prepareStatement(SQLFahrzeug);
-			ResultSet rs = up.executeQuery();
-			
-			while (rs.next()) {
-				
-				int fahrzeugid  = rs.getInt(1);
-				String marke 	= rs.getString(2);
-				String modell 	= rs.getString(3);
-				String baujahr	= rs.getString(4);
-				String farbe 		= rs.getString(5);
-				
-				fahrzeug = new Fahrzeug(fahrzeugid, marke, modell, baujahr, farbe);
-				
+		DBCollection Fahrzeugcollection = db.getCollection("Fahrzeug");
+		BasicDBObject query = new BasicDBObject("Fahrzeugid", id);
+		DBCursor cur = Fahrzeugcollection.find(query);
+		if (cur.size() > 0) {
+			BasicDBObject fahrzeug = (BasicDBObject) cur.next();
+			Fahrzeug neu = new Fahrzeug(fahrzeug.getInt("fahrzeugid"), fahrzeug.getString("marke"),
+					fahrzeug.getString("modell"), fahrzeug.getString("baujahr"), fahrzeug.getString("farbe"));
+			return neu;
+		} else {
+			System.out.println("Keine Fahrzeuge gefunden");
+		}
+		return null;
+	}
+
+	public ArrayList<Fahrzeug> getFahrzeugList() {
+		ArrayList<Fahrzeug> returnFahrzeug = new ArrayList<Fahrzeug>();
+		DBCollection Fahrzeugcollection = db.getCollection("Fahrzeug");
+		DBCursor cur = Fahrzeugcollection.find();
+
+		if (cur.size() > 0) {
+			for (int i = 0; i <= cur.size(); i++) {
+				BasicDBObject fahrzeug = (BasicDBObject) cur.next();
+				Fahrzeug tempo = new Fahrzeug(fahrzeug.getInt("fahrzeugid"), fahrzeug.getString("marke"),
+						fahrzeug.getString("modell"), fahrzeug.getString("baujahr"), fahrzeug.getString("farbe"));
+				returnFahrzeug.add(tempo);
 			}
-			
-			up.close();
-    		}
-    		catch(SQLException e){e.getMessage();}
-			
-		return fahrzeug;
-		
-	}
-    
-	/**
-	 * Aktualisiert die Marke
-	 * @param id
-	 * @param upmarke
-	 */
-	public void updateMarke (int id, String upmarke) {
-		try {
-			String update =" UPDATE Fahrzeug SET marke =' " + upmarke + " 'where fahrzeugid=' " +id+ " ' ";  
-			PreparedStatement connect = connection.prepareStatement(update);
-			connect.execute();
-			connect.close();
+			return returnFahrzeug;
+		} else {
+			System.out.println("Keine Fahrzeuge gefunden");
 		}
-		catch(SQLException e){e.getStackTrace();}
-		
+		return null;
 	}
-    
-	
-	/**
-	 * Aktualisiert die Modell
-	 * @param id
-	 * @param upmodell
-	 */
+
+	public void insert(String marke, String modell, String baujahr, String farbe) {
+
+		DBCollection fahrzeug = db.getCollection("Fahrzeug");
+		DBCursor cur = fahrzeug.find();
+		long next = fahrzeug.count();
+		next = next + 1;
+		BasicDBObject doc = new BasicDBObject();
+		doc.put("fahrzeugrid", next);
+		doc.put("marke", marke);
+		doc.put("modell", modell);
+		doc.put("baujahr", baujahr);
+		doc.put("farbe", farbe);
+		fahrzeug.insert(doc);
+	}
+
+	public void deleteFahrzeug(int id) {
+		DBCollection fahrzeug = db.getCollection("fahrzeug");
+        BasicDBObject query = new BasicDBObject("fahrzeugid", id);
+        DBCursor cur = fahrzeug.find(query);
+        for(int i=0;i<cur.size();i++){
+         BasicDBObject act = (BasicDBObject) cur.next();
+         if(id == act.getInt("fahrzeug")){
+          fahrzeug.remove(act);
+         }
+        }
+	}
+
+	public void updateMarke(int id, String upmarke) {
+		DBCollection coll = db.getCollection("Fahrzeug");
+		BasicDBObject query = new BasicDBObject("fahrzeugid", id);
+		DBCursor cur = coll.find(query);
+		if (cur.size() > 0) {
+			for (int i = 0; i < cur.size(); i++) {
+				BasicDBObject next = (BasicDBObject) cur.next();
+					BasicDBObject up = new BasicDBObject();
+					up.append("fahrzeugid", next.getLong("fahrzeugid"));
+					up.append("marke", upmarke);
+					up.append("modell", next.getString("modell"));
+					up.append("baujahr", next.getInt("baujahr"));
+					up.append("farbe", next.getString("farbe"));
+					coll.update(new BasicDBObject().append("fahrzeugid", next.getLong("fahrzeugid")), up);
+				}
+			}
+		}
+
 	public void updateModell (int id, String upmodel) {
-		try {
-			String update =" UPDATE Fahrzeug SET modell =' " + upmodel + " 'where fahrzeugid=' " +id+ " ' ";  
-			PreparedStatement connect = connection.prepareStatement(update);
-		
-			connect.execute();
-			connect.close();
-			
-			//PreparedStatement stm = connection.prepareStatement(update);
-            //ResultSet rs = stm.executeQuery();
-		}
-		catch(Exception e){e.getStackTrace();}
+
+		DBCollection coll = db.getCollection("Fahrzeug");
+		BasicDBObject query = new BasicDBObject("fahrzeugid", id);
+		DBCursor cur = coll.find(query);
+		if (cur.size() > 0) {
+			for (int i = 0; i < cur.size(); i++) {
+				BasicDBObject next = (BasicDBObject) cur.next();
+					BasicDBObject up = new BasicDBObject();
+					up.append("fahrzeugid", next.getLong("fahrzeugid"));
+					up.append("marke", next.getLong("marke"));
+					up.append("modell", upmodel);
+					up.append("baujahr", next.getInt("baujahr"));
+					up.append("farbe", next.getString("farbe"));
+					coll.update(new BasicDBObject().append("fahrzeugid", next.getLong("fahrzeugid")), up);
+				}
+			}	
 		
 	}
 	
 	
-	/**
-	 * Aktualisiert die Jahre
-	 * @param id
-	 * @param jahr
-	 */
 	public void updateJahr (int id, String jahr) {
-		try {
-			String update =" UPDATE Fahrzeug SET baujahr =' " + jahr + " 'where fahrzeugid=' " +id+ " ' ";  
-			PreparedStatement connect = connection.prepareStatement(update);
-
-			connect.execute();
-			connect.close();
-		}
-		catch(SQLException e){e.getStackTrace();}
-		
+		DBCollection coll = db.getCollection("Fahrzeug");
+		BasicDBObject query = new BasicDBObject("fahrzeugid", id);
+		DBCursor cur = coll.find(query);
+		if (cur.size() > 0) {
+			for (int i = 0; i < cur.size(); i++) {
+				BasicDBObject next = (BasicDBObject) cur.next();
+					BasicDBObject up = new BasicDBObject();
+					up.append("fahrzeugid", next.getLong("fahrzeugid"));
+					up.append("marke", next.getLong("marke"));
+					up.append("modell", next.getString("modell"));
+					up.append("baujahr", jahr);
+					up.append("farbe", next.getString("farbe"));
+					coll.update(new BasicDBObject().append("fahrzeugid", next.getLong("fahrzeugid")), up);
+				}
+			}	
 	}
-    
-	/**
-	 * Aktualisiert die Farbe
-	 * @param id
-	 * @param upfarbe
-	 */
+	
 	public void updateFarbe (int id, String upfarbe) {
-		try {
-			String update =" UPDATE Fahrzeug SET typ =' " + upfarbe + " 'where immobilienid=' " +id+ " ' ";  
-			PreparedStatement connect = connection.prepareStatement(update);
-			connect.execute();
-			connect.close();
-		}
-		catch(SQLException e){e.getStackTrace();}
+		DBCollection coll = db.getCollection("Fahrzeug");
+		BasicDBObject query = new BasicDBObject("fahrzeugid", id);
+		DBCursor cur = coll.find(query);
+		if (cur.size() > 0) {
+			for (int i = 0; i < cur.size(); i++) {
+				BasicDBObject next = (BasicDBObject) cur.next();
+					BasicDBObject up = new BasicDBObject();
+					up.append("fahrzeugid", next.getLong("fahrzeugid"));
+					up.append("marke", next.getLong("marke"));
+					up.append("modell", next.getString("modell"));
+					up.append("baujahr",next.getString("baujahr"));
+					up.append("farbe", upfarbe);
+					coll.update(new BasicDBObject().append("fahrzeugid", next.getLong("fahrzeugid")), up);
+				}
+			}	
 		
 	}
 	
 	
 	
-  }
 
-
+}

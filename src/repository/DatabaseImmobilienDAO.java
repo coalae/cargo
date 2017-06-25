@@ -1,41 +1,40 @@
 package repository;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+
+import org.bson.Document;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.*;
+
 import java.util.ArrayList;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+
+import com.mongodb.client.model.CreateCollectionOptions;
+import com.mongodb.client.model.ValidationOptions;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.MongoClientURI;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 
 import model.Fahrzeug;
 import model.Immobilie;
 
-/**
- * Hier wird die Datenbankverbindung hergestellt und die Immobilie Objekte verwertet
- * @author Nikola Babic
- *
- */
+public class DatabaseImmobilienDAO {
 
-public class DatabaseImmobilienDAO implements ImmobilienDAO {
-  private static final String auslesen = "Select * from Immobilie";
-  private static final String suche="Select * from Immobilie where id = ?";
-  private static final String addImmo =  "Insert into Immobilie (immobilienid, typ, immobilienname) values (?,?,?)";
-  private static final String delImmo = 	"Delete from Immobilie where immobilienid= ?";
+	DatabaseHandlerMongoDB databasehandler = DatabaseHandlerMongoDB.getInstance();
+	DB db;
 
-
-  DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-  Connection connection;
-
-/**
- * konstruktor
- */
-  public DatabaseImmobilienDAO() {
-	  try {
-		  connection = DatabaseHandler.getConnection();
-	  } catch (SQLException e) {
-		  e.printStackTrace();
-    }
-  }
+	public DatabaseImmobilienDAO() {
+		try {
+			db = databasehandler.erstellen();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
   
      
     
@@ -46,17 +45,19 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
     
     
     public void insert(int typ, String name) {
-    	try {
-    		PreparedStatement connect = connection.prepareStatement(addImmo);
-    		connect.setInt(1,0);
-    		connect.setInt(2, typ);
-    		connect.setString(3, name);
-    		connect.execute();
-    		connect.close();
-    		System.out.println("Letzter Wert wurde hinzugefügt");
+    	
+		DBCollection immobilie = db.getCollection("Immobilie");
+		DBCursor cur = immobilie.find();
+		long next = immobilie.count();
+		next = next + 1;
+		BasicDBObject doc = new BasicDBObject();
+		doc.put("immobilienid", next);
+		doc.put("typ", typ);
+		doc.put("name", name);
 
-    		}
-    		catch(SQLException e){e.getMessage();}
+		immobilie.insert(doc);
+    	
+    	
     	}
     	
     /**
@@ -65,15 +66,16 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
      */
     
     public void deleteGebaude (int id) {
-    	try{
-    		PreparedStatement connect = connection.prepareStatement(delImmo);
-    		connect.setInt(1, id);
-    		connect.execute();
-    		connect.close();
-    		System.out.println("Inhalt wurde gelöscht");
-    		}
-    		catch(SQLException e){e.getMessage();}
-    	}
+		DBCollection immobilie = db.getCollection("Immobilie");
+        BasicDBObject query = new BasicDBObject("immobilienid", id);
+        DBCursor cur = immobilie.find(query);
+        for(int i=0;i<cur.size();i++){
+         BasicDBObject act = (BasicDBObject) cur.next();
+         if(id == act.getInt("fahrzeug")){
+        	 immobilie.remove(act);
+         }
+        }
+	}
     	
     /**
      * Retouriert eine Liste von typ Immobilie.    
@@ -82,26 +84,22 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
 
 	public ArrayList<Immobilie> getGebaudeList () {
 		ArrayList<Immobilie> returnGebaude = new ArrayList<Immobilie>();
-		String SQLGebaude=  "SELECT Immobilienid, typ, immobilienname FROM Immobilie";
-		
-		try {
-			PreparedStatement up =connection.prepareStatement(SQLGebaude);
-			ResultSet rs = up.executeQuery();
-			
-			while (rs.next()) {
-				
-				int immobilienid  = rs.getInt(1);
-				int typ 	= rs.getInt(2);
-				String name 	= rs.getString(3);
-				
-				Immobilie gebaude = new Immobilie(immobilienid, typ, name);
-				returnGebaude.add(gebaude);
-				
+	
+		DBCollection Immobiliecollection = db.getCollection("Immobilie");
+		DBCursor cur = Immobiliecollection.find();
+
+		if (cur.size() > 0) {
+			for (int i = 0; i <= cur.size(); i++) {
+				BasicDBObject immobilie = (BasicDBObject) cur.next();
+				Immobilie tempo = new Immobilie(immobilie.getInt("immobilienid"), immobilie.getInt("typ"),
+						immobilie.getString("name"));
+				returnGebaude.add(tempo);
 			}
-			up.close();
-    		}
-    		catch(SQLException e){e.getMessage();}
 			return returnGebaude;
+		} else {
+			System.out.println("Keine Gebaude gefunden");
+		}
+		return null;
 	}
 
 	/**
@@ -110,27 +108,18 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
 	 * @return immobilie
 	 */ 
 	public Immobilie getGebaudebyID(int id) {
-		String SQLGebäude =  "SELECT Immobilienid, typ, name FROM Immobilie WHERE immobilienid=' " + id + " ' ";
-		Immobilie gebäude  =null;
-		try {
-			PreparedStatement up =connection.prepareStatement(SQLGebäude);
-			ResultSet rs = up.executeQuery();
-			
-			while (rs.next()) {
-				
-				int immobilienid  = rs.getInt(1);
-				int typ 	= rs.getInt(2);
-				String name 	= rs.getString(3);
-				
-				gebäude = new Immobilie(immobilienid, typ, name);
-				
-				
-			}
-			up.close();
-    		}
-    		catch(SQLException e){e.getMessage();}
-			
-		return gebäude;
+		DBCollection Immobiliecollection = db.getCollection("Immobilie");
+		BasicDBObject query = new BasicDBObject("immobilienid", id);
+		DBCursor cur = Immobiliecollection.find(query);
+		if (cur.size() > 0) {
+			BasicDBObject immobilie = (BasicDBObject) cur.next();
+			Immobilie neu = new Immobilie(immobilie.getInt("immobilienid"), immobilie.getInt("typ"),
+					immobilie.getString("name"));
+			return neu;
+		} else {
+			System.out.println("Keine Immobilie gefunden");
+		}
+		return null;
 	}
     
 	/**
@@ -139,13 +128,19 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
 	 * @return typ
 	 */ 
 	public void updatetyp (int id, int typ) {
-		try {
-			String update =" UPDATE Immobilie SET typ =' " + typ + " 'where immobilienid=' " +id+ " ' ";  
-			PreparedStatement connect = connection.prepareStatement(update);
-			connect.execute();
-			connect.close();
-		}
-		catch(SQLException e){e.getStackTrace();}
+		DBCollection coll = db.getCollection("Immobilie");
+		BasicDBObject query = new BasicDBObject("immobilieid", id);
+		DBCursor cur = coll.find(query);
+		if (cur.size() > 0) {
+			for (int i = 0; i < cur.size(); i++) {
+				BasicDBObject next = (BasicDBObject) cur.next();
+					BasicDBObject up = new BasicDBObject();
+					up.append("immobilienid", next.getLong("immobilienid"));
+					up.append("typ", typ);
+					up.append("name", next.getString("name"));
+					coll.update(new BasicDBObject().append("immobilienid", next.getLong("immobilienid")), up);
+				}
+			}	
 		
 	}
     
@@ -155,15 +150,21 @@ public class DatabaseImmobilienDAO implements ImmobilienDAO {
 	 * @return name
 	 */ 
 	public void updatename (int id, String name) {
-		try {
-			String update =" UPDATE Immobilie SET immobilienname =' " + name + " ' where immobilienid='"+id+" ' "; 
-			PreparedStatement connect = connection.prepareStatement(update);
-			connect.execute();
-			connect.close();
+			DBCollection coll = db.getCollection("Immobilie");
+			BasicDBObject query = new BasicDBObject("immobilieid", id);
+			DBCursor cur = coll.find(query);
+			if (cur.size() > 0) {
+				for (int i = 0; i < cur.size(); i++) {
+					BasicDBObject next = (BasicDBObject) cur.next();
+						BasicDBObject up = new BasicDBObject();
+						up.append("immobilienid", next.getLong("immobilienid"));
+						up.append("typ", next.getString("typ"));
+						up.append("name", name);
+						coll.update(new BasicDBObject().append("immobilienid", next.getLong("immobilienid")), up);
+					}
+				}	
+			
 		}
-		catch(SQLException e){e.getStackTrace();}
-		
-	}
 	
 	
   }

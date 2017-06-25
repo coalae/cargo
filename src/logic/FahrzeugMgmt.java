@@ -1,7 +1,6 @@
 package logic;
 
 import java.util.ArrayList;
-
 import model.Fahrzeug;
 import repository.DatabaseFahrzeugDAO;
 import repository.FahrzeugDAO;
@@ -17,7 +16,7 @@ import repository.FahrzeugDAO;
 
 public class FahrzeugMgmt {
 
-	private FahrzeugDAO fahrzeugDAO;
+	private DatabaseFahrzeugDAO fahrzeugDAO;
 	
 	
 	public FahrzeugMgmt() {
