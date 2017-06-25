@@ -163,14 +163,19 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 			} 
 	        return mentoring;*/
 		
+
+		
 		
 		Mentoring mento = null;
 		DBCollection mentoringcoll = db.getCollection("Mentoringbeziehung");
-		BasicDBObject object = new BasicDBObject("id", id);
+		BasicDBObject object = new BasicDBObject("mentoringid", id);
 		DBCursor cursor = mentoringcoll.find(object);
 		for (int i=0; i<cursor.size(); i++) {
 			BasicDBObject mentoring = (BasicDBObject) cursor.next();
-			if(id == mentoring.getInt("id")){
+			int id2 = Integer.parseInt(mentoring.getString("mentoringid"));
+			System.out.println(mentoring.get("mentoringid"));
+			System.out.println("Im getMentoringbyId");
+			if(id == id2){
 				try{
 					SimpleDateFormat sdf = new SimpleDateFormat("YYYY"); 
 
