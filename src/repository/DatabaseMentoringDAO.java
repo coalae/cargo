@@ -105,19 +105,18 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 
 			     	     Date mentoringjahr = new Date();
 			     	     mentoringjahr = sdf.parse(mentoring.getString("jahr"));
+			     	     
+			  
+						int id = Integer.parseInt(mentoring.getString("mentoringid"));
+						int mentor = Integer.parseInt(mentoring.getString("mentorid"));
+						int mentee = Integer.parseInt(mentoring.getString("menteeid"));
 					
-					
-					Mentoring ment = new Mentoring(mentoring.getInt("mentoringid"), mentoring.getInt("mentorid"),
-							mentoring.getInt("menteeid"), mentoring.getString("thema"), mentoringjahr);
-					mentoringList.add(ment);
+						Mentoring ment = new Mentoring(id, mentor, mentee, mentoring.getString("thema"), mentoringjahr);
+						mentoringList.add(ment);
 					}catch(Exception e){System.out.println(e.getMessage());}
-				}
-			
-			for (Mentoring s : mentoringList) {
-				System.out.println(s.getMentoringId());
-			
-		}
-			return mentoringList;
+				}		
+		
+		return mentoringList;
 
         
      }	
