@@ -243,7 +243,7 @@ public class DatabaseKursDAO implements KursDAO {
 	public void addTeilnehmerToKurs(int kundenId, int kursId){
  
         	
-    	DBCollection teilnehmercoll = db.getCollection("Teilnehmer");
+    	DBCollection teilnehmercoll = db.getCollection("teilnehmer");
 		DBCursor cursor = teilnehmercoll.find();
 				
 		// System.out.println(teilnehmercoll.count());
@@ -266,7 +266,7 @@ public class DatabaseKursDAO implements KursDAO {
 	@Override
 	public void deleteTeilnehmerFromKurs(int kundenId, int kursId){
 
-	 	   DBCollection teilnehmer = db.getCollection("Teilnehmer");
+	 	   DBCollection teilnehmer = db.getCollection("teilnehmer");
 	 	   BasicDBObject query1 = new BasicDBObject("kundenid", kundenId);
 	 	   BasicDBObject query2 = new BasicDBObject("kursid", kursId);
 	 	   DBCursor cursor = teilnehmer.find(query1,query2);
@@ -287,7 +287,7 @@ public class DatabaseKursDAO implements KursDAO {
 	public ArrayList<Integer> getTeilnehmerListe(int kursId) {
 
 		ArrayList<Integer> teilnehmerList = new ArrayList<Integer>();
-		DBCollection teilnehmercoll = db.getCollection("Teilnehmer");
+		DBCollection teilnehmercoll = db.getCollection("teilnehmer");
 		DBCursor cursor = teilnehmercoll.find();
 
 			while(cursor.hasNext()) {
@@ -325,7 +325,7 @@ public class DatabaseKursDAO implements KursDAO {
 
 		ArrayList<Integer> kursList=new ArrayList<Integer>();
 		 
-		DBCollection teilnehmercoll = db.getCollection("Teilnehmer");
+		DBCollection teilnehmercoll = db.getCollection("teilnehmer");
 
 	 	BasicDBObject query = new BasicDBObject("kundenid", kundenId);
 	 	   DBCursor cursor = teilnehmercoll.find(query);
