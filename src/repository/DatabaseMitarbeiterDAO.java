@@ -72,25 +72,7 @@ public class DatabaseMitarbeiterDAO implements MitarbeiterDAO {
 	 * Einfügen eines neuen Mitarbeiters in die Datenbank
 	 */
 	public void insert(String vor,String nach,int svnr,String spezi,int mittyp,String gebdate,
-			String user,String pw,int statusint){ /*
-		try{
-		PreparedStatement ein = connection.prepareStatement(add);
-		ein.setInt(1,0);
-		ein.setString(2,vor);
-		ein.setString(3,nach);
-		ein.setInt(4,svnr);
-		ein.setString(5,spezi);
-		ein.setInt(6,mittyp);
-		ein.setString(7,gebdate);
-		ein.setString(8,user);
-		ein.setString(9,pw);
-		ein.setInt(10,statusint);
-		ein.execute();
-		ein.close();
-		System.out.println("Hab hinzugefügt letzter wert");
-
-		}
-		catch(SQLException e){e.getMessage();} */
+			String user,String pw,int statusint){ 
 		DBCollection mitarbeiter = db.getCollection("Mitarbeiter");
 		DBCursor cur = mitarbeiter.find();
 		
@@ -109,7 +91,6 @@ public class DatabaseMitarbeiterDAO implements MitarbeiterDAO {
 		doc.put("passw", pw);
 		doc.put("activ", statusint);
 		mitarbeiter.insert(doc);
-		getMitarbeiterListe();
 	}
 		 
  
@@ -117,14 +98,6 @@ public class DatabaseMitarbeiterDAO implements MitarbeiterDAO {
 	 * UPDATE Mitarbeiter neues Passwort 
 	 */
 	public void update(String user,String oldpw,String newpw) {
-		/*try{
-
-				String update="UPDATE Mitarbeiter SET passw ='"+ newpw +"' where username='"+user+"'";
-				System.out.println(update);
-				PreparedStatement up =connection.prepareStatement(update);
-				up.execute();
-				up.close();
-		}catch(Exception e){e.getMessage();} */
 		
 		DBCollection coll = db.getCollection("Mitarbeiter");
 		BasicDBObject query = new BasicDBObject("username", user);
@@ -175,17 +148,12 @@ public class DatabaseMitarbeiterDAO implements MitarbeiterDAO {
 		ArrayList<Mitarbeiter> mitarbeiterlist = new ArrayList<Mitarbeiter>();
 		DBCollection Mitarbeitercoll = db.getCollection("Mitarbeiter");
 		DBCursor cur = Mitarbeitercoll.find();
-
 			while(cur.hasNext()) {
-				System.out.println(cur.next());
 				BasicDBObject mit = (BasicDBObject) cur.next();
-		
 					boolean active = Boolean.parseBoolean(mit.getString("active"));
-					SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 					GregorianCalendar cal = new GregorianCalendar();
 					try{
-					Date geburtsdatum_ = sdf.parse(mit.getString("geburtsdatum"));
-					cal.setTime(geburtsdatum_);
+					cal.getTime();
 					Mitarbeiter tempo = new Mitarbeiter(mit.getInt("mitarbeiterid"), mit.getString("vorname"),
 							mit.getString("nachname"), mit.getInt("svnr"), mit.getString("spezialisierung"),
 							mit.getInt("mitarbeitertyp"), cal, mit.getString("username"), mit.getString("passw"),
@@ -193,11 +161,6 @@ public class DatabaseMitarbeiterDAO implements MitarbeiterDAO {
 					mitarbeiterlist.add(tempo);
 					}catch(Exception e){System.out.println(e.getMessage());}
 				}
-			
-			for (Mitarbeiter s : mitarbeiterlist) {
-				System.out.println(s.getNachname());
-			
-		}
 			return mitarbeiterlist;
 
 	}
@@ -205,46 +168,19 @@ public class DatabaseMitarbeiterDAO implements MitarbeiterDAO {
     
 	@Override
 	public Mitarbeiter getMitarbeiterById(int id) {
-		/*String sql;
-		Mitarbeiter mitarbeiter = null;
-	    sql = "SELECT mitarbeiterid, vorname, nachname, svnr, spezialisierung, mitarbeitertyp, geburtsdatum, username, passw, active from Mitarbeiter WHERE mitarbeiterid='" + id + "'";
-	        
-	        try {
-
-	           PreparedStatement stm = connection.prepareStatement(sql);
-	            ResultSet rs = stm.executeQuery();
-	            
-	            while (rs.next()){
-	            int mitarbeiterid=rs.getInt(1);
-	             String vorname=rs.getString(2);
-	             String nachname=rs.getString(3);
-	             int svnr = rs.getInt(4);
-	             String spezialisierung=rs.getString(5);
-	             int mitarbeitertyp=rs.getInt(6);
-	             String geburtsdatum = rs.getString(7);
-	             String username = rs.getString(8);
-	             String passw = rs.getString(9);
-	             String active = rs.getString(10);
-	             
-	             boolean active_ = Boolean.parseBoolean(active);
-	             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); 
-	             GregorianCalendar cal = new GregorianCalendar();
-	     	     java.util.Date geburtsdatum_ = sdf.parse(geburtsdatum);
-	     	     cal.setTime(geburtsdatum_);
-	                    
-	     	     mitarbeiter = new Mitarbeiter(mitarbeiterid, vorname, nachname, svnr, spezialisierung, mitarbeitertyp, cal, username, passw, active_);
-	     	    stm.close();
-	            }
-	           
-	              
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (ParseException e) {
-				e.printStackTrace();
-			} 
-	        
-	        
-	        return mitarbeiter; */
+		Mitarbeiter mitarbeiter =null;
+	     DBCollection suche = db.getCollection("Mitarbeiter");
+	     BasicDBObject query = new BasicDBObject("mitarbeiterid",id);
+	     DBCursor cur = suche.find(query);
+	     BasicDBObject mit =(BasicDBObject) cur.next();
+	     boolean active =Boolean.parseBoolean(mit.getString("active"));
+	     GregorianCalendar cal = new GregorianCalendar();
+	     cal.getTime();
+	     mitarbeiter =new Mitarbeiter(mit.getInt("mitarbeiterid"), mit.getString("vorname"),
+					mit.getString("nachname"), mit.getInt("svnr"), mit.getString("spezialisierung"),
+					mit.getInt("mitarbeitertyp"), cal, mit.getString("username"), mit.getString("passw"),
+					active);
+	     return mitarbeiter;
 
 	}
 }
