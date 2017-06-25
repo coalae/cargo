@@ -28,9 +28,6 @@ import model.Mitarbeiter;
  */
 public class DatabaseMentoringDAO implements MentoringDAO {
 	
-	/*DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-	Connection connection;*/
-	
 	DatabaseHandlerMongoDB databaseHandler = DatabaseHandlerMongoDB.getInstance();
 	DB db;
 	
@@ -50,76 +47,27 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 	@Override
 	public ArrayList<Mentoring> getMentoringListe() {
 		
-       /* ArrayList<Mentoring> mentoringList = new ArrayList<Mentoring>();
-        
-        String sql;   
-        sql = "SELECT mentoringid, mentorid, menteeid, thema, jahr FROM Mentoringbeziehung";
-        
-        try {
-
-            PreparedStatement stm = connection.prepareStatement(sql);
-            ResultSet rs = stm.executeQuery();
-            
-            while (rs.next()) {
-             int mentoringId=rs.getInt(1);
-             int mentorId=rs.getInt(2);
-             int menteeId=rs.getInt(3);
-             String thema=rs.getString(4);
-             String jahr=rs.getString(5);
-                    
-    		
-             // GregorianCalendar fuer Jahr setzen
-             SimpleDateFormat sdf = new SimpleDateFormat("YYYY"); 
-
-     	     Date mentoringjahr = new Date();
-     	     mentoringjahr = sdf.parse(jahr);
-    	     
-    	  
-     	     Mentoring mentoring = new Mentoring(mentoringId, mentorId, menteeId, thema, mentoringjahr);
-     	    
-             mentoringList.add(mentoring);
-             
-             
-             
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-			e.printStackTrace();
-		} 
-        return mentoringList;*/
-		
-		
-		
 		ArrayList<Mentoring> mentoringList = new ArrayList<Mentoring>();
 		DBCollection mentoringcoll = db.getCollection("Mentoringbeziehung");
 		DBCursor cursor = mentoringcoll.find();
 
 			while(cursor.hasNext()) {
 				BasicDBObject mentoring = (BasicDBObject) cursor.next();
-		
+				try{
+					SimpleDateFormat sdf = new SimpleDateFormat("YYYY"); 
+					Date mentoringjahr = new Date();
+			     	mentoringjahr = sdf.parse(mentoring.getString("jahr"));
+			     	int id = Integer.parseInt(mentoring.getString("mentoringid"));
+					int mentor = Integer.parseInt(mentoring.getString("mentorid"));
+					int mentee = Integer.parseInt(mentoring.getString("menteeid"));
 					
-					
-					try{
-						 SimpleDateFormat sdf = new SimpleDateFormat("YYYY"); 
-
-			     	     Date mentoringjahr = new Date();
-			     	     mentoringjahr = sdf.parse(mentoring.getString("jahr"));
-			     	     
-			  
-						int id = Integer.parseInt(mentoring.getString("mentoringid"));
-						int mentor = Integer.parseInt(mentoring.getString("mentorid"));
-						int mentee = Integer.parseInt(mentoring.getString("menteeid"));
-					
-						Mentoring ment = new Mentoring(id, mentor, mentee, mentoring.getString("thema"), mentoringjahr);
-						mentoringList.add(ment);
-					}catch(Exception e){System.out.println(e.getMessage());}
-				}		
+					Mentoring ment = new Mentoring(id, mentor, mentee, mentoring.getString("thema"), mentoringjahr);
+									mentoringList.add(ment);
+				}catch(Exception e){System.out.println(e.getMessage());}
+			}		
 		
 		return mentoringList;
-
-        
-     }	
+   }	
 	
 	/**
 	 * Gibt Mentoring zu einer bestimmten Id zurueck
@@ -129,64 +77,19 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 	@Override
 	public Mentoring getMentoringById(int id) {
 		
-		
-		
-
-	   /* String sql;
-	    sql = "SELECT * from Mentoringbeziehung WHERE mentoringid='" + id + "'";
-	        
-	        try {
-
-	           PreparedStatement stm = connection.prepareStatement(sql);
-	            ResultSet rs = stm.executeQuery();
-	            
-	            while (rs.next()) {
-	            	 int mentoringId=rs.getInt(1);
-	                 int mentorId=rs.getInt(2);
-	                 int menteeId=rs.getInt(3);
-	                 String thema=rs.getString(4);
-	                 String jahr=rs.getString(5);
-	                                		
-	                 // Date fuer Jahr setzen
-	                 SimpleDateFormat sdf = new SimpleDateFormat("YYYY"); 
-
-	         	     Date mentoringjahr = new Date();
-	         	     mentoringjahr = sdf.parse(jahr);
-	             
-	             mentoring=new Mentoring(mentoringId, mentorId, menteeId, thema, mentoringjahr); 
-	             stm.close();
-	             
-	            }
-	        } catch (SQLException e) {
-	        } catch (ParseException e) {
-				e.printStackTrace();
-			} 
-	        return mentoring;*/
-		
-
-		
-		
 		Mentoring mento = null;
 		DBCollection mentoringcoll = db.getCollection("Mentoringbeziehung");
 		BasicDBObject object = new BasicDBObject("mentoringid", id);
 		DBCursor cursor = mentoringcoll.find(object);
-		for (int i=0; i<cursor.size(); i++) {
-			BasicDBObject mentoring = (BasicDBObject) cursor.next();
-			int id2 = Integer.parseInt(mentoring.getString("mentoringid"));
-			System.out.println(mentoring.get("mentoringid"));
-			System.out.println("Im getMentoringbyId");
-			if(id == id2){
-				try{
-					SimpleDateFormat sdf = new SimpleDateFormat("YYYY"); 
+		BasicDBObject mentoring = (BasicDBObject) cursor.next();
+		try{
+			SimpleDateFormat sdf = new SimpleDateFormat("YYYY"); 
+			Date mentoringjahr = new Date();
+			mentoringjahr = sdf.parse(mentoring.getString("jahr"));
+			mento = new Mentoring(mentoring.getInt("mentoringid"), mentoring.getInt("mentorid"),
+					mentoring.getInt("menteeid"), mentoring.getString("thema"), mentoringjahr); 
+		}catch(Exception e){System.out.println(e.getMessage());}
 
-					Date mentoringjahr = new Date();
-					mentoringjahr = sdf.parse(mentoring.getString("jahr"));
-					mento = new Mentoring(mentoring.getInt("mentoringid"), mentoring.getInt("mentorid"),
-						mentoring.getInt("menteeid"), mentoring.getString("thema"), mentoringjahr); 
-				}catch(Exception e){System.out.println(e.getMessage());}
-			}
-
-		}
 		return mento;
 	}
 	
@@ -197,49 +100,24 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 	 */
 	@Override
 	public void addMentoring(Mentoring mentoring) {
-       /* try {
-        	
-              // insert statement
-              String query = "INSERT INTO Mentoringbeziehung (mentoringid,mentorid, menteeid,thema,jahr) VALUES (?,?,?,?,?)";
-	
-              // create insert preparedstatement
-              PreparedStatement stm = connection.prepareStatement(query);
-              SimpleDateFormat sdf = new SimpleDateFormat("YYYY"); 
-              stm.setInt (1, 0);
-              stm.setInt (2, mentoring.getMentorId());
-              stm.setInt (3, mentoring.getMenteeId());
-              stm.setString(4, mentoring.getThema());
-              stm.setString (5, sdf.format(mentoring.getBeginnJahr()));
-            
-              // execute the preparedstatement
-              stm.execute();
-              
-              // close
-              stm.close();
-             
-		  } catch (SQLException e) {
-		        e.printStackTrace();
-		  }*/
-        	
-        	
-        	DBCollection mentoringcoll = db.getCollection("Mentoringbeziehung");
-    		DBCursor cur = mentoringcoll.find();
-    		
+           	DBCollection mentoringcoll = db.getCollection("Mentoringbeziehung");
+    		    		
     		SimpleDateFormat sdf = new SimpleDateFormat("YYYY"); 
+    		 
+    		DBCursor cursor = mentoringcoll.find();
+    		int id=1;
+    		for (int i=0; i<cursor.size(); i++) {
+    			id++;
+    		}
     		
-    		System.out.println(mentoringcoll.count());
-    		long next = mentoringcoll.count();
-    		next = next +1;
     		BasicDBObject doc = new BasicDBObject();
-    		doc.put("mentoringid", next);
+    		doc.put("mentoringid", id);
     		doc.put("mentorid", mentoring.getMentorId());
     		doc.put("menteeid", mentoring.getMenteeId());
     		doc.put("thema", mentoring.getThema());
     		doc.put("jahr",  sdf.format(mentoring.getBeginnJahr()));
     		
     		mentoringcoll.insert(doc);
-    		//getMitarbeiterListe();
-		    
 	}
 		
 	/**
@@ -248,27 +126,12 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 	 */
 	@Override
 	public void deleteMentoring(int id) {
-		
-	    /*String sql = "DELETE from Mentoringbeziehung WHERE mentoringid ='" + id + "'"; 
-
-        try {
-        	PreparedStatement stmt = connection.prepareStatement(sql);        	         	 
-        	stmt.execute(sql);            
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } 
-            
-        return;*/
-		
 		DBCollection mentoringcoll = db.getCollection("Mentoringbeziehung");
-		BasicDBObject object = new BasicDBObject("id", id);
+		BasicDBObject object = new BasicDBObject("mentoringid", id);
 		DBCursor cursor = mentoringcoll.find(object);
-		for (int i=0; i<cursor.size(); i++) {
-			BasicDBObject mentid = (BasicDBObject) cursor.next();
-			if(id == mentid.getInt("id")){
-				mentoringcoll.remove(mentid);
-			}
-		}
+		BasicDBObject mentid = (BasicDBObject) cursor.next();
+		mentoringcoll.remove(mentid);
+		
 	}	
 	
     
@@ -278,49 +141,23 @@ public class DatabaseMentoringDAO implements MentoringDAO {
 	 */
 	@Override
 	public void updateMentoring(Mentoring mentoring) {
-		/* String sql = "UPDATE Mentoringbeziehung SET mentorid=?, menteeid=?, thema =?, jahr=? where mentoringid =?";
-		       
-		    PreparedStatement preparedStmt = null;
-		    try {
-		    	SimpleDateFormat sdf = new SimpleDateFormat("YYYY"); 
-		        preparedStmt = connection.prepareStatement(sql);
-		        preparedStmt.setInt(1, mentoring.getMentorId());
-		        preparedStmt.setInt(2, mentoring.getMenteeId());
-		        preparedStmt.setString(3, mentoring.getThema());
-		        preparedStmt.setString(4, sdf.format(mentoring.getBeginnJahr()));
-		        preparedStmt.setInt(5, mentoring.getMentoringId());
-		        
-		      	        
-		        preparedStmt.executeUpdate();
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }
-		
-		    
-		    return;		
-	}    */
-		
+				
 		SimpleDateFormat sdf = new SimpleDateFormat("YYYY"); 
 		
 		DBCollection mentoringcoll = db.getCollection("Mentoringbeziehung");
 		BasicDBObject object = new BasicDBObject("mentoringid", mentoring.getMentoringId());
 		DBCursor cursor = mentoringcoll.find(object);
 		if(cursor.size()>0){
-				for(int i=0; i<cursor.size(); i++){
-					BasicDBObject next = (BasicDBObject) cursor.next();
-					if(mentoring.getMentoringId() == next.getInt("id")){
-						BasicDBObject update = new BasicDBObject();
+			BasicDBObject update = new BasicDBObject();
 						
-						update.append("mentoringid", mentoring.getMentoringId());
-						update.append("mentorid",  mentoring.getMentorId());
-						update.append("menteeid",  mentoring.getMenteeId());
-						update.append("thema", mentoring.getThema());
-						update.append("jahr", sdf.format(mentoring.getBeginnJahr()));
+			update.append("mentoringid", mentoring.getMentoringId());
+			update.append("mentorid",  mentoring.getMentorId());
+			update.append("menteeid",  mentoring.getMenteeId());
+			update.append("thema", mentoring.getThema());
+			update.append("jahr", sdf.format(mentoring.getBeginnJahr()));
 						
-						mentoringcoll.update(new BasicDBObject().append("mentoringid", mentoring.getMentoringId()), update);
-					}
-
-				}
+			mentoringcoll.update(new BasicDBObject().append("mentoringid", mentoring.getMentoringId()), update);
+		
 		}
 	}
 

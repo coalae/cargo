@@ -221,7 +221,7 @@
 					<form action="MentoringAendernServlet" Method="GET" >
 						
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-                          <span>MentoringId auswaehlen:</span><br><br>
+                          <span>MentoringId auswählen:</span><br><br>
 						  <select name="mentoringid" required>  						  
   						    <%for(int i=0; i<mentoringliste.size();i++) {%>
   						  	 <%int id = mentoringliste.get(i).getMentoringId();%>

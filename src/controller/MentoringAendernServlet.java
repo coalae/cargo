@@ -42,8 +42,7 @@ public class MentoringAendernServlet extends HttpServlet {
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 			String mentoringid = (String) request.getParameter("mentoringid");
 			request.setAttribute("mentoringid", mentoringid);
-			RequestDispatcher view = request.getRequestDispatcher("mentoringAendern2.jsp");
-			view.forward(request, response);
+			request.getRequestDispatcher("mentoringAendern2.jsp").forward(request, response);
 		}
 
 		/**

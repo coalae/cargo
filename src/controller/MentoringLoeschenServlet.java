@@ -56,7 +56,7 @@ public class MentoringLoeschenServlet extends HttpServlet {
     							mm.deleteMentoring(mentoring.getMentoringId());
     							String message = "Mentoring wurde geloescht.";
     							request.setAttribute("message", message);
-    							RequestDispatcher view = request.getRequestDispatcher("mentoringLoeschenauswaehlen.jsp");
+    							RequestDispatcher view = request.getRequestDispatcher("/mentoringLoeschenauswaehlen.jsp");
     							view.forward(request, response);
     						} catch (Exception e) {
     							e.printStackTrace();

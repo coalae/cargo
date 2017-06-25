@@ -45,7 +45,7 @@ public class MentoringSuchenfuerLoeschen extends HttpServlet {
 						// Mentoring Id weitergeben
 						try{
 							request.setAttribute("mentoringId",mentoringId);
-							RequestDispatcher view = request.getRequestDispatcher("mentoringLoeschen.jsp");
+							RequestDispatcher view = request.getRequestDispatcher("/mentoringLoeschen.jsp");
 							view.forward(request, response);
 						} catch (Exception e) {
 							e.printStackTrace();

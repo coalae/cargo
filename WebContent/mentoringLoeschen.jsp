@@ -213,7 +213,7 @@
  
                                 <h1 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
   <br>
-                                <span>Mentoring loeschen:</span><br>
+                                <span>Mentoring löschen:</span><br>
                       <!--          <span class="cd-words-wrapper">
                                     <b class="is-visible">CarGo Driving School</b>
                                     <b>CarGo Fahrschule</b>

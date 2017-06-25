@@ -239,7 +239,7 @@
 					<form action="MentoringAendernServlet" Method="POST" >
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
                           <span>MentoringId:</span><br>
-						  <span> <%=ausgewaehltesMentoring.getMentoringId()%></span>
+                          <span> <%=ausgewaehltesMentoring.getMentoringId()%></span>
 						  <br> </h2>
 						
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
@@ -268,7 +268,7 @@
 
 						  
 						  <h2 class="wow fadeInUp animated cd-headline slide" data-wow-delay=".4s" >
-						  <span>	  <input type="submit" value="Aenderungen bestaetigen"> </span> 
+						  <span>	  <input type="submit" value="Änderungen bestätigen"> </span> 
 						  <input type="hidden" name="mentoringid" value=<%=ausgewaehltesMentoring.getMentoringId()%>> 
 						  </h2>
 						  
@@ -284,7 +284,7 @@
 							
 
 						  <br>
-					<a href="indexLoggedInAsMitarbeiter.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Home</a>
+					<a href="mentoringAendern.jsp" class="btn btn-default btn-contact wow fadeInDown" data-wow-delay=".7s" data-wow-duration="500ms">Zurück</a>
 						                                
                             </div>
                         </div>
