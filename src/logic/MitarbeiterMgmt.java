@@ -36,7 +36,7 @@ public class MitarbeiterMgmt {
 		try {
 			mitarbeiterliste = dbzugang.getMitarbeiterListe();
 			
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

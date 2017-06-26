@@ -91,9 +91,15 @@ public class DatabaseImmobilienDAO {
 		if (cur.size() > 0) {
 			for (int i = 0; i <= cur.size(); i++) {
 				BasicDBObject immobilie = (BasicDBObject) cur.next();
-				Immobilie tempo = new Immobilie(immobilie.getInt("immobilienid"), immobilie.getInt("typ"),
+				String zahl = immobilie.getString("immobilienid");
+				System.out.println(zahl);
+				int value = Integer.parseInt(zahl);
+				String typ = immobilie.getString("typ");
+				int valuetyp = Integer.parseInt(typ);
+				Immobilie tempo = new Immobilie(value, valuetyp,
 						immobilie.getString("name"));
 				returnGebaude.add(tempo);
+				if(!cur.hasNext()){break;}
 			}
 			return returnGebaude;
 		} else {

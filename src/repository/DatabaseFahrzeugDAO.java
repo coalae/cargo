@@ -58,17 +58,19 @@ public class DatabaseFahrzeugDAO {
 		DBCursor cur = Fahrzeugcollection.find();
 
 		if (cur.size() > 0) {
-			for (int i = 0; i <= cur.size(); i++) {
+			for (int i = 0; cur.hasNext(); i++) {
+				
 				BasicDBObject fahrzeug = (BasicDBObject) cur.next();
 				Fahrzeug tempo = new Fahrzeug(fahrzeug.getInt("fahrzeugid"), fahrzeug.getString("marke"),
 						fahrzeug.getString("modell"), fahrzeug.getString("baujahr"), fahrzeug.getString("farbe"));
 				returnFahrzeug.add(tempo);
+				if(!cur.hasNext()){break;}
 			}
 			return returnFahrzeug;
 		} else {
 			System.out.println("Keine Fahrzeuge gefunden");
 		}
-		return null;
+		return returnFahrzeug;
 	}
 
 	public void insert(String marke, String modell, String baujahr, String farbe) {
